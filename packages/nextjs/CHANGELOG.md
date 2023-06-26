@@ -1,5 +1,123 @@
 # @yamada-ui/nextjs
 
+## 3.0.7
+
+### Patch Changes
+
+- Updated dependencies [[`540682f2`](https://github.com/hirotomoyamada/yamada-ui/commit/540682f27c8d407c93d02342d341a7bf07cf8ec1)]:
+  - @yamada-ui/core@0.3.0
+  - @yamada-ui/react@0.4.7
+
+## 3.0.6
+
+### Patch Changes
+
+- Updated dependencies [[`ddb71320`](https://github.com/hirotomoyamada/yamada-ui/commit/ddb71320c504386e99b9bb76f71d23ae6552547a)]:
+  - @yamada-ui/core@0.2.3
+  - @yamada-ui/react@0.4.6
+
+## 3.0.5
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/react@0.4.5
+
+## 3.0.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/react@0.4.4
+
+## 3.0.3
+
+### Patch Changes
+
+- Updated dependencies [[`bc90e430`](https://github.com/hirotomoyamada/yamada-ui/commit/bc90e4300e10eba6635e5decfdf0e624422a916c)]:
+  - @yamada-ui/core@0.2.2
+  - @yamada-ui/react@0.4.3
+
+## 3.0.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/react@0.4.2
+
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies [[`0ec606a9`](https://github.com/hirotomoyamada/yamada-ui/commit/0ec606a9960924b50b4f9f3e683b4e8d168d25f7)]:
+  - @yamada-ui/core@0.2.1
+  - @yamada-ui/react@0.4.1
+
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies [[`72b5cb4a`](https://github.com/hirotomoyamada/yamada-ui/commit/72b5cb4a514743144336f79df29ce48939b22f2d)]:
+  - @yamada-ui/react@0.4.0
+
+## 2.0.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/react@0.3.2
+
+## 2.0.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/react@0.3.1
+
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies [[`557676e`](https://github.com/hirotomoyamada/yamada-ui/commit/557676e5ac3354571de1adeb5a58c75ba0ac1b5c)]:
+  - @yamada-ui/react@0.3.0
+
+## 1.0.11
+
+### Patch Changes
+
+- Updated dependencies [[`93741e6`](https://github.com/hirotomoyamada/yamada-ui/commit/93741e682f83d7cf954443f341543632f81696f4)]:
+  - @yamada-ui/core@0.2.0
+  - @yamada-ui/react@0.2.11
+
+## 1.0.10
+
+### Patch Changes
+
+- Updated dependencies [[`e8c4cae`](https://github.com/hirotomoyamada/yamada-ui/commit/e8c4cae22de22c1574773fda1d0919ea73decbef), [`9c16c53`](https://github.com/hirotomoyamada/yamada-ui/commit/9c16c53d50a1df576eb3e86a2b2ffc75edb52b6f)]:
+  - @yamada-ui/core@0.1.6
+  - @yamada-ui/react@0.2.10
+
+## 1.0.9
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/react@0.2.9
+
+## 1.0.8
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/react@0.2.8
+
+## 1.0.7
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/react@0.2.7
+
 ## 1.0.6
 
 ### Patch Changes

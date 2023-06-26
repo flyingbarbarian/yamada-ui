@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/react",
-  "version": "0.2.6",
+  "version": "0.4.7",
   "description": "React UI components of the Yamada, by the Yamada, for the Yamada built with React and Emotion",
   "keywords": [
     "yamada",
@@ -103,6 +103,7 @@
     "@yamada-ui/use-boolean": "workspace:*",
     "@yamada-ui/use-breakpoint": "workspace:*",
     "@yamada-ui/use-clickable": "workspace:*",
+    "@yamada-ui/use-clipboard": "workspace:*",
     "@yamada-ui/use-controllable-state": "workspace:*",
     "@yamada-ui/use-counter": "workspace:*",
     "@yamada-ui/use-descendant": "workspace:*",
@@ -110,8 +111,13 @@
     "@yamada-ui/use-event-listener": "workspace:*",
     "@yamada-ui/use-focus": "workspace:*",
     "@yamada-ui/use-focus-visible": "workspace:*",
+    "@yamada-ui/use-hover": "workspace:*",
+    "@yamada-ui/use-idle": "workspace:*",
     "@yamada-ui/use-interval": "workspace:*",
     "@yamada-ui/use-latest-ref": "workspace:*",
+    "@yamada-ui/use-local-storage": "workspace:*",
+    "@yamada-ui/use-media-query": "workspace:*",
+    "@yamada-ui/use-os": "workspace:*",
     "@yamada-ui/use-outside-click": "workspace:*",
     "@yamada-ui/use-pan-event": "workspace:*",
     "@yamada-ui/use-popper": "workspace:*",
@@ -121,6 +127,7 @@
     "@yamada-ui/use-timeout": "workspace:*",
     "@yamada-ui/use-token": "workspace:*",
     "@yamada-ui/use-value": "workspace:*",
+    "@yamada-ui/use-window-event": "workspace:*",
     "@yamada-ui/utils": "workspace:*"
   },
   "devDependencies": {

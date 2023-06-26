@@ -1,5 +1,69 @@
 # @yamada-ui/theme
 
+## 0.3.0
+
+### Minor Changes
+
+- [`e9aed64e`](https://github.com/hirotomoyamada/yamada-ui/commit/e9aed64e171a3e326b28ed330de0e2dc22a71fbe) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Changed defaultProps colorScheme to `primary`.
+
+### Patch Changes
+
+- Updated dependencies [[`540682f2`](https://github.com/hirotomoyamada/yamada-ui/commit/540682f27c8d407c93d02342d341a7bf07cf8ec1)]:
+  - @yamada-ui/core@0.3.0
+
+## 0.2.4
+
+### Patch Changes
+
+- [`ddb71320`](https://github.com/hirotomoyamada/yamada-ui/commit/ddb71320c504386e99b9bb76f71d23ae6552547a) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Added basci alert variant.
+
+- Updated dependencies [[`ddb71320`](https://github.com/hirotomoyamada/yamada-ui/commit/ddb71320c504386e99b9bb76f71d23ae6552547a)]:
+  - @yamada-ui/core@0.2.3
+
+## 0.2.3
+
+### Patch Changes
+
+- [`fa90da83`](https://github.com/hirotomoyamada/yamada-ui/commit/fa90da8350abe1ce768e94b7e82108c2b66e869d) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Fixed a bug where the width of the Modal or Dialog was not being correctly reflected.
+
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [[`bc90e430`](https://github.com/hirotomoyamada/yamada-ui/commit/bc90e4300e10eba6635e5decfdf0e624422a916c)]:
+  - @yamada-ui/core@0.2.2
+
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [[`0ec606a9`](https://github.com/hirotomoyamada/yamada-ui/commit/0ec606a9960924b50b4f9f3e683b4e8d168d25f7)]:
+  - @yamada-ui/core@0.2.1
+
+## 0.2.0
+
+### Minor Changes
+
+- [`93741e6`](https://github.com/hirotomoyamada/yamada-ui/commit/93741e682f83d7cf954443f341543632f81696f4) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Added gradient tokens.
+
+### Patch Changes
+
+- Updated dependencies [[`93741e6`](https://github.com/hirotomoyamada/yamada-ui/commit/93741e682f83d7cf954443f341543632f81696f4)]:
+  - @yamada-ui/core@0.2.0
+
+## 0.1.8
+
+### Patch Changes
+
+- Updated dependencies [[`e8c4cae`](https://github.com/hirotomoyamada/yamada-ui/commit/e8c4cae22de22c1574773fda1d0919ea73decbef), [`9c16c53`](https://github.com/hirotomoyamada/yamada-ui/commit/9c16c53d50a1df576eb3e86a2b2ffc75edb52b6f)]:
+  - @yamada-ui/core@0.1.6
+
+## 0.1.7
+
+### Patch Changes
+
+- [`0a64e78`](https://github.com/hirotomoyamada/yamada-ui/commit/0a64e7895dc1bbb2cba5230e9e7d16836f5a2f4c) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Added props `filledTrackColor`.
+
 ## 0.1.6
 
 ### Patch Changes

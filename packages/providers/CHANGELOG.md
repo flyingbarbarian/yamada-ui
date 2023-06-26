@@ -1,5 +1,102 @@
 # @yamada-ui/providers
 
+## 0.3.5
+
+### Patch Changes
+
+- Updated dependencies [[`e9aed64e`](https://github.com/hirotomoyamada/yamada-ui/commit/e9aed64e171a3e326b28ed330de0e2dc22a71fbe), [`540682f2`](https://github.com/hirotomoyamada/yamada-ui/commit/540682f27c8d407c93d02342d341a7bf07cf8ec1)]:
+  - @yamada-ui/theme@0.3.0
+  - @yamada-ui/core@0.3.0
+  - @yamada-ui/loading@0.2.8
+  - @yamada-ui/motion@0.1.11
+  - @yamada-ui/notice@0.2.1
+
+## 0.3.4
+
+### Patch Changes
+
+- Updated dependencies [[`ddb71320`](https://github.com/hirotomoyamada/yamada-ui/commit/ddb71320c504386e99b9bb76f71d23ae6552547a), [`ddb71320`](https://github.com/hirotomoyamada/yamada-ui/commit/ddb71320c504386e99b9bb76f71d23ae6552547a)]:
+  - @yamada-ui/theme@0.2.4
+  - @yamada-ui/core@0.2.3
+  - @yamada-ui/notice@0.2.0
+  - @yamada-ui/loading@0.2.7
+  - @yamada-ui/motion@0.1.10
+
+## 0.3.3
+
+### Patch Changes
+
+- Updated dependencies [[`fa90da83`](https://github.com/hirotomoyamada/yamada-ui/commit/fa90da8350abe1ce768e94b7e82108c2b66e869d)]:
+  - @yamada-ui/theme@0.2.3
+
+## 0.3.2
+
+### Patch Changes
+
+- Updated dependencies [[`bc90e430`](https://github.com/hirotomoyamada/yamada-ui/commit/bc90e4300e10eba6635e5decfdf0e624422a916c)]:
+  - @yamada-ui/core@0.2.2
+  - @yamada-ui/loading@0.2.6
+  - @yamada-ui/motion@0.1.9
+  - @yamada-ui/notice@0.1.9
+  - @yamada-ui/theme@0.2.2
+
+## 0.3.1
+
+### Patch Changes
+
+- Updated dependencies [[`0ec606a9`](https://github.com/hirotomoyamada/yamada-ui/commit/0ec606a9960924b50b4f9f3e683b4e8d168d25f7)]:
+  - @yamada-ui/core@0.2.1
+  - @yamada-ui/loading@0.2.5
+  - @yamada-ui/motion@0.1.8
+  - @yamada-ui/notice@0.1.8
+  - @yamada-ui/theme@0.2.1
+
+## 0.3.0
+
+### Minor Changes
+
+- [`2be51f0a`](https://github.com/hirotomoyamada/yamada-ui/commit/2be51f0a02196aeda977a7cf3ccc475cee391752) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Added EnvironmentProvider.
+
+### Patch Changes
+
+- Updated dependencies [[`9f945f06`](https://github.com/hirotomoyamada/yamada-ui/commit/9f945f06ea1bf7c389053e84fb4d0d45bc3ce6e0)]:
+  - @yamada-ui/use-timeout@0.1.2
+
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [[`93741e6`](https://github.com/hirotomoyamada/yamada-ui/commit/93741e682f83d7cf954443f341543632f81696f4)]:
+  - @yamada-ui/theme@0.2.0
+  - @yamada-ui/core@0.2.0
+  - @yamada-ui/loading@0.2.4
+  - @yamada-ui/motion@0.1.7
+  - @yamada-ui/notice@0.1.7
+
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [[`e8c4cae`](https://github.com/hirotomoyamada/yamada-ui/commit/e8c4cae22de22c1574773fda1d0919ea73decbef), [`9c16c53`](https://github.com/hirotomoyamada/yamada-ui/commit/9c16c53d50a1df576eb3e86a2b2ffc75edb52b6f)]:
+  - @yamada-ui/core@0.1.6
+  - @yamada-ui/loading@0.2.3
+  - @yamada-ui/motion@0.1.6
+  - @yamada-ui/notice@0.1.6
+  - @yamada-ui/theme@0.1.8
+
+## 0.2.0
+
+### Minor Changes
+
+- [`3009eda`](https://github.com/hirotomoyamada/yamada-ui/commit/3009eda3ea6b297eaa5db92b7827c71b55b55dcb) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Changed the loading animation to end correctly if it runs multiple times.
+
+## 0.1.8
+
+### Patch Changes
+
+- Updated dependencies [[`0a64e78`](https://github.com/hirotomoyamada/yamada-ui/commit/0a64e7895dc1bbb2cba5230e9e7d16836f5a2f4c)]:
+  - @yamada-ui/theme@0.1.7
+
 ## 0.1.7
 
 ### Patch Changes

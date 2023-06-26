@@ -183,6 +183,7 @@ export interface GeneratedTheme extends UITheme {
     | 'extrabold'
     | 'black'
     | (string & {})
+  gradients: string & {}
   layerStyles: string & {}
   letterSpacings: 'tighter' | 'tight' | 'normal' | 'wide' | 'wider' | 'widest' | (string & {})
   lineHeights:
@@ -406,7 +407,14 @@ export interface GeneratedTheme extends UITheme {
     Accordion: { sizes: string & {}; variants: 'basic' | 'card' | 'unstyled' | (string & {}) }
     Alert: {
       sizes: string & {}
-      variants: 'subtle' | 'solid' | 'left-accent' | 'top-accent' | (string & {})
+      variants:
+        | 'basic'
+        | 'subtle'
+        | 'solid'
+        | 'island-accent'
+        | 'left-accent'
+        | 'top-accent'
+        | (string & {})
     }
     Avatar: {
       sizes: '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | (string & {})

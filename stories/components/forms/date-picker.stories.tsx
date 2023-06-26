@@ -2,8 +2,9 @@ import { faPoo } from '@fortawesome/free-solid-svg-icons'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { CalendarType, DatePicker } from '@yamada-ui/calendar'
 import { Icon } from '@yamada-ui/fontawesome'
-import { FormControl, Grid, Heading } from '@yamada-ui/react'
+import { FormControl, Grid, Heading, VStack, Button } from '@yamada-ui/react'
 import { useState } from 'react'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import 'dayjs/locale/ja'
 
 export default {
@@ -578,7 +579,83 @@ export const customControlMonth: ComponentStory<typeof DatePicker> = () => {
 }
 
 export const customControlValue: ComponentStory<typeof DatePicker> = () => {
-  const [value, onChange] = useState<Date | null | undefined>(new Date())
+  const [value, onChange] = useState<Date | null>(new Date())
 
   return <DatePicker placeholder='YYYY/MM/DD' value={value} onChange={onChange} />
+}
+
+export const reactHookForm: ComponentStory<typeof DatePicker> = () => {
+  type Data = { datePicker: Date | null }
+
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Data>()
+
+  const onSubmit: SubmitHandler<Data> = (data) => console.log('submit:', data)
+
+  console.log('watch:', watch())
+
+  return (
+    <VStack as='form' onSubmit={handleSubmit(onSubmit)}>
+      <FormControl
+        isInvalid={!!errors.datePicker}
+        label='Birthday'
+        errorMessage={errors.datePicker?.message}
+      >
+        <Controller
+          name='datePicker'
+          control={control}
+          rules={{ required: { value: true, message: 'This is required.' } }}
+          render={({ field }) => <DatePicker placeholder='YYYY/MM/DD' {...field} />}
+        />
+      </FormControl>
+
+      <Button type='submit' alignSelf='flex-end'>
+        Submit
+      </Button>
+    </VStack>
+  )
+}
+
+export const reactHookFormWithDefaultValue: ComponentStory<typeof DatePicker> = () => {
+  type Data = { datePicker: Date | null }
+
+  const defaultValues: Data = {
+    datePicker: new Date(),
+  }
+
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Data>({ defaultValues })
+
+  const onSubmit: SubmitHandler<Data> = (data) => console.log('submit:', data)
+
+  console.log('watch:', watch())
+
+  return (
+    <VStack as='form' onSubmit={handleSubmit(onSubmit)}>
+      <FormControl
+        isInvalid={!!errors.datePicker}
+        label='Birthday'
+        errorMessage={errors.datePicker?.message}
+      >
+        <Controller
+          name='datePicker'
+          control={control}
+          rules={{ required: { value: true, message: 'This is required.' } }}
+          render={({ field }) => <DatePicker placeholder='YYYY/MM/DD' {...field} />}
+        />
+      </FormControl>
+
+      <Button type='submit' alignSelf='flex-end'>
+        Submit
+      </Button>
+    </VStack>
+  )
 }

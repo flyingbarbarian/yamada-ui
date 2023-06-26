@@ -29,7 +29,22 @@ export const Alert: ComponentMultiStyle = {
   },
 
   variants: {
-    subtle: ({ theme: t, colorMode: m, colorScheme: c = 'blue' }) => {
+    basic: ({ theme: t, colorMode: m, colorScheme: c = 'primary' }) => {
+      const color = isDefaultColor(
+        mode(toneColor(c, 500)(t, m), toneColor(c, 200)(t, m))(m),
+        mode(getColor(`${c}.500`)(t, m), getColor(`${c}.200`)(t, m))(m),
+      )(c)
+
+      return {
+        container: {
+          bg: ['white', 'black'],
+          borderWidth: '1px',
+        },
+        icon: { color },
+        loading: { color },
+      }
+    },
+    subtle: ({ theme: t, colorMode: m, colorScheme: c = 'primary' }) => {
       const color = isDefaultColor(
         [toneColor(c, 500)(t, m), toneColor(c, 200)(t, m)],
         [`${c}.500`, `${c}.200`],
@@ -46,7 +61,7 @@ export const Alert: ComponentMultiStyle = {
         loading: { color },
       }
     },
-    solid: ({ theme: t, colorMode: m, colorScheme: c = 'blue' }) => ({
+    solid: ({ theme: t, colorMode: m, colorScheme: c = 'primary' }) => ({
       container: {
         bg: isDefaultColor(
           [toneColor(c, 500)(t, m), toneColor(c, 200)(t, m)],
@@ -55,7 +70,33 @@ export const Alert: ComponentMultiStyle = {
         color: ['white', 'gray.900'],
       },
     }),
-    'left-accent': ({ theme: t, colorMode: m, colorScheme: c = 'blue' }) => {
+    'island-accent': ({ theme: t, colorMode: m, colorScheme: c = 'primary' }) => {
+      const color = isDefaultColor(
+        mode(toneColor(c, 500)(t, m), toneColor(c, 200)(t, m))(m),
+        mode(getColor(`${c}.500`)(t, m), getColor(`${c}.200`)(t, m))(m),
+      )(c)
+
+      return {
+        container: {
+          bg: ['white', 'black'],
+          borderWidth: '1px',
+          pl: 7,
+          _before: {
+            content: '""',
+            position: 'absolute',
+            top: '50%',
+            left: 3,
+            transform: 'translateY(-50%)',
+            w: 1,
+            h: 'calc(100% - 1.5rem)',
+            bg: color,
+            rounded: 'full',
+          },
+        },
+        icon: { color },
+      }
+    },
+    'left-accent': ({ theme: t, colorMode: m, colorScheme: c = 'primary' }) => {
       const color = isDefaultColor(
         mode(toneColor(c, 500)(t, m), toneColor(c, 200)(t, m))(m),
         mode(getColor(`${c}.500`)(t, m), getColor(`${c}.200`)(t, m))(m),
@@ -74,7 +115,7 @@ export const Alert: ComponentMultiStyle = {
         icon: { color },
       }
     },
-    'top-accent': ({ theme: t, colorMode: m, colorScheme: c = 'blue' }) => {
+    'top-accent': ({ theme: t, colorMode: m, colorScheme: c = 'primary' }) => {
       const color = isDefaultColor(
         mode(toneColor(c, 500)(t, m), toneColor(c, 200)(t, m))(m),
         mode(getColor(`${c}.500`)(t, m), getColor(`${c}.200`)(t, m))(m),
@@ -96,7 +137,7 @@ export const Alert: ComponentMultiStyle = {
   },
 
   defaultProps: {
-    variant: 'subtle',
-    colorScheme: 'blue',
+    variant: 'basic',
+    colorScheme: 'primary',
   },
 }
