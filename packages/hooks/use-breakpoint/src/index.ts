@@ -1,27 +1,28 @@
-import { useTheme, Theme, ResponsiveObject } from '@yamada-ui/core'
-import { createdDom } from '@yamada-ui/utils'
-import { useState, useMemo, useEffect } from 'react'
+import type { Theme, ResponsiveObject } from "@yamada-ui/core"
+import { useTheme } from "@yamada-ui/core"
+import { createdDom } from "@yamada-ui/utils"
+import { useState, useMemo, useEffect } from "react"
 
 export const useBreakpoint = () => {
   const { theme } = useTheme()
 
   if (!theme)
     throw Error(
-      'useBreakpoint: `theme` is undefined. Seems you forgot to wrap your app in `<UIProvider />`',
+      "useBreakpoint: `theme` is undefined. Seems you forgot to wrap your app in `<UIProvider />`",
     )
 
   const breakpoints = theme.__breakpoints
 
   if (!breakpoints)
     throw Error(
-      'useBreakpoint: `breakpoints` is undefined. Seems you forgot to put theme in `breakpoints`',
+      "useBreakpoint: `breakpoints` is undefined. Seems you forgot to put theme in `breakpoints`",
     )
 
   const queries = useMemo(
     () =>
       breakpoints.queries.map(({ breakpoint, minMaxQuery }) => ({
         breakpoint,
-        query: minMaxQuery?.replace('@media screen and ', '') ?? '',
+        query: minMaxQuery?.replace("@media screen and ", "") ?? "",
       })),
     [breakpoints],
   )
@@ -29,7 +30,7 @@ export const useBreakpoint = () => {
   const [breakpoint, setBreakpoint] = useState(() => {
     const isBrowser = createdDom()
 
-    if (!isBrowser) return 'base'
+    if (!isBrowser) return "base"
 
     for (const { breakpoint, query } of queries) {
       const mql = window.matchMedia(query)
@@ -46,11 +47,12 @@ export const useBreakpoint = () => {
         if (e.matches) setBreakpoint(breakpoint)
       }
 
-      if (typeof mql.addEventListener === 'function') mql.addEventListener('change', onChange)
+      if (typeof mql.addEventListener === "function")
+        mql.addEventListener("change", onChange)
 
       return () => {
-        if (typeof mql.removeEventListener === 'function')
-          mql.removeEventListener('change', onChange)
+        if (typeof mql.removeEventListener === "function")
+          mql.removeEventListener("change", onChange)
       }
     })
 
@@ -59,29 +61,34 @@ export const useBreakpoint = () => {
     }
   }, [queries])
 
-  return breakpoint as Theme['breakpoints']
+  return breakpoint as Theme["breakpoints"]
 }
 
-export const useBreakpointValue = <T extends any>(values: ResponsiveObject<T>): T => {
+export const useBreakpointValue = <T extends any>(
+  values: ResponsiveObject<T>,
+): T => {
   const { theme } = useTheme()
 
   if (!theme)
     throw Error(
-      'useBreakpoint: `theme` is undefined. Seems you forgot to wrap your app in `<UIProvider />`',
+      "useBreakpoint: `theme` is undefined. Seems you forgot to wrap your app in `<UIProvider />`",
     )
 
   const breakpoints = theme.__breakpoints?.keys
 
   if (!breakpoints)
     throw Error(
-      'useBreakpoint: `breakpoints` is undefined. Seems you forgot to put theme in `breakpoints`',
+      "useBreakpoint: `breakpoints` is undefined. Seems you forgot to put theme in `breakpoints`",
     )
 
   const breakpoint = useBreakpoint()
 
   const computedBreakpoint = breakpoints.reduce((prev, current) => {
     if (prev === breakpoint || current === breakpoint) {
-      if (prev === 'base' || (!values.hasOwnProperty(prev) && values.hasOwnProperty(current))) {
+      if (
+        prev === "base" ||
+        (!values.hasOwnProperty(prev) && values.hasOwnProperty(current))
+      ) {
         return current
       } else {
         return prev
@@ -89,7 +96,7 @@ export const useBreakpointValue = <T extends any>(values: ResponsiveObject<T>): 
     } else {
       return prev
     }
-  }, 'base')
+  }, "base")
 
   return values[computedBreakpoint] as T
 }

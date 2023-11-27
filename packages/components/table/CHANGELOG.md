@@ -1,5 +1,673 @@
 # @yamada-ui/table
 
+## 0.5.4
+
+### Patch Changes
+
+- Updated dependencies [[`9920bf6c`](https://github.com/hirotomoyamada/yamada-ui/commit/9920bf6c47c79a2447fc83fe7343d16d8fd4774f)]:
+  - @yamada-ui/select@0.5.8
+
+## 0.5.3
+
+### Patch Changes
+
+- Updated dependencies [[`de0eebc8`](https://github.com/hirotomoyamada/yamada-ui/commit/de0eebc83c72d86f2e337b1b363361e6cb75cd16), [`a1ee1bdb`](https://github.com/hirotomoyamada/yamada-ui/commit/a1ee1bdb113ebb18261e5b0910ca2a179aac1a96), [`965abe7d`](https://github.com/hirotomoyamada/yamada-ui/commit/965abe7dd9bacca8ffe61dc7de89ec087c4ff9a4)]:
+  - @yamada-ui/checkbox@0.5.0
+  - @yamada-ui/select@0.5.7
+
+## 0.5.2
+
+### Patch Changes
+
+- [`65236225`](https://github.com/hirotomoyamada/yamada-ui/commit/65236225f25422cc0e4791d686fbb6f2747856ab) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Updated column type definitions.
+
+## 0.5.1
+
+### Patch Changes
+
+- [`27434dec`](https://github.com/hirotomoyamada/yamada-ui/commit/27434dec6704dfb437514e4b309ba4e4a765a9df) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Extended `Column` type with `UIColumn`.
+
+- [#384](https://github.com/hirotomoyamada/yamada-ui/pull/384) [`65223fae`](https://github.com/hirotomoyamada/yamada-ui/commit/65223faeb235642c75285a9fe46c893478ef609a) Thanks [@illionillion](https://github.com/illionillion)! - Formatted code.
+
+- Updated dependencies [[`910651d8`](https://github.com/hirotomoyamada/yamada-ui/commit/910651d850fd3901200e54a3e863f10ae2c5659a), [`65223fae`](https://github.com/hirotomoyamada/yamada-ui/commit/65223faeb235642c75285a9fe46c893478ef609a), [`7ae02003`](https://github.com/hirotomoyamada/yamada-ui/commit/7ae020036f56eeb764202d7d2818ebf01d83b73a), [`71a6c742`](https://github.com/hirotomoyamada/yamada-ui/commit/71a6c74212761a5b1e25450cf317f3db59bc6106)]:
+  - @yamada-ui/select@0.5.6
+  - @yamada-ui/use-controllable-state@0.3.2
+  - @yamada-ui/native-table@0.4.11
+  - @yamada-ui/pagination@0.4.19
+  - @yamada-ui/checkbox@0.4.3
+  - @yamada-ui/icon@0.3.17
+  - @yamada-ui/core@0.12.7
+
+## 0.5.0
+
+### Minor Changes
+
+- [`f7f7a110`](https://github.com/hirotomoyamada/yamada-ui/commit/f7f7a11084c88bc2c0941a53c277f3d4a6901d1a) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Added `rowSpan`, `colSpan` to table columns.
+
+## 0.4.21
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/select@0.5.5
+
+## 0.4.20
+
+### Patch Changes
+
+- Updated dependencies [[`cd8a4b57`](https://github.com/hirotomoyamada/yamada-ui/commit/cd8a4b57fec448b4bb052282902ffcc018bd9d55)]:
+  - @yamada-ui/use-controllable-state@0.3.1
+  - @yamada-ui/checkbox@0.4.2
+  - @yamada-ui/pagination@0.4.18
+  - @yamada-ui/select@0.5.4
+
+## 0.4.19
+
+### Patch Changes
+
+- [`d2a5f0a3`](https://github.com/hirotomoyamada/yamada-ui/commit/d2a5f0a3164d3776a2cb639e95abaec36b4111cc) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Changed `options` prop to `items` in pageSize `Select`.
+
+## 0.4.18
+
+### Patch Changes
+
+- [#255](https://github.com/hirotomoyamada/yamada-ui/pull/255) [`8e10f071`](https://github.com/hirotomoyamada/yamada-ui/commit/8e10f0714021eff5d809e974244d0baed0b046d6) Thanks [@illionillion](https://github.com/illionillion)! - Changed `className` in `Table`.
+
+## 0.4.17
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/select@0.5.3
+
+## 0.4.16
+
+### Patch Changes
+
+- Updated dependencies [[`23c5ff1d`](https://github.com/hirotomoyamada/yamada-ui/commit/23c5ff1d24f6a193ec1bbcee2a0e57289b6021e7)]:
+  - @yamada-ui/select@0.5.2
+
+## 0.4.15
+
+### Patch Changes
+
+- Updated dependencies [[`03be9bf8`](https://github.com/hirotomoyamada/yamada-ui/commit/03be9bf8dc949821baea727f69ee832055426392)]:
+  - @yamada-ui/core@0.12.6
+  - @yamada-ui/checkbox@0.4.1
+  - @yamada-ui/icon@0.3.16
+  - @yamada-ui/native-table@0.4.10
+  - @yamada-ui/pagination@0.4.17
+  - @yamada-ui/select@0.5.1
+
+## 0.4.14
+
+### Patch Changes
+
+- Updated dependencies [[`955e1b19`](https://github.com/hirotomoyamada/yamada-ui/commit/955e1b19f847f29f8e05b14e048a8fee2277e902), [`5545d7fe`](https://github.com/hirotomoyamada/yamada-ui/commit/5545d7febbe0860108961b29a3a9da316692a7c3)]:
+  - @yamada-ui/select@0.5.0
+  - @yamada-ui/checkbox@0.4.0
+
+## 0.4.13
+
+### Patch Changes
+
+- Updated dependencies [[`64f44a9d`](https://github.com/hirotomoyamada/yamada-ui/commit/64f44a9dd7f5c4a845145d5e492f43bbd1e3cf48), [`99a44d2c`](https://github.com/hirotomoyamada/yamada-ui/commit/99a44d2c0bee0e510b747d8f841648122081aad7), [`199b0b25`](https://github.com/hirotomoyamada/yamada-ui/commit/199b0b250d60c5a48291ee1cfcd56c41702fcc68)]:
+  - @yamada-ui/native-table@0.4.9
+  - @yamada-ui/use-controllable-state@0.3.0
+  - @yamada-ui/pagination@0.4.16
+  - @yamada-ui/checkbox@0.3.19
+  - @yamada-ui/select@0.4.13
+
+## 0.4.12
+
+### Patch Changes
+
+- Updated dependencies [[`f23e2e3d`](https://github.com/hirotomoyamada/yamada-ui/commit/f23e2e3d5d9c7dc56bd76c0a6639e77a0210fa4b), [`6be7db00`](https://github.com/hirotomoyamada/yamada-ui/commit/6be7db002112720dbc9fc962a9380476e7481b83)]:
+  - @yamada-ui/utils@0.3.3
+  - @yamada-ui/core@0.12.5
+  - @yamada-ui/checkbox@0.3.18
+  - @yamada-ui/icon@0.3.15
+  - @yamada-ui/native-table@0.4.8
+  - @yamada-ui/pagination@0.4.15
+  - @yamada-ui/select@0.4.12
+  - @yamada-ui/use-controllable-state@0.2.5
+
+## 0.4.11
+
+### Patch Changes
+
+- Updated dependencies [[`44daf8e1`](https://github.com/hirotomoyamada/yamada-ui/commit/44daf8e174097a776ac2b6005b3c2579dab495dc)]:
+  - @yamada-ui/checkbox@0.3.17
+  - @yamada-ui/select@0.4.11
+
+## 0.4.10
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/select@0.4.10
+
+## 0.4.9
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/select@0.4.9
+
+## 0.4.8
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/select@0.4.8
+
+## 0.4.7
+
+### Patch Changes
+
+- Updated dependencies [[`7484afb2`](https://github.com/hirotomoyamada/yamada-ui/commit/7484afb2998f47e57818245286b91d412e8e1093)]:
+  - @yamada-ui/utils@0.3.2
+  - @yamada-ui/checkbox@0.3.16
+  - @yamada-ui/icon@0.3.14
+  - @yamada-ui/native-table@0.4.7
+  - @yamada-ui/pagination@0.4.14
+  - @yamada-ui/select@0.4.7
+  - @yamada-ui/core@0.12.4
+  - @yamada-ui/use-controllable-state@0.2.4
+
+## 0.4.6
+
+### Patch Changes
+
+- Updated dependencies [[`11c878ce`](https://github.com/hirotomoyamada/yamada-ui/commit/11c878ceb1cfa216ec33ba6780857c2c7d36a1f5)]:
+  - @yamada-ui/core@0.12.3
+  - @yamada-ui/checkbox@0.3.15
+  - @yamada-ui/icon@0.3.13
+  - @yamada-ui/native-table@0.4.6
+  - @yamada-ui/pagination@0.4.13
+  - @yamada-ui/select@0.4.6
+
+## 0.4.5
+
+### Patch Changes
+
+- Updated dependencies [[`f4c37a4b`](https://github.com/hirotomoyamada/yamada-ui/commit/f4c37a4b4df2e14fc5d162a6a3990ce841f93331)]:
+  - @yamada-ui/core@0.12.2
+  - @yamada-ui/checkbox@0.3.14
+  - @yamada-ui/icon@0.3.12
+  - @yamada-ui/native-table@0.4.5
+  - @yamada-ui/pagination@0.4.12
+  - @yamada-ui/select@0.4.5
+
+## 0.4.4
+
+### Patch Changes
+
+- Updated dependencies [[`49cf0999`](https://github.com/hirotomoyamada/yamada-ui/commit/49cf0999e6b3aededb08c6f8f80fd3209cddeb27), [`58a763b4`](https://github.com/hirotomoyamada/yamada-ui/commit/58a763b49623b95c9a643e04f044dbab076e7535), [`0e5e72e1`](https://github.com/hirotomoyamada/yamada-ui/commit/0e5e72e14c8b46f8b948918312bbb2d03464b523), [`02a33f1e`](https://github.com/hirotomoyamada/yamada-ui/commit/02a33f1e619b08d2a12ce5cc277d1692a3bb4a0a), [`ebb9023a`](https://github.com/hirotomoyamada/yamada-ui/commit/ebb9023ab97f61792e149e217a7fbe635e5b48e1), [`d048b650`](https://github.com/hirotomoyamada/yamada-ui/commit/d048b650fccb91c281ea4bbebee104dd2b7d18f0)]:
+  - @yamada-ui/utils@0.3.1
+  - @yamada-ui/core@0.12.1
+  - @yamada-ui/checkbox@0.3.13
+  - @yamada-ui/icon@0.3.11
+  - @yamada-ui/native-table@0.4.4
+  - @yamada-ui/pagination@0.4.11
+  - @yamada-ui/select@0.4.4
+  - @yamada-ui/use-controllable-state@0.2.3
+
+## 0.4.3
+
+### Patch Changes
+
+- Updated dependencies [[`ad6bf131`](https://github.com/hirotomoyamada/yamada-ui/commit/ad6bf131a4a96145cfa6b00bcee3b0c0280191ce), [`f42c23ef`](https://github.com/hirotomoyamada/yamada-ui/commit/f42c23ef990c2fa303b79a64c71a5c3fbe8001f4)]:
+  - @yamada-ui/core@0.12.0
+  - @yamada-ui/checkbox@0.3.12
+  - @yamada-ui/icon@0.3.10
+  - @yamada-ui/native-table@0.4.3
+  - @yamada-ui/pagination@0.4.10
+  - @yamada-ui/select@0.4.3
+
+## 0.4.2
+
+### Patch Changes
+
+- Updated dependencies [[`efa39e12`](https://github.com/hirotomoyamada/yamada-ui/commit/efa39e1258e88019b5aa605ddacfbf2d2b3c757c)]:
+  - @yamada-ui/core@0.11.3
+  - @yamada-ui/checkbox@0.3.11
+  - @yamada-ui/icon@0.3.9
+  - @yamada-ui/native-table@0.4.2
+  - @yamada-ui/pagination@0.4.9
+  - @yamada-ui/select@0.4.2
+
+## 0.4.1
+
+### Patch Changes
+
+- Updated dependencies [[`c1a79e92`](https://github.com/hirotomoyamada/yamada-ui/commit/c1a79e921a2aa5cd6fec47ca9971aa678085dcf6)]:
+  - @yamada-ui/core@0.11.2
+  - @yamada-ui/checkbox@0.3.10
+  - @yamada-ui/icon@0.3.8
+  - @yamada-ui/native-table@0.4.1
+  - @yamada-ui/pagination@0.4.8
+  - @yamada-ui/select@0.4.1
+
+## 0.4.0
+
+### Minor Changes
+
+- [`9fdf7d41`](https://github.com/hirotomoyamada/yamada-ui/commit/9fdf7d412e593645f73787d20190d11cb2261a8f) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Added component style in theme.
+
+### Patch Changes
+
+- Updated dependencies [[`9fdf7d41`](https://github.com/hirotomoyamada/yamada-ui/commit/9fdf7d412e593645f73787d20190d11cb2261a8f), [`3adec6b1`](https://github.com/hirotomoyamada/yamada-ui/commit/3adec6b1e3e6b5faed457a5aed354a4cb63c0e86)]:
+  - @yamada-ui/native-table@0.4.0
+  - @yamada-ui/select@0.4.0
+  - @yamada-ui/core@0.11.1
+  - @yamada-ui/checkbox@0.3.9
+  - @yamada-ui/icon@0.3.7
+  - @yamada-ui/pagination@0.4.7
+
+## 0.3.8
+
+### Patch Changes
+
+- Updated dependencies [[`ce7552c2`](https://github.com/hirotomoyamada/yamada-ui/commit/ce7552c265e67d8dc580132521ece9c91b4b545a), [`7e24d8e4`](https://github.com/hirotomoyamada/yamada-ui/commit/7e24d8e4557912cedd3856242c67ba972b824334)]:
+  - @yamada-ui/core@0.11.0
+  - @yamada-ui/utils@0.3.0
+  - @yamada-ui/checkbox@0.3.8
+  - @yamada-ui/icon@0.3.6
+  - @yamada-ui/native-table@0.3.6
+  - @yamada-ui/pagination@0.4.6
+  - @yamada-ui/select@0.3.8
+  - @yamada-ui/use-controllable-state@0.2.2
+
+## 0.3.7
+
+### Patch Changes
+
+- Updated dependencies [[`ec8ff49c`](https://github.com/hirotomoyamada/yamada-ui/commit/ec8ff49c3dd7767f0586386c58fe5be484e8a924)]:
+  - @yamada-ui/core@0.10.0
+  - @yamada-ui/checkbox@0.3.7
+  - @yamada-ui/icon@0.3.5
+  - @yamada-ui/native-table@0.3.5
+  - @yamada-ui/pagination@0.4.5
+  - @yamada-ui/select@0.3.7
+
+## 0.3.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/checkbox@0.3.6
+  - @yamada-ui/select@0.3.6
+
+## 0.3.5
+
+### Patch Changes
+
+- Updated dependencies [[`e73947ba`](https://github.com/hirotomoyamada/yamada-ui/commit/e73947ba6c843184ed9d21e6dbd2ac319aa5f888), [`bcdf6ae7`](https://github.com/hirotomoyamada/yamada-ui/commit/bcdf6ae7a062bdd9a15a57073ecc588603b9573b)]:
+  - @yamada-ui/core@0.9.4
+  - @yamada-ui/checkbox@0.3.5
+  - @yamada-ui/icon@0.3.4
+  - @yamada-ui/native-table@0.3.4
+  - @yamada-ui/pagination@0.4.4
+  - @yamada-ui/select@0.3.5
+
+## 0.3.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/checkbox@0.3.4
+  - @yamada-ui/select@0.3.4
+
+## 0.3.3
+
+### Patch Changes
+
+- Updated dependencies [[`d829df88`](https://github.com/hirotomoyamada/yamada-ui/commit/d829df8807eae773b08aac5423a3a7ce5ffd9b31)]:
+  - @yamada-ui/core@0.9.3
+  - @yamada-ui/checkbox@0.3.3
+  - @yamada-ui/icon@0.3.3
+  - @yamada-ui/native-table@0.3.3
+  - @yamada-ui/pagination@0.4.3
+  - @yamada-ui/select@0.3.3
+
+## 0.3.2
+
+### Patch Changes
+
+- Updated dependencies [[`135e8e03`](https://github.com/hirotomoyamada/yamada-ui/commit/135e8e030c3056922bcdd3bc017d7264bdd31cda)]:
+  - @yamada-ui/core@0.9.2
+  - @yamada-ui/checkbox@0.3.2
+  - @yamada-ui/icon@0.3.2
+  - @yamada-ui/native-table@0.3.2
+  - @yamada-ui/pagination@0.4.2
+  - @yamada-ui/select@0.3.2
+
+## 0.3.1
+
+### Patch Changes
+
+- Updated dependencies [[`c7eda37b`](https://github.com/hirotomoyamada/yamada-ui/commit/c7eda37bcae2b4ea0eddc8fa9f168a85ab8b8cc0), [`bbad918b`](https://github.com/hirotomoyamada/yamada-ui/commit/bbad918b75312ad4656448c9e9e37bdce5d1c14d)]:
+  - @yamada-ui/core@0.9.1
+  - @yamada-ui/utils@0.2.1
+  - @yamada-ui/checkbox@0.3.1
+  - @yamada-ui/icon@0.3.1
+  - @yamada-ui/native-table@0.3.1
+  - @yamada-ui/pagination@0.4.1
+  - @yamada-ui/select@0.3.1
+  - @yamada-ui/use-controllable-state@0.2.1
+
+## 0.3.0
+
+### Minor Changes
+
+- [`9bc5dacc`](https://github.com/hirotomoyamada/yamada-ui/commit/9bc5dacc3d10be62a8593b6cea89e97924f34c50) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - To improve support for the App Router, all components and hooks are exported with the `"use client"` directive.
+
+### Patch Changes
+
+- Updated dependencies [[`9bc5dacc`](https://github.com/hirotomoyamada/yamada-ui/commit/9bc5dacc3d10be62a8593b6cea89e97924f34c50)]:
+  - @yamada-ui/use-controllable-state@0.2.0
+  - @yamada-ui/native-table@0.3.0
+  - @yamada-ui/pagination@0.4.0
+  - @yamada-ui/checkbox@0.3.0
+  - @yamada-ui/select@0.3.0
+  - @yamada-ui/icon@0.3.0
+  - @yamada-ui/core@0.9.0
+
+## 0.2.25
+
+### Patch Changes
+
+- Updated dependencies [[`0ca89b7f`](https://github.com/hirotomoyamada/yamada-ui/commit/0ca89b7f7d0921846b67235e0cb4907c6abc9c3c)]:
+  - @yamada-ui/pagination@0.3.0
+
+## 0.2.24
+
+### Patch Changes
+
+- Updated dependencies [[`37369a9e`](https://github.com/hirotomoyamada/yamada-ui/commit/37369a9e34a9ab38390271a9f8f02ff2ae1b3462)]:
+  - @yamada-ui/core@0.8.0
+  - @yamada-ui/checkbox@0.2.18
+  - @yamada-ui/icon@0.2.17
+  - @yamada-ui/native-table@0.2.17
+  - @yamada-ui/pagination@0.2.17
+  - @yamada-ui/select@0.2.23
+
+## 0.2.23
+
+### Patch Changes
+
+- Updated dependencies [[`8345c45b`](https://github.com/hirotomoyamada/yamada-ui/commit/8345c45b9248b8ba1acf4d258782b7c952934899)]:
+  - @yamada-ui/core@0.7.0
+  - @yamada-ui/checkbox@0.2.17
+  - @yamada-ui/icon@0.2.16
+  - @yamada-ui/native-table@0.2.16
+  - @yamada-ui/pagination@0.2.16
+  - @yamada-ui/select@0.2.22
+
+## 0.2.22
+
+### Patch Changes
+
+- Updated dependencies [[`e786239e`](https://github.com/hirotomoyamada/yamada-ui/commit/e786239e3af06c75e405eb37fae0a75fbc4d6d66), [`7b0bed20`](https://github.com/hirotomoyamada/yamada-ui/commit/7b0bed2044736fe545b9a222af6788ca7005989e)]:
+  - @yamada-ui/core@0.6.5
+  - @yamada-ui/checkbox@0.2.16
+  - @yamada-ui/icon@0.2.15
+  - @yamada-ui/native-table@0.2.15
+  - @yamada-ui/pagination@0.2.15
+  - @yamada-ui/select@0.2.21
+
+## 0.2.21
+
+### Patch Changes
+
+- Updated dependencies [[`df49eca7`](https://github.com/hirotomoyamada/yamada-ui/commit/df49eca7b61acc637fa9eb9ba5e3665e769ed3a8)]:
+  - @yamada-ui/utils@0.2.0
+  - @yamada-ui/checkbox@0.2.15
+  - @yamada-ui/icon@0.2.14
+  - @yamada-ui/native-table@0.2.14
+  - @yamada-ui/pagination@0.2.14
+  - @yamada-ui/select@0.2.20
+  - @yamada-ui/core@0.6.4
+  - @yamada-ui/use-controllable-state@0.1.7
+
+## 0.2.20
+
+### Patch Changes
+
+- Updated dependencies [[`bec572a4`](https://github.com/hirotomoyamada/yamada-ui/commit/bec572a4a043fa9f816c10bdcc445b4b6478face)]:
+  - @yamada-ui/core@0.6.3
+  - @yamada-ui/pagination@0.2.13
+  - @yamada-ui/checkbox@0.2.14
+  - @yamada-ui/icon@0.2.13
+  - @yamada-ui/native-table@0.2.13
+  - @yamada-ui/select@0.2.19
+
+## 0.2.19
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/select@0.2.18
+
+## 0.2.18
+
+### Patch Changes
+
+- Updated dependencies [[`0d07b946`](https://github.com/hirotomoyamada/yamada-ui/commit/0d07b9460b217c3d8c6b7e667eee114f6f9acf3e), [`0d07b946`](https://github.com/hirotomoyamada/yamada-ui/commit/0d07b9460b217c3d8c6b7e667eee114f6f9acf3e)]:
+  - @yamada-ui/core@0.6.2
+  - @yamada-ui/utils@0.1.5
+  - @yamada-ui/checkbox@0.2.13
+  - @yamada-ui/icon@0.2.12
+  - @yamada-ui/native-table@0.2.12
+  - @yamada-ui/pagination@0.2.12
+  - @yamada-ui/select@0.2.17
+  - @yamada-ui/use-controllable-state@0.1.6
+
+## 0.2.17
+
+### Patch Changes
+
+- Updated dependencies [[`4a776fae`](https://github.com/hirotomoyamada/yamada-ui/commit/4a776fae148d66f6b35759f2d83884003891a03a)]:
+  - @yamada-ui/core@0.6.1
+  - @yamada-ui/checkbox@0.2.12
+  - @yamada-ui/icon@0.2.11
+  - @yamada-ui/native-table@0.2.11
+  - @yamada-ui/pagination@0.2.11
+  - @yamada-ui/select@0.2.16
+
+## 0.2.16
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/select@0.2.15
+
+## 0.2.15
+
+### Patch Changes
+
+- [`b2577425`](https://github.com/hirotomoyamada/yamada-ui/commit/b25774256a68ba4ba23aee82a3085b99a59c23a0) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Formatted code.
+
+- [`09d887fa`](https://github.com/hirotomoyamada/yamada-ui/commit/09d887fafea4a8dc78250c9bcf16b8069a73a76d) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Added export CellContext, RowData.
+
+- Updated dependencies [[`2fe9c1a1`](https://github.com/hirotomoyamada/yamada-ui/commit/2fe9c1a128418f555b0bce492bdcf1b6f3598621), [`9b5f4f9f`](https://github.com/hirotomoyamada/yamada-ui/commit/9b5f4f9ffb7a946cee70c69635e85c6e23f17eb7)]:
+  - @yamada-ui/core@0.6.0
+  - @yamada-ui/checkbox@0.2.11
+  - @yamada-ui/icon@0.2.10
+  - @yamada-ui/native-table@0.2.10
+  - @yamada-ui/pagination@0.2.10
+  - @yamada-ui/select@0.2.14
+
+## 0.2.14
+
+### Patch Changes
+
+- Updated dependencies [[`e0906df0`](https://github.com/hirotomoyamada/yamada-ui/commit/e0906df07076956cba7e541782ce21c381ae9947)]:
+  - @yamada-ui/core@0.5.4
+  - @yamada-ui/checkbox@0.2.10
+  - @yamada-ui/icon@0.2.9
+  - @yamada-ui/native-table@0.2.9
+  - @yamada-ui/pagination@0.2.9
+  - @yamada-ui/select@0.2.13
+
+## 0.2.13
+
+### Patch Changes
+
+- Updated dependencies [[`c941721c`](https://github.com/hirotomoyamada/yamada-ui/commit/c941721cc830edd4c4c07c102fb871450ecfa832)]:
+  - @yamada-ui/core@0.5.3
+  - @yamada-ui/checkbox@0.2.9
+  - @yamada-ui/icon@0.2.8
+  - @yamada-ui/native-table@0.2.8
+  - @yamada-ui/pagination@0.2.8
+  - @yamada-ui/select@0.2.12
+
+## 0.2.12
+
+### Patch Changes
+
+- Updated dependencies [[`b5cbe265`](https://github.com/hirotomoyamada/yamada-ui/commit/b5cbe26510fa7f437538a2ddd36daa6c918b0f35)]:
+  - @yamada-ui/utils@0.1.4
+  - @yamada-ui/core@0.5.2
+  - @yamada-ui/icon@0.2.7
+  - @yamada-ui/checkbox@0.2.8
+  - @yamada-ui/native-table@0.2.7
+  - @yamada-ui/pagination@0.2.7
+  - @yamada-ui/select@0.2.11
+  - @yamada-ui/use-controllable-state@0.1.5
+
+## 0.2.11
+
+### Patch Changes
+
+- Updated dependencies [[`3b8dc0a7`](https://github.com/hirotomoyamada/yamada-ui/commit/3b8dc0a7b67b2c6728cb98b485959d3635e72ffd)]:
+  - @yamada-ui/core@0.5.1
+  - @yamada-ui/checkbox@0.2.7
+  - @yamada-ui/icon@0.2.6
+  - @yamada-ui/native-table@0.2.6
+  - @yamada-ui/pagination@0.2.6
+  - @yamada-ui/select@0.2.10
+
+## 0.2.10
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/select@0.2.9
+
+## 0.2.9
+
+### Patch Changes
+
+- [`735a78de`](https://github.com/hirotomoyamada/yamada-ui/commit/735a78de8fc1cf1ab7b9f2a8a44c9fce320f119f) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Updated docs.
+
+- Updated dependencies [[`628ef528`](https://github.com/hirotomoyamada/yamada-ui/commit/628ef5285864314d2facc1a095d6d99ef392eb4d), [`d46c94b1`](https://github.com/hirotomoyamada/yamada-ui/commit/d46c94b1732644b269872c033102d501444efe0d), [`45eec70b`](https://github.com/hirotomoyamada/yamada-ui/commit/45eec70b0ec611b245a15be3d6ac5f203f403ebc), [`735a78de`](https://github.com/hirotomoyamada/yamada-ui/commit/735a78de8fc1cf1ab7b9f2a8a44c9fce320f119f)]:
+  - @yamada-ui/checkbox@0.2.6
+  - @yamada-ui/select@0.2.8
+  - @yamada-ui/core@0.5.0
+  - @yamada-ui/utils@0.1.3
+  - @yamada-ui/icon@0.2.5
+  - @yamada-ui/native-table@0.2.5
+  - @yamada-ui/pagination@0.2.5
+  - @yamada-ui/use-controllable-state@0.1.4
+
+## 0.2.8
+
+### Patch Changes
+
+- Updated dependencies [[`32b46662`](https://github.com/hirotomoyamada/yamada-ui/commit/32b4666218f378922e6d34bc1502577ef7d1cfe2)]:
+  - @yamada-ui/core@0.4.3
+  - @yamada-ui/checkbox@0.2.5
+  - @yamada-ui/icon@0.2.4
+  - @yamada-ui/native-table@0.2.4
+  - @yamada-ui/pagination@0.2.4
+  - @yamada-ui/select@0.2.7
+
+## 0.2.7
+
+### Patch Changes
+
+- Updated dependencies [[`7f3bf48e`](https://github.com/hirotomoyamada/yamada-ui/commit/7f3bf48e27e7b3dced7c0a5bb7d1b7ac9e041289)]:
+  - @yamada-ui/utils@0.1.2
+  - @yamada-ui/checkbox@0.2.4
+  - @yamada-ui/icon@0.2.3
+  - @yamada-ui/native-table@0.2.3
+  - @yamada-ui/pagination@0.2.3
+  - @yamada-ui/select@0.2.6
+  - @yamada-ui/core@0.4.2
+  - @yamada-ui/use-controllable-state@0.1.3
+
+## 0.2.6
+
+### Patch Changes
+
+- [`4b1a7618`](https://github.com/hirotomoyamada/yamada-ui/commit/4b1a7618cff8804951bc2933eb0f917a8c34c8b9) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Added default type to TableProps.
+
+## 0.2.5
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/select@0.2.5
+
+## 0.2.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @yamada-ui/select@0.2.4
+
+## 0.2.3
+
+### Patch Changes
+
+- Updated dependencies [[`f5febff5`](https://github.com/hirotomoyamada/yamada-ui/commit/f5febff527dd1f5363d13025776750c9fff5c2b9)]:
+  - @yamada-ui/core@0.4.1
+  - @yamada-ui/checkbox@0.2.3
+  - @yamada-ui/icon@0.2.2
+  - @yamada-ui/native-table@0.2.2
+  - @yamada-ui/pagination@0.2.2
+  - @yamada-ui/select@0.2.3
+
+## 0.2.2
+
+### Patch Changes
+
+- [`408c8edd`](https://github.com/hirotomoyamada/yamada-ui/commit/408c8edd5e6d2cf0f4982daeeea85ca2e8fd7465) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Formatted code.
+
+- Updated dependencies []:
+  - @yamada-ui/checkbox@0.2.2
+  - @yamada-ui/select@0.2.2
+
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [[`f79629b2`](https://github.com/hirotomoyamada/yamada-ui/commit/f79629b299618c73601a270bea2f627b8ff6f61f)]:
+  - @yamada-ui/core@0.4.0
+  - @yamada-ui/checkbox@0.2.1
+  - @yamada-ui/icon@0.2.1
+  - @yamada-ui/native-table@0.2.1
+  - @yamada-ui/pagination@0.2.1
+  - @yamada-ui/select@0.2.1
+
+## 0.2.0
+
+### Minor Changes
+
+- [`b1a01b32`](https://github.com/hirotomoyamada/yamada-ui/commit/b1a01b32ddbb09412cc740bd5cdb4853c8992c8e) Thanks [@hirotomoyamada](https://github.com/hirotomoyamada)! - Added JSDoc to props.
+
+### Patch Changes
+
+- Updated dependencies [[`b1a01b32`](https://github.com/hirotomoyamada/yamada-ui/commit/b1a01b32ddbb09412cc740bd5cdb4853c8992c8e), [`76b02283`](https://github.com/hirotomoyamada/yamada-ui/commit/76b022830db92977740e03d44f535d768ffe91f4)]:
+  - @yamada-ui/native-table@0.2.0
+  - @yamada-ui/pagination@0.2.0
+  - @yamada-ui/checkbox@0.2.0
+  - @yamada-ui/select@0.2.0
+  - @yamada-ui/icon@0.2.0
+  - @yamada-ui/core@0.3.1
+
 ## 0.1.16
 
 ### Patch Changes

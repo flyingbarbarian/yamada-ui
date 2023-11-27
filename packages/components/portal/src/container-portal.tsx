@@ -1,7 +1,8 @@
-import { useSafeLayoutEffect } from '@yamada-ui/utils'
-import { FC, useMemo, useState, PropsWithChildren, RefObject } from 'react'
-import { createPortal } from 'react-dom'
-import { PortalProvider } from './portal-provider'
+import { useSafeLayoutEffect } from "@yamada-ui/utils"
+import type { FC, PropsWithChildren, RefObject } from "react"
+import { useMemo, useState } from "react"
+import { createPortal } from "react-dom"
+import { PortalProvider } from "./portal-provider"
 
 type ContainerPortalProps = PropsWithChildren & {
   containerRef: RefObject<HTMLElement | null>
@@ -14,16 +15,17 @@ export const ContainerPortal: FC<ContainerPortalProps> = ({
   appendToParentPortal,
 }) => {
   const parent = containerRef.current
-  const host = parent ?? (typeof window !== 'undefined' ? document.body : undefined)
+  const host =
+    parent ?? (typeof window !== "undefined" ? document.body : undefined)
 
   const portal = useMemo(() => {
     if (!parent) return
 
     const { ownerDocument } = parent
 
-    const node = ownerDocument.createElement('div')
+    const node = ownerDocument.createElement("div")
 
-    if (node) node.className = 'ui-portal'
+    if (node) node.className = "ui-portal"
 
     return node
   }, [parent])
@@ -44,7 +46,9 @@ export const ContainerPortal: FC<ContainerPortalProps> = ({
 
   return host && portal
     ? createPortal(
-        <PortalProvider value={appendToParentPortal ? portal : null}>{children}</PortalProvider>,
+        <PortalProvider value={appendToParentPortal ? portal : null}>
+          {children}
+        </PortalProvider>,
         portal,
       )
     : null

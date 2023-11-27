@@ -1,6 +1,6 @@
-import { faCheck, faPen, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { Icon } from '@yamada-ui/fontawesome'
+import { faCheck, faPen, faXmark } from "@fortawesome/free-solid-svg-icons"
+import type { Meta, StoryFn } from "@storybook/react"
+import { Icon } from "@yamada-ui/fontawesome"
 import {
   ButtonGroup,
   Editable,
@@ -12,90 +12,103 @@ import {
   useEditableControl,
   Button,
   VStack,
-} from '@yamada-ui/react'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-export default {
-  title: 'Components / Forms / Editable',
+} from "@yamada-ui/react"
+import type { SubmitHandler } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
+
+type Story = StoryFn<typeof Editable>
+
+const meta: Meta<typeof Editable> = {
+  title: "Components / Forms / Editable",
   component: Editable,
-} as ComponentMeta<typeof Editable>
+}
 
-export const basic: ComponentStory<typeof Editable> = () => {
+export default meta
+
+export const basic: Story = () => {
   return (
-    <Editable defaultValue='オッス！オラ悟空！'>
+    <Editable defaultValue="オッス！オラ悟空！">
       <EditablePreview />
       <EditableInput />
     </Editable>
   )
 }
 
-export const withTextarea: ComponentStory<typeof Editable> = () => {
+export const withTextarea: Story = () => {
   return (
-    <Editable defaultValue='オッス！オラ悟空！'>
+    <Editable
+      defaultValue={`私の戦闘力は530000です。\nですがもちろんフルパワーであなたと戦う気はありませんからご心配なく……`}
+      h="4lh"
+    >
       <EditablePreview />
-      <EditableTextarea />
+      <EditableTextarea h="4lh" />
     </Editable>
   )
 }
 
-export const withStartWithEditView: ComponentStory<typeof Editable> = () => {
+export const withStartWithEditView: Story = () => {
   return (
-    <Editable startWithEditView defaultValue='オッス！オラ悟空！'>
-      <EditablePreview />
-      <EditableInput />
-    </Editable>
-  )
-}
-
-export const withIsPreviewFocusable: ComponentStory<typeof Editable> = () => {
-  return (
-    <Editable isPreviewFocusable={false} defaultValue='オッス！オラ悟空！'>
+    <Editable startWithEditView defaultValue="オッス！オラ悟空！">
       <EditablePreview />
       <EditableInput />
     </Editable>
   )
 }
 
-export const withSubmitOnBlur: ComponentStory<typeof Editable> = () => {
+export const withIsPreviewFocusable: Story = () => {
   return (
-    <Editable submitOnBlur={false} defaultValue='オッス！オラ悟空！'>
+    <Editable isPreviewFocusable={false} defaultValue="オッス！オラ悟空！">
       <EditablePreview />
       <EditableInput />
     </Editable>
   )
 }
 
-export const withSelectAllOnFocus: ComponentStory<typeof Editable> = () => {
+export const withSubmitOnBlur: Story = () => {
   return (
-    <Editable selectAllOnFocus={false} defaultValue='オッス！オラ悟空！'>
+    <Editable submitOnBlur={false} defaultValue="オッス！オラ悟空！">
       <EditablePreview />
       <EditableInput />
     </Editable>
   )
 }
 
-export const withPlaceholder: ComponentStory<typeof Editable> = () => {
+export const withSelectAllOnFocus: Story = () => {
   return (
-    <Editable placeholder='オッス！オラ悟空！'>
+    <Editable selectAllOnFocus={false} defaultValue="オッス！オラ悟空！">
       <EditablePreview />
       <EditableInput />
     </Editable>
   )
 }
 
-export const withBorderColor: ComponentStory<typeof Editable> = () => {
+export const withPlaceholder: Story = () => {
+  return (
+    <Editable placeholder="オッス！オラ悟空！">
+      <EditablePreview />
+      <EditableInput />
+    </Editable>
+  )
+}
+
+export const withBorderColor: Story = () => {
   return (
     <>
-      <Editable defaultValue='default border color'>
+      <Editable defaultValue="default border color">
         <EditablePreview />
         <EditableInput />
       </Editable>
 
-      <Editable focusBorderColor='green.500' defaultValue='custom border color'>
+      <Editable focusBorderColor="green.500" defaultValue="custom border color">
         <EditablePreview />
         <EditableInput />
       </Editable>
 
-      <Editable isInvalid errorBorderColor='orange.500' defaultValue='custom border color'>
+      <Editable
+        isInvalid
+        errorBorderColor="orange.500"
+        defaultValue="custom border color"
+      >
         <EditablePreview />
         <EditableInput />
       </Editable>
@@ -103,16 +116,20 @@ export const withBorderColor: ComponentStory<typeof Editable> = () => {
   )
 }
 
-export const isDisabled: ComponentStory<typeof Editable> = () => {
+export const isDisabled: Story = () => {
   return (
     <>
-      <Editable isDisabled defaultValue='your email address'>
+      <Editable isDisabled defaultValue="your email address">
         <EditablePreview />
         <EditableInput />
       </Editable>
 
-      <FormControl isDisabled label='Email address' helperMessage="We'll never share your email.">
-        <Editable defaultValue='your email address'>
+      <FormControl
+        isDisabled
+        label="Email address"
+        helperMessage="We'll never share your email."
+      >
+        <Editable defaultValue="your email address">
           <EditablePreview />
           <EditableInput />
         </Editable>
@@ -121,16 +138,20 @@ export const isDisabled: ComponentStory<typeof Editable> = () => {
   )
 }
 
-export const isReadonly: ComponentStory<typeof Editable> = () => {
+export const isReadonly: Story = () => {
   return (
     <>
-      <Editable isReadOnly defaultValue='your email address'>
+      <Editable isReadOnly defaultValue="your email address">
         <EditablePreview />
         <EditableInput />
       </Editable>
 
-      <FormControl isReadOnly label='Email address' helperMessage="We'll never share your email.">
-        <Editable defaultValue='your email address'>
+      <FormControl
+        isReadOnly
+        label="Email address"
+        helperMessage="We'll never share your email."
+      >
+        <Editable defaultValue="your email address">
           <EditablePreview />
           <EditableInput />
         </Editable>
@@ -139,16 +160,20 @@ export const isReadonly: ComponentStory<typeof Editable> = () => {
   )
 }
 
-export const isInvalid: ComponentStory<typeof Editable> = () => {
+export const isInvalid: Story = () => {
   return (
     <>
-      <Editable isInvalid defaultValue='your email address'>
+      <Editable isInvalid defaultValue="your email address">
         <EditablePreview />
         <EditableInput />
       </Editable>
 
-      <FormControl isInvalid label='Email address' errorMessage='Email is required.'>
-        <Editable defaultValue='your email address'>
+      <FormControl
+        isInvalid
+        label="Email address"
+        errorMessage="Email is required."
+      >
+        <Editable defaultValue="your email address">
           <EditablePreview />
           <EditableInput />
         </Editable>
@@ -157,37 +182,43 @@ export const isInvalid: ComponentStory<typeof Editable> = () => {
   )
 }
 
-export const customControl: ComponentStory<typeof Editable> = () => {
+export const customControl: Story = () => {
   const CustomControls = () => {
-    const { isEditing, getSubmitProps, getCancelProps, getEditProps } = useEditableControl()
+    const { isEditing, getSubmitProps, getCancelProps, getEditProps } =
+      useEditableControl()
 
     return isEditing ? (
-      <ButtonGroup size='sm' gap='sm'>
+      <ButtonGroup size="sm" gap="sm">
         <IconButton icon={<Icon icon={faCheck} />} {...getSubmitProps()} />
         <IconButton icon={<Icon icon={faXmark} />} {...getCancelProps()} />
       </ButtonGroup>
     ) : (
-      <ButtonGroup size='sm' gap='sm'>
+      <ButtonGroup size="sm" gap="sm">
         <IconButton icon={<Icon icon={faPen} />} {...getEditProps()} />
       </ButtonGroup>
     )
   }
 
   return (
-    <Editable display='flex' gap='sm' isPreviewFocusable={false} defaultValue='オッス！オラ悟空！'>
-      <EditablePreview w='full' />
+    <Editable
+      display="flex"
+      gap="sm"
+      isPreviewFocusable={false}
+      defaultValue="オッス！オラ悟空！"
+    >
+      <EditablePreview w="full" />
       <EditableInput />
       <CustomControls />
     </Editable>
   )
 }
 
-export const reactHookForm: ComponentStory<typeof Editable> = () => {
+export const reactHookForm: Story = () => {
   type Data = { input: string; textarea: string }
 
   const defaultValues: Data = {
-    input: '',
-    textarea: '',
+    input: "",
+    textarea: "",
   }
 
   const {
@@ -197,19 +228,23 @@ export const reactHookForm: ComponentStory<typeof Editable> = () => {
     formState: { errors },
   } = useForm<Data>({ defaultValues })
 
-  const onSubmit: SubmitHandler<Data> = (data) => console.log('submit:', data)
+  const onSubmit: SubmitHandler<Data> = (data) => console.log("submit:", data)
 
-  console.log('watch:', watch())
+  console.log("watch:", watch())
 
   return (
-    <VStack as='form' onSubmit={handleSubmit(onSubmit)}>
-      <FormControl isInvalid={!!errors.input} label='Name' errorMessage={errors.input?.message}>
+    <VStack as="form" onSubmit={handleSubmit(onSubmit)}>
+      <FormControl
+        isInvalid={!!errors.input}
+        label="Name"
+        errorMessage={errors.input?.message}
+      >
         <Controller
-          name='input'
+          name="input"
           control={control}
-          rules={{ required: { value: true, message: 'This is required.' } }}
+          rules={{ required: { value: true, message: "This is required." } }}
           render={({ field }) => (
-            <Editable placeholder='孫悟空' {...field}>
+            <Editable placeholder="孫悟空" {...field}>
               <EditablePreview />
               <EditableInput />
             </Editable>
@@ -219,15 +254,15 @@ export const reactHookForm: ComponentStory<typeof Editable> = () => {
 
       <FormControl
         isInvalid={!!errors.textarea}
-        label='Feedback'
+        label="Feedback"
         errorMessage={errors.textarea?.message}
       >
         <Controller
-          name='textarea'
+          name="textarea"
           control={control}
-          rules={{ required: { value: true, message: 'This is required.' } }}
+          rules={{ required: { value: true, message: "This is required." } }}
           render={({ field }) => (
-            <Editable placeholder='オッス！オラ悟空！' {...field}>
+            <Editable placeholder="オッス！オラ悟空！" {...field}>
               <EditablePreview />
               <EditableTextarea />
             </Editable>
@@ -235,7 +270,7 @@ export const reactHookForm: ComponentStory<typeof Editable> = () => {
         />
       </FormControl>
 
-      <Button type='submit' alignSelf='flex-end'>
+      <Button type="submit" alignSelf="flex-end">
         Submit
       </Button>
     </VStack>

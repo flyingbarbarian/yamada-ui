@@ -1,26 +1,39 @@
-import { IconDefinition, IconProp } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { forwardRef, CSSUIProps } from '@yamada-ui/core'
-import { Icon as UIIcon, IconProps as UIIconProps } from '@yamada-ui/icon'
-import { cx } from '@yamada-ui/utils'
-import { useMemo } from 'react'
+import type {
+  IconDefinition,
+  IconProp,
+} from "@fortawesome/fontawesome-svg-core"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import type { CSSUIProps } from "@yamada-ui/core"
+import { forwardRef } from "@yamada-ui/core"
+import type { IconProps as UIIconProps } from "@yamada-ui/icon"
+import { Icon as UIIcon } from "@yamada-ui/icon"
+import { cx } from "@yamada-ui/utils"
+import { useMemo } from "react"
 
-type FontAwesomeIconOptions = {
-  className?: string
+type IconOptions = {
+  /**
+   * The icon of the font awesome.
+   * Check the docs to see the icon of possible modifiers you can pass.
+   *
+   * @see Doc https://fontawesome.com/v5/docs/web/use-with/react
+   */
   icon: IconDefinition | IconProp
-  size?: CSSUIProps['fontSize']
+  /**
+   * The CSS `font-size` property.
+   */
+  size?: CSSUIProps["fontSize"]
 }
 
-export type FontAwesomeIconProps = UIIconProps & FontAwesomeIconOptions
+export type IconProps = UIIconProps & IconOptions
 
-export const Icon = forwardRef<FontAwesomeIconProps, 'svg'>(
+export const Icon = forwardRef<IconProps, "svg">(
   ({ className, icon, size: fontSize, __css, ...rest }, ref) => {
     const css = useMemo(
       () => ({
-        display: 'inline-block',
+        display: "inline-block",
         flexShrink: 0,
         fontSize,
-        color: 'currentcolor',
+        color: "currentcolor",
         ...__css,
       }),
       [__css, fontSize],
@@ -31,7 +44,7 @@ export const Icon = forwardRef<FontAwesomeIconProps, 'svg'>(
         ref={ref}
         as={FontAwesomeIcon}
         icon={icon}
-        className={cx('ui-fontawesome-icon', className)}
+        className={cx("ui-fontawesome-icon", className)}
         __css={css}
         {...rest}
       />

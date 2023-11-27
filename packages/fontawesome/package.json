@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/fontawesome",
-  "version": "0.1.7",
+  "version": "0.3.17",
   "description": "Yamada UI fontawesome components",
   "keywords": [
     "yamada",
@@ -42,18 +42,19 @@
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
-    "postpack": "clean-package restore"
+    "postpack": "clean-package restore",
+    "gen:docs": "tsx ../../scripts/generate-docs"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@yamada-ui/core": "workspace:*",
-    "@yamada-ui/utils": "workspace:*",
     "@yamada-ui/icon": "workspace:*",
-    "@fortawesome/fontawesome-svg-core": "^6.2.0",
-    "@fortawesome/react-fontawesome": "^0.2.0"
+    "@yamada-ui/utils": "workspace:*"
   },
   "devDependencies": {
-    "react": "^18.0.0",
-    "clean-package": "2.2.0"
+    "clean-package": "2.2.0",
+    "react": "^18.2.0"
   },
   "peerDependencies": {
     "react": ">=18"
@@ -65,6 +66,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

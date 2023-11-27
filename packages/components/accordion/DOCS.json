@@ -11,7 +11,7 @@
       "description": "The initial index(es) of the accordion item to expand."
     },
     "icon": {
-      "type": "string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | ((props: { ...; }) => ReactNode)",
+      "type": "string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | ((props: { ...; }) => ReactNode)",
       "required": false,
       "description": "The accordion icon for all items to use."
     },
@@ -43,7 +43,11 @@
       "required": false,
       "description": "The callback invoked when accordion items are expanded or collapsed."
     },
-    "size": { "type": "string", "required": false, "description": "The size of the Accordion." },
+    "size": {
+      "type": "string",
+      "required": false,
+      "description": "The size of the Accordion."
+    },
     "variant": {
       "defaultValue": "basic",
       "type": "\"basic\" | \"card\" | \"unstyled\"",
@@ -53,7 +57,7 @@
   },
   "AccordionItem": {
     "icon": {
-      "type": "string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | ((props: { ...; }) => ReactNode)",
+      "type": "string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | ((props: { ...; }) => ReactNode)",
       "required": false,
       "description": "The accordion icon to use."
     },
@@ -64,7 +68,7 @@
       "description": "If `true`, the accordion item will be disabled."
     },
     "label": {
-      "type": "string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | ((props: { ...; }) => ReactNode)",
+      "type": "string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | ((props: { ...; }) => ReactNode)",
       "required": false,
       "description": "The accordion label to use."
     }
@@ -92,9 +96,21 @@
       "required": false,
       "description": "The height you want the content in its expanded state."
     },
-    "enter": { "type": "any", "required": false, "description": "Custom `enter`." },
-    "exit": { "type": "any", "required": false, "description": "Custom `exit`." },
-    "initial": { "type": "any", "required": false, "description": "Custom `initial`." },
+    "enter": {
+      "type": "any",
+      "required": false,
+      "description": "Custom `enter`."
+    },
+    "exit": {
+      "type": "any",
+      "required": false,
+      "description": "Custom `exit`."
+    },
+    "initial": {
+      "type": "any",
+      "required": false,
+      "description": "Custom `initial`."
+    },
     "startingHeight": {
       "type": "string | number",
       "defaultValue": "0",
@@ -119,7 +135,7 @@
   },
   "AccordionLabel": {
     "icon": {
-      "type": "string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | ((props: { ...; }) => ReactNode)",
+      "type": "string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | ((props: { ...; }) => ReactNode)",
       "required": false,
       "description": "The accordion icon to use."
     }

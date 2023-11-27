@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/native-select",
-  "version": "0.1.12",
+  "version": "0.5.3",
   "description": "Yamada UI native select component",
   "keywords": [
     "yamada",
@@ -64,6 +64,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

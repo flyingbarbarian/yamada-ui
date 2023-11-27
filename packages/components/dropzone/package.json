@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/dropzone",
-  "version": "0.1.11",
+  "version": "0.5.3",
   "description": "Yamada UI dropzone component",
   "keywords": [
     "yamada",
@@ -46,15 +46,15 @@
   },
   "dependencies": {
     "@yamada-ui/core": "workspace:*",
-    "@yamada-ui/utils": "workspace:*",
     "@yamada-ui/form-control": "workspace:*",
-    "@yamada-ui/transitions": "workspace:*",
     "@yamada-ui/loading": "workspace:*",
-    "react-dropzone": "14.2.3"
+    "@yamada-ui/transitions": "workspace:*",
+    "@yamada-ui/utils": "workspace:*",
+    "react-dropzone-esm": "^15.0.1"
   },
   "devDependencies": {
-    "react": "^18.0.0",
-    "clean-package": "2.2.0"
+    "clean-package": "2.2.0",
+    "react": "^18.0.0"
   },
   "peerDependencies": {
     "react": ">=18"
@@ -66,6 +66,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

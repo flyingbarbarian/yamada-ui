@@ -1,8 +1,8 @@
-import { useWindowEvent } from '@yamada-ui/use-window-event'
-import { isFunction } from '@yamada-ui/utils'
-import { useState, useCallback, useEffect } from 'react'
+import { useWindowEvent } from "@yamada-ui/use-window-event"
+import { isFunction } from "@yamada-ui/utils"
+import { useState, useCallback, useEffect } from "react"
 
-export type StorageType = 'localStorage' | 'sessionStorage'
+export type StorageType = "localStorage" | "sessionStorage"
 
 export type StorageProps<T> = {
   key: string
@@ -31,7 +31,8 @@ const deserializeJSON = (value: string | undefined) => {
 }
 
 export const createStorage = <T>(type: StorageType, name: string) => {
-  const eventName = type === 'localStorage' ? 'ui-local-storage' : 'ui-session-storage'
+  const eventName =
+    type === "localStorage" ? "ui-local-storage" : "ui-session-storage"
 
   return ({
     key,
@@ -43,22 +44,26 @@ export const createStorage = <T>(type: StorageType, name: string) => {
     const readStorageValue = useCallback(
       (skipStorage?: boolean): T => {
         if (
-          typeof window === 'undefined' ||
+          typeof window === "undefined" ||
           !(type in window) ||
           window[type] === null ||
           skipStorage
         ) {
-          return (defaultValue ?? '') as T
+          return (defaultValue ?? "") as T
         }
 
         const storageValue = window[type].getItem(key)
 
-        return storageValue !== null ? deserialize(storageValue) : ((defaultValue ?? '') as T)
+        return storageValue !== null
+          ? deserialize(storageValue)
+          : ((defaultValue ?? "") as T)
       },
       [key, deserialize, defaultValue],
     )
 
-    const [value, setValue] = useState<T>(readStorageValue(getInitialValueInEffect))
+    const [value, setValue] = useState<T>(
+      readStorageValue(getInitialValueInEffect),
+    )
 
     const setStorageValue = useCallback(
       (valOrFunc: T | ((prevState: T) => T)) => {
@@ -68,14 +73,18 @@ export const createStorage = <T>(type: StorageType, name: string) => {
 
             window[type].setItem(key, serialize(result))
             window.dispatchEvent(
-              new CustomEvent(eventName, { detail: { key, value: valOrFunc(current) } }),
+              new CustomEvent(eventName, {
+                detail: { key, value: valOrFunc(current) },
+              }),
             )
 
             return result
           })
         } else {
           window[type].setItem(key, serialize(valOrFunc))
-          window.dispatchEvent(new CustomEvent(eventName, { detail: { key, value: valOrFunc } }))
+          window.dispatchEvent(
+            new CustomEvent(eventName, { detail: { key, value: valOrFunc } }),
+          )
 
           setValue(valOrFunc)
         }
@@ -88,17 +97,18 @@ export const createStorage = <T>(type: StorageType, name: string) => {
       setValue(defaultValue as T)
     }, [defaultValue, key])
 
-    useWindowEvent('storage', (event) => {
-      if (event.storageArea === window[type] && event.key === key)
-        setValue(deserialize(event.newValue ?? undefined))
+    useWindowEvent("storage", (ev) => {
+      if (ev.storageArea === window[type] && ev.key === key)
+        setValue(deserialize(ev.newValue ?? undefined))
     })
 
-    useWindowEvent(eventName, (event) => {
-      if (event.detail.key === key) setValue(event.detail.value)
+    useWindowEvent(eventName, (ev) => {
+      if (ev.detail.key === key) setValue(ev.detail.value)
     })
 
     useEffect(() => {
-      if (defaultValue !== undefined && value === undefined) setStorageValue(defaultValue)
+      if (defaultValue !== undefined && value === undefined)
+        setStorageValue(defaultValue)
     }, [defaultValue, value, setStorageValue])
 
     useEffect(() => {
@@ -114,4 +124,4 @@ export const createStorage = <T>(type: StorageType, name: string) => {
 }
 
 export const useLocalStorage = <T = string>(props: StorageProps<T>) =>
-  createStorage<T>('localStorage', 'use-local-storage')(props)
+  createStorage<T>("localStorage", "use-local-storage")(props)

@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/table",
-  "version": "0.1.16",
+  "version": "0.5.4",
   "description": "Yamada UI table component",
   "keywords": [
     "yamada",
@@ -70,6 +70,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

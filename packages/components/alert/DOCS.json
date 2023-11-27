@@ -6,7 +6,11 @@
       "required": false,
       "description": "The visual color appearance of the component."
     },
-    "size": { "type": "string", "required": false, "description": "The size of the Alert." },
+    "size": {
+      "type": "string",
+      "required": false,
+      "description": "The size of the Alert."
+    },
     "status": {
       "type": "\"warning\" | \"info\" | \"success\" | \"error\" | \"loading\"",
       "defaultValue": "'info'",
@@ -20,7 +24,12 @@
       "description": "The variant of the Alert."
     }
   },
-  "AlertIcon": { "variant": { "type": "LoadingVariant", "required": false } },
+  "AlertIcon": {
+    "variant": {
+      "type": "type ONLY_FOR_FORMAT =\n  | \"audio\"\n  | \"grid\"\n  | \"oval\"\n  | \"dots\"\n  | \"puff\"\n  | \"rings\"\n  | \"circles\"",
+      "required": false
+    }
+  },
   "AlertTitle": {},
   "AlertDescription": {}
 }

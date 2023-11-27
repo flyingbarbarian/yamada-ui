@@ -1,31 +1,44 @@
-import { ui, forwardRef, HTMLUIProps } from '@yamada-ui/core'
-import { cx } from '@yamada-ui/utils'
+import type { HTMLUIProps } from "@yamada-ui/core"
+import { ui, forwardRef } from "@yamada-ui/core"
+import { cx } from "@yamada-ui/utils"
+import type { UseAutocompleteOptionGroupProps } from "./use-autocomplete"
 import {
   useAutocompleteContext,
   useAutocompleteOptionGroup,
-  UseAutocompleteOptionGroupProps,
-} from './use-autocomplete'
+} from "./use-autocomplete"
 
 type AutocompleteOptionGroupOptions = UseAutocompleteOptionGroupProps
 
-export type AutocompleteOptionGroupProps = HTMLUIProps<'ul'> & AutocompleteOptionGroupOptions
+export type AutocompleteOptionGroupProps = HTMLUIProps<"ul"> &
+  AutocompleteOptionGroupOptions
 
-export const AutocompleteOptionGroup = forwardRef<AutocompleteOptionGroupProps, 'ul'>(
-  ({ className, color, h, height, minH, minHeight, children, ...rest }, ref) => {
+export const AutocompleteOptionGroup = forwardRef<
+  AutocompleteOptionGroupProps,
+  "ul"
+>(
+  (
+    { className, color, h, height, minH, minHeight, children, ...rest },
+    ref,
+  ) => {
     const { styles } = useAutocompleteContext()
-    const { label, getContainerProps, getGroupProps } = useAutocompleteOptionGroup(rest)
+    const { label, getContainerProps, getGroupProps } =
+      useAutocompleteOptionGroup(rest)
 
-    h = h ?? height
-    minH = minH ?? minHeight
+    h ??= height
+    minH ??= minHeight
 
     return (
       <ui.li
-        className='ui-autocomplete-group-container'
-        __css={{ w: '100%', h: 'fit-content', color }}
+        className={cx(
+          "ui-autocomplete__item",
+          "ui-autocomplete__item--group",
+          className,
+        )}
+        __css={{ w: "100%", h: "fit-content", color }}
         {...getContainerProps()}
       >
         <ui.span
-          className={cx('ui-autocomplete-group-label')}
+          className={cx("ui-autocomplete__item__group-label")}
           __css={styles.groupLabel}
           noOfLines={1}
         >
@@ -34,7 +47,7 @@ export const AutocompleteOptionGroup = forwardRef<AutocompleteOptionGroupProps, 
 
         <ui.ul
           {...getGroupProps({}, ref)}
-          className={cx('ui-autocomplete-group', className)}
+          className={cx("ui-autocomplete__item__group", className)}
           __css={{ h, minH, ...styles.group }}
         >
           {children}

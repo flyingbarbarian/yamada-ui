@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/breadcrumb",
-  "version": "0.1.11",
+  "version": "0.3.19",
   "description": "Yamada UI breadcrumb component",
   "keywords": [
     "yamada",
@@ -62,6 +62,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

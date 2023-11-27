@@ -1,8 +1,9 @@
-import { UIProvider, extendTheme, UIStyle, Center, Image } from '@yamada-ui/react'
-import { FC } from 'react'
+import type { UIStyle } from "@yamada-ui/react"
+import { UIProvider, extendTheme, Center, Image } from "@yamada-ui/react"
+import type { FC } from "react"
 
 export default {
-  title: 'System / Theme / Reset Style',
+  title: "System / Theme / Reset Style",
 }
 
 export const customResetStyle = () => {
@@ -22,7 +23,7 @@ export const customResetStyle = () => {
 
 export const disabledResetStyle = () => {
   return (
-    <UIProvider reset={false}>
+    <UIProvider disableResetStyle>
       <App />
     </UIProvider>
   )
@@ -30,11 +31,11 @@ export const disabledResetStyle = () => {
 
 const App: FC = () => {
   return (
-    <Center w='calc(100vw - 16px * 2)' h='calc(100vh - 16px * 2)'>
+    <Center w="calc(100vw - 16px * 2)" h="calc(100vh - 16px * 2)">
       <Image
-        w='full'
-        maxW='xl'
-        src='https://raw.githubusercontent.com/hirotomoyamada/yamada-ui/main/logo/logo-colored@2x.png'
+        w="full"
+        maxW="xl"
+        src="https://raw.githubusercontent.com/hirotomoyamada/yamada-ui/main/logo/logo-colored@2x.png"
       />
     </Center>
   )

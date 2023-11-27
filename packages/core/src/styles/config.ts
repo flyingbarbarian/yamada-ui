@@ -1,24 +1,32 @@
-import { CSSObject } from '@emotion/react'
-import { isNumber, Union, Dict } from '@yamada-ui/utils'
-import * as CSS from 'csstype'
-import { ThemeToken } from '../theme'
-import { StyledTheme } from '../theme.types'
+import type { CSSObject } from "@emotion/react"
+import type { Union, Dict } from "@yamada-ui/utils"
+import { isNumber } from "@yamada-ui/utils"
+import type * as CSS from "csstype"
+import type { ThemeToken } from "../theme"
+import type { StyledTheme } from "../theme.types"
 import {
   analyzeCSSValue,
   isCSSFunction,
   tokenToCSSVar,
-  createGradient,
+  generateGradient,
   globalValues,
-} from './utils'
+  isCSSVar,
+  generateTransform,
+  generateFilter,
+  generateAnimation,
+} from "./utils"
 
 type CSSProperties = Union<keyof CSS.Properties>
 
-export type Transform = (value: any, theme: StyledTheme<Dict>, css?: Dict) => any
+export type Transform = (value: any, theme: StyledTheme, css?: Dict) => any
 
 export type ConfigProps = {
   static?: CSSObject
-  processResult?: boolean
-  property?: CSSProperties | CSSProperties[] | ((theme: StyledTheme<Dict>) => CSSProperties)
+  isProcessResult?: boolean
+  properties?:
+    | CSSProperties
+    | CSSProperties[]
+    | ((theme: StyledTheme) => CSSProperties)
   token?: ThemeToken
   transform?: Transform
 }
@@ -28,12 +36,12 @@ export type Configs = Record<string, ConfigProps | true>
 export const createTransform =
   ({
     token,
-    compose,
     transform,
+    compose,
   }: {
     token: ThemeToken
-    compose?: Transform
     transform?: Transform
+    compose?: Transform
   }): Transform =>
   (value, theme) => {
     value = tokenToCSSVar(token, value)(theme)
@@ -47,9 +55,9 @@ export const createTransform =
 
 export const createConfig =
   (token: ThemeToken, transform?: Transform) =>
-  <T extends CSSProperties>(property: T | T[]): ConfigProps => ({
+  <T extends CSSProperties>(properties: T | T[]): ConfigProps => ({
     token,
-    property,
+    properties,
     transform: createTransform({
       token,
       transform,
@@ -64,6 +72,13 @@ export const transforms = {
 
     return isUnitless || isNumber(value) ? `${value}px` : value
   },
+  deg: (value: any) => {
+    if (isCSSVar(value) || value == null) return value
+
+    const isUnitless = typeof value === "string" && !value.endsWith("deg")
+
+    return isUnitless || isNumber(value) ? `${value}deg` : value
+  },
   fraction: (value: any) => {
     if (isNumber(value) && value <= 1) {
       return `${value * 100}%`
@@ -74,15 +89,15 @@ export const transforms = {
   isTruncated: (value: boolean) => {
     if (value === true) {
       return {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
       }
     }
   },
   bgClip: (value: any) => {
-    if (value === 'text') {
-      return { color: 'transparent', backgroundClip: 'text' }
+    if (value === "text") {
+      return { color: "transparent", backgroundClip: "text" }
     } else {
       return { backgroundClip: value }
     }
@@ -96,36 +111,49 @@ export const transforms = {
       return value
     }
   },
+  function:
+    (func: string, transform?: Transform): Transform =>
+    (value: any, ...rest) => {
+      if (transform) value = transform(value, ...rest)
 
-  gradient: createGradient,
+      return `${func}(${value})`
+    },
+  gradient: generateGradient,
+  animation: generateAnimation,
+  transform: generateTransform,
+  filter: generateFilter,
 }
 
 export const configs = {
-  color: createConfig('colors'),
-  space: createConfig('spaces', transforms.px),
-  radii: createConfig('radii', transforms.px),
-  shadow: createConfig('shadows'),
-  border: createConfig('borders'),
-  size: createConfig('sizes', transforms.px),
-  sizeTransform: createConfig('sizes', transforms.fraction),
+  color: createConfig("colors"),
+  space: createConfig("spaces", transforms.px),
+  radii: createConfig("radii", transforms.px),
+  shadow: createConfig("shadows"),
+  border: createConfig("borders"),
+  size: createConfig("sizes", transforms.px),
+  sizeTransform: createConfig("sizes", transforms.fraction),
   prop: (
-    property: ConfigProps['property'],
+    properties: ConfigProps["properties"],
     token?: ThemeToken,
-    transform?: ConfigProps['transform'],
+    transform?: ConfigProps["transform"],
   ) =>
     token
       ? {
-          property,
+          properties,
           token,
           transform: createTransform({ token, transform }),
         }
       : {
-          property,
+          properties,
           token,
         },
-  propTransform: (property: ConfigProps['property'], transform?: ConfigProps['transform']) => ({
-    property,
+  propTransform: (
+    properties: ConfigProps["properties"],
+    transform?: ConfigProps["transform"],
+  ) => ({
+    properties,
     transform,
   }),
-  gradient: createConfig('gradients', transforms.gradient),
+  gradient: createConfig("gradients", transforms.gradient),
+  blur: createConfig("blurs", transforms.function("blur")),
 }

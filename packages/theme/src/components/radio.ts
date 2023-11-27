@@ -1,89 +1,94 @@
-import { ComponentStyle, isDefaultColor } from '@yamada-ui/core'
-import { toneColor } from '@yamada-ui/utils'
+import type { ComponentStyle } from "@yamada-ui/core"
 
 export const Radio: ComponentStyle = {
   baseStyle: {
     container: {
-      _readOnly: { cursor: 'auto' },
-      _disabled: { cursor: 'not-allowed' },
+      _readOnly: { cursor: "auto" },
+      _disabled: { cursor: "not-allowed" },
     },
-    icon: ({ theme: t, colorMode: m, colorScheme: c = 'primary' }) => ({
-      transitionProperty: 'box-shadow',
-      transitionDuration: 'normal',
-      border: '2px solid',
-      borderColor: 'inherit',
-      rounded: 'full',
-      color: 'white',
+    icon: ({ colorScheme: c = "primary" }) => ({
+      transitionProperty: "box-shadow",
+      transitionDuration: "normal",
+      border: "2px solid",
+      borderColor: "inherit",
+      rounded: "full",
+      color: "white",
+      display: "inline-flex",
+      justifyContent: "center",
+      alignItems: "center",
       _checked: {
         _before: {
           content: `""`,
-          display: 'inline-block',
-          w: '70%',
-          h: '70%',
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          rounded: 'full',
-          bg: isDefaultColor(
-            [toneColor(c, 500)(t, m), toneColor(c, 200)(t, m)],
-            [`${c}.500`, `${c}.200`],
-          )(c),
+          display: "inline-block",
+          rounded: "full",
+          bg: [`${c}.500`, `${c}.200`],
         },
         _hover: {
           _before: {
-            bg: isDefaultColor(
-              [toneColor(c, 600)(t, m), toneColor(c, 300)(t, m)],
-              [`${c}.600`, `${c}.300`],
-            )(c),
+            bg: [`${c}.600`, `${c}.300`],
           },
         },
         _disabled: {
-          borderColor: ['gray.200', 'transparent'],
+          borderColor: ["gray.200", "transparent"],
           _before: {
-            bg: 'gray.200',
+            bg: "gray.200",
           },
           _dark: {
             _before: {
-              bg: 'whiteAlpha.300',
+              bg: "whiteAlpha.300",
             },
           },
         },
       },
       _disabled: {
-        bg: ['gray.100', 'whiteAlpha.100'],
-        borderColor: ['gray.100', 'transparent'],
+        bg: ["gray.100", "whiteAlpha.100"],
+        borderColor: ["gray.100", "transparent"],
       },
       _focusVisible: {
-        boxShadow: 'outline',
+        boxShadow: "outline",
       },
       _invalid: {
-        borderColor: ['red.500', 'red.300'],
+        borderColor: ["red.500", "red.300"],
       },
     }),
     label: {
-      userSelect: 'none',
+      userSelect: "none",
       _disabled: { opacity: 0.4 },
     },
   },
 
   sizes: {
     sm: {
-      icon: { boxSize: '3' },
-      label: { fontSize: 'sm' },
+      icon: {
+        boxSize: "3.5",
+        _before: {
+          boxSize: "1.5",
+        },
+      },
+      label: { fontSize: "sm" },
     },
     md: {
-      icon: { boxSize: '4' },
-      label: { fontSize: 'md' },
+      icon: {
+        boxSize: "4",
+        _before: {
+          boxSize: "2",
+        },
+      },
+      label: { fontSize: "md" },
     },
     lg: {
-      icon: { boxSize: '5' },
-      label: { fontSize: 'lg' },
+      icon: {
+        boxSize: "5",
+        _before: {
+          boxSize: "3",
+        },
+      },
+      label: { fontSize: "lg" },
     },
   },
 
   defaultProps: {
-    size: 'md',
-    colorScheme: 'primary',
+    size: "md",
+    colorScheme: "primary",
   },
 }

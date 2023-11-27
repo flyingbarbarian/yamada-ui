@@ -1,12 +1,14 @@
-import { HTMLUIProps, layoutStylesProperties, ThemeProps, useTheme } from '@yamada-ui/core'
+import type { HTMLUIProps, ThemeProps } from "@yamada-ui/core"
+import { layoutStylesProperties, useTheme } from "@yamada-ui/core"
+import type { FormControlOptions } from "@yamada-ui/form-control"
 import {
-  FormControlOptions,
   formControlProperties,
   useFormControlProps,
-} from '@yamada-ui/form-control'
-import { PopoverProps } from '@yamada-ui/popover'
-import { useControllableState } from '@yamada-ui/use-controllable-state'
-import { useOutsideClick } from '@yamada-ui/use-outside-click'
+} from "@yamada-ui/form-control"
+import { popoverProperties, type PopoverProps } from "@yamada-ui/popover"
+import { useControllableState } from "@yamada-ui/use-controllable-state"
+import { useOutsideClick } from "@yamada-ui/use-outside-click"
+import type { PropGetter, RequiredPropGetter, Dict } from "@yamada-ui/utils"
 import {
   isActiveElement,
   useUpdateEffect,
@@ -16,98 +18,141 @@ import {
   isContains,
   mergeRefs,
   pickObject,
-  PropGetter,
-  RequiredPropGetter,
   splitObject,
   omitObject,
-  Dict,
-} from '@yamada-ui/utils'
-import dayjs from 'dayjs'
-import {
+} from "@yamada-ui/utils"
+import dayjs from "dayjs"
+import type {
   ChangeEvent,
   CSSProperties,
   FocusEvent,
   KeyboardEvent,
   MouseEvent,
-  useCallback,
-  useRef,
-  useState,
-} from 'react'
-import { CalendarBaseProps } from './calendar'
-import { UseCalendarProps, isAfterMaxDate, isBeforeMinDate, CalendarType } from './use-calendar'
+} from "react"
+import { useCallback, useRef, useState } from "react"
+import type { CalendarBaseProps } from "./calendar"
+import type { UseCalendarProps } from "./use-calendar"
+import { isAfterMaxDate, isBeforeMinDate } from "./use-calendar"
 
 type CalendarProps = Pick<
   UseCalendarProps<Date | null>,
-  | 'value'
-  | 'defaultValue'
-  | 'onChange'
-  | 'month'
-  | 'defaultMonth'
-  | 'onChangeMonth'
-  | 'locale'
-  | 'minDate'
-  | 'maxDate'
-  | 'yearFormat'
-  | 'monthFormat'
-  | 'withHeader'
-  | 'withControls'
-  | 'withLabel'
+  | "value"
+  | "defaultValue"
+  | "onChange"
+  | "month"
+  | "defaultMonth"
+  | "onChangeMonth"
+  | "locale"
+  | "minDate"
+  | "maxDate"
+  | "yearFormat"
+  | "monthFormat"
+  | "withHeader"
+  | "withControls"
+  | "withLabel"
 >
 
-export type MonthPickerType = Exclude<CalendarType, 'date'>
-
-type CalendarThemeProps = ThemeProps<'Calendar'>
+type CalendarThemeProps = ThemeProps<"Calendar">
 
 type UseMonthPickerBaseProps = Omit<
   PopoverProps,
-  | 'initialFocusRef'
-  | 'closeOnButton'
-  | 'isOpen'
-  | 'trigger'
-  | 'autoFocus'
-  | 'restoreFocus'
-  | 'openDelay'
-  | 'closeDelay'
+  | "initialFocusRef"
+  | "closeOnButton"
+  | "isOpen"
+  | "trigger"
+  | "autoFocus"
+  | "restoreFocus"
+  | "openDelay"
+  | "closeDelay"
 > &
   FormControlOptions &
   CalendarProps & {
-    type?: MonthPickerType
-    defaultType?: MonthPickerType
-    onChangeType?: (type: MonthPickerType) => void
+    /**
+     * The type of the month picker.
+     */
+    type?: "month" | "year"
+    /**
+     * The initial type of the month picker.
+     *
+     * @default 'month'
+     */
+    defaultType?: "month" | "year"
+    /**
+     * The callback invoked when type state changes.
+     */
+    onChangeType?: (type: "month" | "year") => void
+    /**
+     * The pattern used to check the <input> element's.
+     *
+     * @default '/[^0-9\-\/]/g'
+     */
     pattern?: RegExp
+    /**
+     * Function that converts the input value to Date type.
+     */
     parseDate?: (value: string) => Date | null
+    /**
+     * The format used for conversion.
+     * Check the docs to see the format of possible modifiers you can pass.
+     *
+     * @see Doc https://day.js.org/docs/en/display/format#list-of-localized-formats
+     * @default 'YYYY/MM'
+     */
     inputFormat?: string
+    /**
+     * If `true`, display the month picker clear icon.
+     *
+     * @default true
+     */
     isClearable?: boolean
+    /**
+     * If `true`, the list element will be closed when value is selected.
+     *
+     * @default true
+     */
     closeOnSelect?: boolean
+    /**
+     * If `true`, allows input.
+     *
+     * @default true
+     */
     allowInput?: boolean
+    /**
+     * Props for calendar component.
+     */
     calendarProps?: CalendarBaseProps
   }
 
 export type UseMonthPickerProps = Omit<
-  HTMLUIProps<'input'>,
-  keyof UseMonthPickerBaseProps | 'disabled' | 'required' | 'readOnly' | 'size' | 'type'
+  HTMLUIProps<"input">,
+  | keyof UseMonthPickerBaseProps
+  | "disabled"
+  | "required"
+  | "readOnly"
+  | "size"
+  | "type"
 > &
   UseMonthPickerBaseProps & {
-    calendarVariant?: CalendarThemeProps['variant']
-    calendarSize?: CalendarThemeProps['size']
-    calendarColorScheme?: CalendarThemeProps['colorScheme']
+    calendarVariant?: CalendarThemeProps["variant"]
+    calendarSize?: CalendarThemeProps["size"]
+    calendarColorScheme?: CalendarThemeProps["colorScheme"]
   }
 
 export const useMonthPicker = ({
   parseDate,
   defaultIsOpen,
   closeOnBlur = true,
-  placement = 'bottom-start',
+  placement = "bottom-start",
   duration = 0.2,
   defaultValue,
-  defaultType = 'month',
+  defaultType = "month",
   month,
   defaultMonth,
   onChangeMonth,
   minDate,
   maxDate,
   locale,
-  inputFormat = 'YYYY/MM',
+  inputFormat = "YYYY/MM",
   yearFormat,
   monthFormat,
   calendarVariant,
@@ -127,19 +172,28 @@ export const useMonthPicker = ({
 
   rest = useFormControlProps(rest)
 
-  locale ??= theme.__config.date?.locale ?? 'en'
+  locale ??= theme.__config.date?.locale ?? "en"
 
   const { id } = rest
 
   const formControlProps = pickObject(rest, formControlProperties)
-  const [containerProps, inputProps] = splitObject(
-    omitObject(rest as Dict, ['id', 'value', 'onChange', 'type', 'onChangeType']),
+  const [containerProps, inputProps] = splitObject<Dict, string>(
+    omitObject(rest, [
+      ...popoverProperties,
+      "id",
+      "value",
+      "onChange",
+      "type",
+      "onChangeType",
+    ]),
     layoutStylesProperties,
   )
 
   const stringToDate = useCallback(
     (value: string): Date | null => {
-      let date = parseDate ? parseDate(value) : dayjs(value, inputFormat, locale).toDate()
+      let date = parseDate
+        ? parseDate(value)
+        : dayjs(value, inputFormat, locale).toDate()
 
       if (date == null) return date
 
@@ -159,7 +213,7 @@ export const useMonthPicker = ({
       if (minDate && isBeforeMinDate(value, minDate)) value = minDate
 
       return dayjs(value)
-        .locale(locale ?? 'en')
+        .locale(locale ?? "en")
         .format(inputFormat)
     },
     [inputFormat, locale, maxDate, minDate],
@@ -176,12 +230,16 @@ export const useMonthPicker = ({
     defaultValue: defaultType,
     onChange: rest.onChangeType,
   })
-  const [inputValue, setInputValue] = useState<string | undefined>(dateToString(value))
+  const [inputValue, setInputValue] = useState<string | undefined>(
+    dateToString(value),
+  )
 
   const containerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const onOpen = useCallback(() => {
+    console.trace("run")
+
     if (formControlProps.disabled || formControlProps.readOnly) return
 
     setIsOpen(true)
@@ -205,10 +263,8 @@ export const useMonthPicker = ({
 
       setValue(null)
       setInputValue(undefined)
-
-      if (allowInput && inputRef.current) inputRef.current.focus()
     },
-    [allowInput, setValue],
+    [setValue],
   )
 
   const onClick = useCallback(() => {
@@ -261,13 +317,14 @@ export const useMonthPicker = ({
   )
 
   const onChangeType = useCallback(
-    (type: CalendarType, year?: number, month?: number) => {
-      if (type !== 'date') {
+    (type: "month" | "year" | "date", year?: number, month?: number) => {
+      if (type !== "date") {
         setType(type)
       } else {
         let value: Date | null = null
 
-        if (typeof year === 'number' && typeof month === 'number') value = new Date(year, month)
+        if (typeof year === "number" && typeof month === "number")
+          value = new Date(year, month)
 
         const inputValue = dateToString(value)
 
@@ -284,7 +341,7 @@ export const useMonthPicker = ({
     (ev: ChangeEvent<HTMLInputElement>) => {
       let inputValue = ev.target.value
 
-      inputValue = inputValue.replace(pattern, '')
+      inputValue = inputValue.replace(pattern, "")
 
       const value = stringToDate(inputValue)
 
@@ -320,10 +377,9 @@ export const useMonthPicker = ({
       ...props,
       ...formControlProps,
       onClick: handlerAll(props.onClick, rest.onClick, onClick),
-      onFocus: handlerAll(props.onFocus, rest.onFocus, onFocus),
       onBlur: handlerAll(props.onBlur, rest.onBlur, onBlur),
     }),
-    [containerProps, formControlProps, onBlur, onClick, onFocus, rest],
+    [containerProps, formControlProps, onBlur, onClick, rest],
   )
 
   const getPopoverProps = useCallback(
@@ -335,7 +391,7 @@ export const useMonthPicker = ({
       onClose,
       placement,
       duration,
-      trigger: 'never',
+      trigger: "never",
       closeOnButton: false,
     }),
     [duration, isOpen, onClose, onOpen, placement, rest],
@@ -345,7 +401,7 @@ export const useMonthPicker = ({
     (props = {}, ref = null) => {
       const style: CSSProperties = {
         ...props.style,
-        ...(!allowInput ? { cursor: 'pointer' } : {}),
+        ...(!allowInput ? { cursor: "pointer" } : {}),
       }
 
       return {
@@ -354,12 +410,13 @@ export const useMonthPicker = ({
         ...props,
         ...formControlProps,
         style,
-        'data-active': dataAttr(isOpen),
-        'aria-expanded': dataAttr(isOpen),
+        "data-active": dataAttr(isOpen),
+        "aria-expanded": dataAttr(isOpen),
+        onFocus: handlerAll(props.onFocus, rest.onFocus, onFocus),
         onKeyDown: handlerAll(props.onKeyDown, rest.onKeyDown, onKeyDown),
       }
     },
-    [allowInput, formControlProps, isOpen, rest, onKeyDown],
+    [allowInput, formControlProps, isOpen, rest, onFocus, onKeyDown],
   )
 
   const getInputProps: PropGetter = useCallback(
@@ -367,7 +424,7 @@ export const useMonthPicker = ({
       const style: CSSProperties = {
         ...props.style,
         ...(inputProps as { style?: CSSProperties }).style,
-        ...(!allowInput ? { pointerEvents: 'none' } : {}),
+        ...(!allowInput ? { pointerEvents: "none" } : {}),
       }
 
       return {
@@ -378,22 +435,30 @@ export const useMonthPicker = ({
         style,
         id,
         tabIndex: !allowInput ? -1 : 0,
-        value: inputValue ?? '',
-        cursor: formControlProps.readOnly ? 'default' : 'text',
-        pointerEvents: formControlProps.disabled ? 'none' : 'auto',
+        value: inputValue ?? "",
+        cursor: formControlProps.readOnly ? "default" : "text",
+        pointerEvents: formControlProps.disabled ? "none" : "auto",
         onChange: handlerAll(props.onChange, onInputChange),
       }
     },
-    [inputProps, allowInput, placeholder, formControlProps, id, inputValue, onInputChange],
+    [
+      inputProps,
+      allowInput,
+      placeholder,
+      formControlProps,
+      id,
+      inputValue,
+      onInputChange,
+    ],
   )
 
   const getCalendarProps = useCallback(
     (
       props?: CalendarProps,
     ): CalendarProps & {
-      type: MonthPickerType
-      onChangeType: UseCalendarProps['onChangeType']
-      selectMonthWith: UseCalendarProps['selectMonthWith']
+      type: "month" | "year"
+      onChangeType: UseCalendarProps["onChangeType"]
+      selectMonthWith: UseCalendarProps["selectMonthWith"]
     } => ({
       ...props,
       type,
@@ -416,7 +481,7 @@ export const useMonthPicker = ({
       minDate,
       maxDate,
       locale,
-      selectMonthWith: 'value',
+      selectMonthWith: "value",
     }),
     [
       calendarColorScheme,

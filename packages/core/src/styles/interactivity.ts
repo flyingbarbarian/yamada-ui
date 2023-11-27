@@ -1,6 +1,7 @@
-import * as CSS from 'csstype'
-import { Token } from '../css'
-import { Configs, configs } from './config'
+import type * as CSS from "csstype"
+import type { Token } from "../css"
+import type { Configs } from "./config"
+import { configs } from "./config"
 
 export const interactivity: Configs = {
   appearance: true,
@@ -10,40 +11,40 @@ export const interactivity: Configs = {
   pointerEvents: true,
   outline: true,
   outlineOffset: true,
-  outlineColor: configs.color('outlineColor'),
+  outlineColor: configs.color("outlineColor"),
 }
 
-export type InteractivityProps<Y = 'responsive', M = 'colorMode'> = {
+export type InteractivityProps = {
   /**
-   * The CSS `appearance` property
+   * The CSS `appearance` property.
    */
-  appearance?: Token<CSS.Property.Appearance, unknown, Y, M>
+  appearance?: Token<CSS.Property.Appearance>
   /**
-   * The CSS `user-select` property
+   * The CSS `user-select` property.
    */
-  userSelect?: Token<CSS.Property.UserSelect, unknown, Y, M>
+  userSelect?: Token<CSS.Property.UserSelect>
   /**
-   * The CSS `pointer-events` property
+   * The CSS `pointer-events` property.
    */
-  pointerEvents?: Token<CSS.Property.PointerEvents, unknown, Y, M>
+  pointerEvents?: Token<CSS.Property.PointerEvents>
   /**
-   * The CSS `resize` property
+   * The CSS `resize` property.
    */
-  resize?: Token<CSS.Property.Resize, unknown, Y, M>
+  resize?: Token<CSS.Property.Resize>
   /**
-   * The CSS `cursor` property
+   * The CSS `cursor` property.
    */
-  cursor?: Token<CSS.Property.Cursor, unknown, Y, M>
+  cursor?: Token<CSS.Property.Cursor>
   /**
-   * The CSS `outline` property
+   * The CSS `outline` property.
    */
-  outline?: Token<CSS.Property.Outline | number, unknown, Y, M>
+  outline?: Token<CSS.Property.Outline | number>
   /**
-   * The CSS `outline-offset` property
+   * The CSS `outline-offset` property.
    */
-  outlineOffset?: Token<CSS.Property.OutlineOffset | number, unknown, Y, M>
+  outlineOffset?: Token<CSS.Property.OutlineOffset | number>
   /**
-   * The CSS `outline-color` property
+   * The CSS `outline-color` property.
    */
-  outlineColor?: Token<CSS.Property.Color, 'colors', Y, M>
+  outlineColor?: Token<CSS.Property.Color, "colors">
 }

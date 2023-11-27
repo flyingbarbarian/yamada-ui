@@ -1,10 +1,10 @@
-import { CSSUIObject, useTheme } from '@yamada-ui/core'
-import { useControllableState } from '@yamada-ui/use-controllable-state'
+import type { CSSUIObject } from "@yamada-ui/core"
+import { useTheme } from "@yamada-ui/core"
+import { useControllableState } from "@yamada-ui/use-controllable-state"
+import type { PropGetter, RequiredPropGetter } from "@yamada-ui/utils"
 import {
   createContext,
   isArray,
-  PropGetter,
-  RequiredPropGetter,
   handlerAll,
   dataAttr,
   ariaAttr,
@@ -17,9 +17,9 @@ import {
   getEventRelatedTarget,
   useCallbackRef,
   omitObject,
-} from '@yamada-ui/utils'
-import dayjs from 'dayjs'
-import {
+} from "@yamada-ui/utils"
+import dayjs from "dayjs"
+import type {
   CSSProperties,
   Dispatch,
   ForwardedRef,
@@ -28,46 +28,49 @@ import {
   MutableRefObject,
   RefObject,
   SetStateAction,
-  createRef,
-  useCallback,
-  useRef,
-  useState,
-} from 'react'
-
-export type FirstDayOfWeek = 'sunday' | 'monday'
-
-export type CalendarType = 'year' | 'month' | 'date'
+} from "react"
+import { createRef, useCallback, useRef, useState } from "react"
 
 export type MaybeValue = Date | Date[] | undefined | null
 
 export type CalendarContext = Pick<
   Required<UseCalendarProps>,
-  | 'type'
-  | 'month'
-  | 'firstDayOfWeek'
-  | 'amountOfMonths'
-  | 'paginateBy'
-  | 'withWeekdays'
-  | 'withHeader'
-  | 'withControls'
-  | 'withLabel'
-  | 'disableOutsideDays'
-  | 'locale'
-  | 'weekdayFormat'
-  | 'yearFormat'
-  | 'monthFormat'
-  | 'dateFormat'
-  | 'weekendDays'
-  | 'holidays'
-  | 'today'
-  | 'selectMonthWith'
+  | "type"
+  | "month"
+  | "firstDayOfWeek"
+  | "amountOfMonths"
+  | "paginateBy"
+  | "withWeekdays"
+  | "withHeader"
+  | "withControls"
+  | "withLabel"
+  | "disableOutsideDays"
+  | "locale"
+  | "weekdayFormat"
+  | "yearFormat"
+  | "monthFormat"
+  | "dateFormat"
+  | "weekendDays"
+  | "holidays"
+  | "today"
+  | "selectMonthWith"
 > &
   Pick<
     UseCalendarProps,
-    'minDate' | 'maxDate' | 'excludeDate' | 'typeRef' | 'prevRef' | 'nextRef' | 'maxSelectedValues'
+    | "minDate"
+    | "maxDate"
+    | "excludeDate"
+    | "typeRef"
+    | "prevRef"
+    | "nextRef"
+    | "maxSelectedValues"
   > & {
     value: MaybeValue
-    setType: (type: CalendarType, year?: number, month?: number) => void
+    setType: (
+      type: "year" | "month" | "date",
+      year?: number,
+      month?: number,
+    ) => void
     setValue: Dispatch<SetStateAction<MaybeValue>>
     setMonth: Dispatch<SetStateAction<Date>>
     setYear: Dispatch<SetStateAction<number>>
@@ -85,39 +88,48 @@ export type CalendarContext = Pick<
     dayRefs: MutableRefObject<Map<string, RefObject<HTMLButtonElement>>>
   }
 
-export const [CalendarProvider, useCalendarContext] = createContext<CalendarContext>({
-  strict: false,
-  name: 'CalendarContext',
-})
+export const [CalendarProvider, useCalendarContext] =
+  createContext<CalendarContext>({
+    strict: false,
+    name: "CalendarContext",
+  })
 
-export const getFirstOfWeek = (date: Date, firstDayOfWeek: FirstDayOfWeek): Date => {
+export const getFirstOfWeek = (
+  date: Date,
+  firstDayOfWeek: "sunday" | "monday",
+): Date => {
   const value = new Date(date)
   const day = value.getDay() || 7
-  const isSunday = firstDayOfWeek === 'sunday'
+  const isSunday = firstDayOfWeek === "sunday"
 
   const clampToFirstDay = isSunday ? day : day - 1
 
-  if ((isSunday && day !== 0) || day !== 1) value.setHours(-24 * clampToFirstDay)
+  if ((isSunday && day !== 0) || day !== 1)
+    value.setHours(-24 * clampToFirstDay)
 
   return value
 }
 
-export const getLastOfWeek = (date: Date, firstDayOfWeek: FirstDayOfWeek): Date => {
+export const getLastOfWeek = (
+  date: Date,
+  firstDayOfWeek: "sunday" | "monday",
+): Date => {
   const value = new Date(date)
   const day = value.getDay()
-  const isSunday = firstDayOfWeek === 'sunday'
+  const isSunday = firstDayOfWeek === "sunday"
 
   const clampToLastDay = 7 - (isSunday ? day + 1 : day)
 
-  if ((isSunday && day !== 6) || day !== 0) value.setDate(value.getDate() + clampToLastDay)
+  if ((isSunday && day !== 6) || day !== 0)
+    value.setDate(value.getDate() + clampToLastDay)
 
   return value
 }
 
 export const getWeekdays = (
   locale: string,
-  firstDayOfWeek: FirstDayOfWeek,
-  format: string = 'dd',
+  firstDayOfWeek: "sunday" | "monday",
+  format: string = "dd",
 ): string[] => {
   let weekdays: string[] = []
 
@@ -134,7 +146,10 @@ export const getWeekdays = (
   return weekdays
 }
 
-export const getMonthDays = (date: Date, firstDayOfWeek: FirstDayOfWeek): Date[][] => {
+export const getMonthDays = (
+  date: Date,
+  firstDayOfWeek: "sunday" | "monday",
+): Date[][] => {
   const currentMonth = date.getMonth()
   const firstOfMonth = new Date(date.getFullYear(), currentMonth, 1)
   const lastOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0)
@@ -196,7 +211,9 @@ export const getFormattedLabel = (
   if (dateOrYear instanceof Date) {
     return dayjs(dateOrYear).locale(locale).format(format)
   } else {
-    return dayjs(new Date(dateOrYear, 1, 1)).locale(locale).format(format)
+    return dayjs(new Date(dateOrYear, 1, 1))
+      .locale(locale)
+      .format(format)
   }
 }
 
@@ -204,10 +221,13 @@ export const isSameMonth = (
   date: Date | undefined | null,
   comparison: Date | undefined | null,
 ): boolean =>
-  date?.getFullYear() === comparison?.getFullYear() && date?.getMonth() === comparison?.getMonth()
+  date?.getFullYear() === comparison?.getFullYear() &&
+  date?.getMonth() === comparison?.getMonth()
 
-export const isSameDate = (date: Date | undefined | null, comparison: Date | undefined | null) =>
-  isSameMonth(date, comparison) && date?.getDate() === comparison?.getDate()
+export const isSameDate = (
+  date: Date | undefined | null,
+  comparison: Date | undefined | null,
+) => isSameMonth(date, comparison) && date?.getDate() === comparison?.getDate()
 
 const onShouldFocus = <T = any>(
   refs: MutableRefObject<Map<T, RefObject<HTMLButtonElement>>>,
@@ -223,7 +243,7 @@ const onShouldFocus = <T = any>(
     if (isSelected) targetValue = value
   }
 
-  if (typeof targetValue === 'number') {
+  if (typeof targetValue === "number") {
     const ref = refs.current.get(targetValue)
 
     targetEl = ref?.current
@@ -251,13 +271,17 @@ const getFocused = <T = any>(
   }
 }
 
-const getRangeFirstDay = (refs: MutableRefObject<Map<string, RefObject<HTMLButtonElement>>>) => {
+const getRangeFirstDay = (
+  refs: MutableRefObject<Map<string, RefObject<HTMLButtonElement>>>,
+) => {
   const days = [...refs.current.keys()]
 
   return days[0]
 }
 
-const getRangeLastDay = (refs: MutableRefObject<Map<string, RefObject<HTMLButtonElement>>>) => {
+const getRangeLastDay = (
+  refs: MutableRefObject<Map<string, RefObject<HTMLButtonElement>>>,
+) => {
   const days = [...refs.current.keys()]
 
   return days[days.length - 1]
@@ -272,10 +296,10 @@ const disableAllTabIndex = <T = any>(
 }
 
 export const isAfterMaxMonth = (value: Date, date: Date | undefined) =>
-  date instanceof Date && dayjs(value).startOf('month').isAfter(date)
+  date instanceof Date && dayjs(value).startOf("month").isAfter(date)
 
 export const isBeforeMinMonth = (value: Date, date: Date | undefined) =>
-  date instanceof Date && dayjs(value).startOf('month').isBefore(date)
+  date instanceof Date && dayjs(value).startOf("month").isBefore(date)
 
 export const isMonthInRange = ({
   date,
@@ -291,8 +315,8 @@ export const isMonthInRange = ({
 
   if (!hasMaxDate && !hasMinDate) return true
 
-  const firstOfMonth = dayjs(date).startOf('month')
-  const lastOfMonth = dayjs(date).endOf('month')
+  const firstOfMonth = dayjs(date).startOf("month")
+  const lastOfMonth = dayjs(date).endOf("month")
 
   const minInRange = hasMinDate ? lastOfMonth.isAfter(minDate) : true
   const maxInRange = hasMaxDate ? firstOfMonth.isBefore(maxDate) : true
@@ -301,10 +325,10 @@ export const isMonthInRange = ({
 }
 
 export const isAfterMaxDate = (value: Date, date: Date | undefined) =>
-  date instanceof Date && dayjs(date).isBefore(value, 'day')
+  date instanceof Date && dayjs(date).isBefore(value, "day")
 
 export const isBeforeMinDate = (value: Date, date: Date | undefined) =>
-  date instanceof Date && dayjs(date).isAfter(value, 'day')
+  date instanceof Date && dayjs(date).isAfter(value, "day")
 
 export const isDisabledDate = ({
   minDate,
@@ -327,46 +351,186 @@ export const isDisabledDate = ({
   (!!disableOutsideDays && !!isOutside)
 
 export type UseCalendarProps<Y extends MaybeValue = Date> = {
-  type?: CalendarType
-  defaultType?: CalendarType
-  onChangeType?: (type: CalendarType, year?: number, month?: number) => void
+  /**
+   * The type of the calendar.
+   */
+  type?: "year" | "month" | "date"
+  /**
+   * The initial type of the calendar.
+   */
+  defaultType?: "year" | "month" | "date"
+  /**
+   * The callback invoked when type state changes.
+   */
+  onChangeType?: (
+    type: "year" | "month" | "date",
+    year?: number,
+    month?: number,
+  ) => void
+  /**
+   * The value of the calendar.
+   */
   value?: Y
+  /**
+   * The initial value of the calendar.
+   */
   defaultValue?: Y
+  /**
+   * The callback invoked when value state changes.
+   */
   onChange?: (value: Y) => void
+  /**
+   * The month of the calendar.
+   */
   month?: Date
+  /**
+   * The initial month of the calendar.
+   *
+   * @default 'new Date()'
+   */
   defaultMonth?: Date
+  /**
+   * The callback invoked when month state changes.
+   */
   onChangeMonth?: (value: Date) => void
-  firstDayOfWeek?: FirstDayOfWeek
+  /**
+   * Define the first day of the week.
+   *
+   * @default 'monday'
+   */
+  firstDayOfWeek?: "sunday" | "monday"
+  /**
+   * The number of months to display.
+   *
+   * @default 1
+   */
   amountOfMonths?: number
+  /**
+   * The number of months to paginate.
+   *
+   * @default 1
+   */
   paginateBy?: number
+  /**
+   * If `true`, outside days will be disabled.
+   */
   disableOutsideDays?: boolean
+  /**
+   * The locale of the calendar.
+   * Check the docs to see the locale of possible modifiers you can pass.
+   *
+   * @see Doc https://day.js.org/docs/en/i18n/instance-locale
+   * @default 'en'
+   */
   locale?: string
+  /**
+   * The format used for conversion.
+   * Check the docs to see the format of possible modifiers you can pass.
+   *
+   * @see Doc https://day.js.org/docs/en/display/format#list-of-localized-formats
+   * @default 'dd'
+   */
   weekdayFormat?: string
+  /**
+   * The format used for conversion.
+   * Check the docs to see the format of possible modifiers you can pass.
+   *
+   * @see Doc https://day.js.org/docs/en/display/format#list-of-localized-formats
+   * @default 'YYYY'
+   */
   yearFormat?: string
+  /**
+   * The format used for conversion.
+   * Check the docs to see the format of possible modifiers you can pass.
+   *
+   * @see Doc https://day.js.org/docs/en/display/format#list-of-localized-formats
+   * @default 'MM'
+   */
   monthFormat?: string
+  /**
+   * The format used for conversion.
+   * Check the docs to see the format of possible modifiers you can pass.
+   *
+   * @see Doc https://day.js.org/docs/en/display/format#list-of-localized-formats
+   * @default 'MMMM YYYY'
+   */
   dateFormat?: string
+  /**
+   * Define weekend days.
+   *
+   * @default '[0, 6]'
+   */
   weekendDays?: number[]
+  /**
+   * If `true`, highlight today.
+   *
+   * @default false
+   */
   today?: boolean
+  /**
+   * The minimum possible date.
+   */
   minDate?: Date
+  /**
+   * The maximum possible date.
+   */
   maxDate?: Date
+  /**
+   * Callback function to determine whether the day should be disabled.
+   */
   excludeDate?: (date: Date) => boolean
+  /**
+   * Define holidays.
+   */
   holidays?: Date[]
+  /**
+   * Ref to a type function.
+   */
   typeRef?: ForwardedRef<() => void | undefined>
+  /**
+   * Ref to a previous function.
+   */
   prevRef?: ForwardedRef<() => void | undefined>
+  /**
+   * Ref to a next function.
+   */
   nextRef?: ForwardedRef<() => void | undefined>
+  /**
+   * If `true`, display the calendar weekdays.
+   *
+   * @default true
+   */
   withWeekdays?: boolean
+  /**
+   * If `true`, display the calendar header.
+   *
+   * @default true
+   */
   withHeader?: boolean
+  /**
+   * If `true`, display the calendar control buttons.
+   *
+   * @default true
+   */
   withControls?: boolean
+  /**
+   * If `true`, display the calendar label button.
+   *
+   * @default true
+   */
   withLabel?: boolean
+  /**
+   * The maximum selectable value.
+   */
   maxSelectedValues?: number
-  selectMonthWith?: 'month' | 'value'
+  selectMonthWith?: "month" | "value"
 }
 
 export const useCalendar = <Y extends MaybeValue = Date>({
   defaultType,
   defaultValue,
   defaultMonth,
-  firstDayOfWeek = 'monday',
+  firstDayOfWeek = "monday",
   amountOfMonths = 1,
   paginateBy = amountOfMonths,
   withWeekdays = true,
@@ -374,10 +538,10 @@ export const useCalendar = <Y extends MaybeValue = Date>({
   minDate,
   maxDate,
   locale,
-  yearFormat = 'YYYY',
-  monthFormat = 'MMM',
-  weekdayFormat = 'dd',
-  dateFormat = 'MMMM YYYY',
+  yearFormat = "YYYY",
+  monthFormat = "MMM",
+  weekdayFormat = "dd",
+  dateFormat = "MMMM YYYY",
   weekendDays = [0, 6],
   today = false,
   excludeDate,
@@ -389,22 +553,25 @@ export const useCalendar = <Y extends MaybeValue = Date>({
   withControls = true,
   withLabel = true,
   maxSelectedValues,
-  selectMonthWith = 'month',
+  selectMonthWith = "month",
   ...rest
 }: UseCalendarProps<Y>) => {
   const { theme } = useTheme()
 
-  locale ??= theme.__config.date?.locale ?? 'en'
+  locale ??= theme.__config.date?.locale ?? "en"
 
   const [type, onChangeType] = useControllableState({
     value: rest.type,
-    defaultValue: defaultType ?? 'date',
+    defaultValue: defaultType ?? "date",
   })
 
-  const setType = useCallbackRef((type: CalendarType, year?: number, month?: number) => {
-    onChangeType(type)
-    rest.onChangeType?.(type, year, month)
-  }, [])
+  const setType = useCallbackRef(
+    (type: "year" | "month" | "date", year?: number, month?: number) => {
+      onChangeType(type)
+      rest.onChangeType?.(type, year, month)
+    },
+    [],
+  )
 
   const [value, setValue] = useControllableState({
     value: rest.value,
@@ -434,8 +601,8 @@ export const useCalendar = <Y extends MaybeValue = Date>({
   const minYear = minDate instanceof Date ? minDate.getFullYear() : 1
   const maxYear = maxDate instanceof Date ? maxDate.getFullYear() : 10000
   const rangeYears = getRangeYears(internalYear)
-  const nextMonth = dayjs(month).add(amountOfMonths, 'months').toDate()
-  const prevMonth = dayjs(month).subtract(1, 'months').toDate()
+  const nextMonth = dayjs(month).add(amountOfMonths, "months").toDate()
+  const prevMonth = dayjs(month).subtract(1, "months").toDate()
 
   const yearRefs = useRef(new Map<number, RefObject<HTMLButtonElement>>())
   const monthRefs = useRef(new Map<number, RefObject<HTMLButtonElement>>())
@@ -456,12 +623,12 @@ export const useCalendar = <Y extends MaybeValue = Date>({
 
   useUpdateEffect(() => {
     switch (type) {
-      case 'year':
+      case "year":
         onShouldFocus(yearRefs, (i) => year === rangeYears[i])
 
         break
 
-      case 'month':
+      case "month":
         onShouldFocus(
           monthRefs,
           (value) => month.getFullYear() === year && month.getMonth() === value,
@@ -471,11 +638,14 @@ export const useCalendar = <Y extends MaybeValue = Date>({
 
       default:
         onShouldFocus(dayRefs, (key) => {
-          const [, month, date] = key.split('-').map(Number)
+          const [, month, date] = key.split("-").map(Number)
 
           return !isMulti
             ? value?.getMonth() === month && value?.getDate() === date
-            : value?.some((value) => value.getMonth() === month && value.getDate() === date)
+            : value?.some(
+                (value) =>
+                  value.getMonth() === month && value.getDate() === date,
+              )
         })
 
         break
@@ -484,7 +654,14 @@ export const useCalendar = <Y extends MaybeValue = Date>({
 
   const getContainerProps: PropGetter = useCallback(
     (props = {}, ref = null) => ({
-      ...omitObject(rest, ['value', 'onChange', 'month', 'onChangeMonth', 'type', 'onChangeType']),
+      ...omitObject(rest, [
+        "value",
+        "onChange",
+        "month",
+        "onChangeMonth",
+        "type",
+        "onChangeType",
+      ]),
       ...props,
       ref,
     }),
@@ -540,11 +717,11 @@ export const useCalendar = <Y extends MaybeValue = Date>({
 
 export type UseCalendarReturn = ReturnType<typeof useCalendar>
 
-export type UseCalenderHeaderProps = {
+export type UseCalendarHeaderProps = {
   index?: number
 }
 
-export const useCalenderHeader = ({ index }: UseCalenderHeaderProps) => {
+export const useCalendarHeader = ({ index }: UseCalendarHeaderProps) => {
   const {
     prevMonth,
     nextMonth,
@@ -570,13 +747,13 @@ export const useCalenderHeader = ({ index }: UseCalenderHeaderProps) => {
 
   const onChangeType = useCallback(() => {
     switch (type) {
-      case 'month':
-        setType('year', year, month.getMonth())
+      case "month":
+        setType("year", year, month.getMonth())
 
         break
 
-      case 'date':
-        setType('month', year, month.getMonth())
+      case "date":
+        setType("month", year, month.getMonth())
 
         break
 
@@ -587,19 +764,19 @@ export const useCalenderHeader = ({ index }: UseCalenderHeaderProps) => {
 
   const onPrev = useCallback(() => {
     switch (type) {
-      case 'year':
+      case "year":
         setInternalYear((prev) => prev - 12)
 
         break
 
-      case 'month':
+      case "month":
         setYear((prev) => prev - 1)
 
         break
 
       default:
         dayRefs.current.clear()
-        setMonth((prev) => dayjs(prev).subtract(paginateBy, 'months').toDate())
+        setMonth((prev) => dayjs(prev).subtract(paginateBy, "months").toDate())
 
         break
     }
@@ -607,19 +784,19 @@ export const useCalenderHeader = ({ index }: UseCalenderHeaderProps) => {
 
   const onNext = useCallback(() => {
     switch (type) {
-      case 'year':
+      case "year":
         setInternalYear((prev) => prev + 12)
 
         break
 
-      case 'month':
+      case "month":
         setYear((prev) => prev + 1)
 
         break
 
       default:
         dayRefs.current.clear()
-        setMonth((prev) => dayjs(prev).add(paginateBy, 'months').toDate())
+        setMonth((prev) => dayjs(prev).add(paginateBy, "months").toDate())
 
         break
     }
@@ -636,10 +813,10 @@ export const useCalenderHeader = ({ index }: UseCalenderHeaderProps) => {
         ArrowLeft: () => {
           const isDisabled = (() => {
             switch (type) {
-              case 'year':
+              case "year":
                 return rangeYears[0] <= minYear
 
-              case 'month':
+              case "month":
                 return year <= minYear
 
               default:
@@ -652,10 +829,10 @@ export const useCalenderHeader = ({ index }: UseCalenderHeaderProps) => {
         ArrowRight: () => {
           const isDisabled = (() => {
             switch (type) {
-              case 'year':
+              case "year":
                 return maxYear <= rangeYears[rangeYears.length - 1]
 
-              case 'month':
+              case "month":
                 return maxYear <= year
 
               default:
@@ -693,74 +870,81 @@ export const useCalenderHeader = ({ index }: UseCalenderHeaderProps) => {
   )
 
   const getContainerProps: PropGetter = useCallback(
-    (props = {}) => ({ ...props, onKeyDown: handlerAll(onKeyDown, props.onKeyDown) }),
+    (props = {}) => ({
+      ...props,
+      onKeyDown: handlerAll(onKeyDown, props.onKeyDown),
+    }),
     [onKeyDown],
   )
 
-  const getControlProps: RequiredPropGetter<{ operation: 'prev' | 'next' }> = useCallback(
-    ({ operation, ...props } = {}) => {
-      const isPrev = operation === 'prev'
+  const getControlProps: RequiredPropGetter<{ operation: "prev" | "next" }> =
+    useCallback(
+      ({ operation, ...props } = {}) => {
+        const isPrev = operation === "prev"
 
-      const isHidden = (() => {
-        switch (type) {
-          case 'year':
-            if (isPrev) {
-              return rangeYears[0] <= minYear
-            } else {
-              return maxYear <= rangeYears[rangeYears.length - 1]
-            }
+        const isHidden = (() => {
+          switch (type) {
+            case "year":
+              if (isPrev) {
+                return rangeYears[0] <= minYear
+              } else {
+                return maxYear <= rangeYears[rangeYears.length - 1]
+              }
 
-          case 'month':
-            if (isPrev) {
-              return year <= minYear
-            } else {
-              return maxYear <= year
-            }
+            case "month":
+              if (isPrev) {
+                return year <= minYear
+              } else {
+                return maxYear <= year
+              }
 
-          default:
-            if (typeof index !== 'number') return
+            default:
+              if (typeof index !== "number") return
 
-            if (isPrev) {
-              return index !== 0 || !isMonthInRange({ date: prevMonth, minDate, maxDate })
-            } else {
-              return (
-                index + 1 !== amountOfMonths ||
-                !isMonthInRange({ date: nextMonth, minDate, maxDate })
-              )
-            }
+              if (isPrev) {
+                return (
+                  index !== 0 ||
+                  !isMonthInRange({ date: prevMonth, minDate, maxDate })
+                )
+              } else {
+                return (
+                  index + 1 !== amountOfMonths ||
+                  !isMonthInRange({ date: nextMonth, minDate, maxDate })
+                )
+              }
+          }
+        })()
+
+        return {
+          ...props,
+          onClick: handlerAll(isPrev ? onPrev : onNext, props.onClick),
+          tabIndex: -1,
+          "data-hidden": dataAttr(isHidden),
+          "data-disabled": dataAttr(isHidden),
+          "aria-disabled": ariaAttr(isHidden),
         }
-      })()
-
-      return {
-        ...props,
-        onClick: handlerAll(isPrev ? onPrev : onNext, props.onClick),
-        tabIndex: -1,
-        'data-hidden': dataAttr(isHidden),
-        'data-disabled': dataAttr(isHidden),
-        'aria-disabled': ariaAttr(isHidden),
-      }
-    },
-    [
-      amountOfMonths,
-      index,
-      maxDate,
-      maxYear,
-      minDate,
-      minYear,
-      nextMonth,
-      onNext,
-      onPrev,
-      prevMonth,
-      rangeYears,
-      type,
-      year,
-    ],
-  )
+      },
+      [
+        amountOfMonths,
+        index,
+        maxDate,
+        maxYear,
+        minDate,
+        minYear,
+        nextMonth,
+        onNext,
+        onPrev,
+        prevMonth,
+        rangeYears,
+        type,
+        year,
+      ],
+    )
 
   const getLabelProps: PropGetter = useCallback(
     (props = {}) => {
       return {
-        pointerEvents: type !== 'year' ? 'auto' : 'none',
+        pointerEvents: type !== "year" ? "auto" : "none",
         ...props,
         onClick: handlerAll(props.onClick, onChangeType),
         tabIndex: !!index ? -1 : 0,
@@ -772,7 +956,7 @@ export const useCalenderHeader = ({ index }: UseCalenderHeaderProps) => {
   return { getContainerProps, getControlProps, getLabelProps }
 }
 
-export type UseCalenderHeaderReturn = ReturnType<typeof useCalenderHeader>
+export type UseCalendarHeaderReturn = ReturnType<typeof useCalendarHeader>
 
 export const useYearList = () => {
   const {
@@ -844,8 +1028,10 @@ export const useYearList = () => {
       const focusedIndex = getFocused(yearRefs) ?? 0
 
       const actions: Record<string, Function | undefined> = {
-        ArrowDown: () => (focusedIndex + 4 <= 11 ? onFocusNext(focusedIndex + 4) : {}),
-        ArrowUp: () => (focusedIndex - 4 >= 0 ? onFocusPrev(focusedIndex - 4) : {}),
+        ArrowDown: () =>
+          focusedIndex + 4 <= 11 ? onFocusNext(focusedIndex + 4) : {},
+        ArrowUp: () =>
+          focusedIndex - 4 >= 0 ? onFocusPrev(focusedIndex - 4) : {},
         ArrowLeft: () => onFocusPrev(focusedIndex - 1),
         ArrowRight: () => onFocusNext(focusedIndex + 1),
         Home: () => onFocusPrev(0),
@@ -874,15 +1060,19 @@ export const useYearList = () => {
 
       setYear(year)
       setMonth((prev) => new Date(prev.setFullYear(year)))
-      setType('month', year, month.getMonth())
+      setType("month", year, month.getMonth())
     },
     [month, setMonth, setType, setYear],
   )
 
   useUpdateEffect(() => {
-    if (typeof beforeInternalYear.current !== 'number') return
+    if (typeof beforeInternalYear.current !== "number") return
 
-    onShouldFocus(yearRefs, () => false, beforeInternalYear.current < internalYear)
+    onShouldFocus(
+      yearRefs,
+      () => false,
+      beforeInternalYear.current < internalYear,
+    )
 
     beforeInternalYear.current = null
   }, [internalYear])
@@ -900,48 +1090,49 @@ export const useYearList = () => {
     [onKeyDown],
   )
 
-  const getButtonProps: RequiredPropGetter<{ value: number; index: number }> = useCallback(
-    ({ value, index, ...props } = {}, ref = null) => {
-      const isControlled = typeof beforeInternalYear.current === 'number'
-      const isSelected =
-        (selectMonthWith === 'month'
-          ? year
-          : !isMulti
-          ? selectedValue?.getFullYear()
-          : selectedValue[0]?.getFullYear()) === value
-      const isDisabled = value < minYear || value > maxYear
+  const getButtonProps: RequiredPropGetter<{ value: number; index: number }> =
+    useCallback(
+      ({ value, index, ...props } = {}, ref = null) => {
+        const isControlled = typeof beforeInternalYear.current === "number"
+        const isSelected =
+          (selectMonthWith === "month"
+            ? year
+            : !isMulti
+            ? selectedValue?.getFullYear()
+            : selectedValue[0]?.getFullYear()) === value
+        const isDisabled = value < minYear || value > maxYear
 
-      yearRefs.current.set(index, createRef<HTMLButtonElement>())
+        yearRefs.current.set(index, createRef<HTMLButtonElement>())
 
-      return {
-        ref: mergeRefs(ref, yearRefs.current.get(index)),
-        ...props,
-        tabIndex: isControlled
-          ? -1
-          : !rangeYears.includes(year) && rangeYears[0] === value
-          ? 0
-          : isSelected
-          ? 0
-          : -1,
-        'data-selected': dataAttr(isSelected),
-        'data-value': value ?? '',
-        'data-disabled': dataAttr(isDisabled),
-        'aria-disabled': ariaAttr(isDisabled),
-        onClick: handlerAll(props.onClick, (ev) => onClick(ev, value)),
-      }
-    },
-    [
-      isMulti,
-      maxYear,
-      minYear,
-      onClick,
-      rangeYears,
-      selectMonthWith,
-      selectedValue,
-      year,
-      yearRefs,
-    ],
-  )
+        return {
+          ref: mergeRefs(ref, yearRefs.current.get(index)),
+          ...props,
+          tabIndex: isControlled
+            ? -1
+            : !rangeYears.includes(year) && rangeYears[0] === value
+            ? 0
+            : isSelected
+            ? 0
+            : -1,
+          "data-selected": dataAttr(isSelected),
+          "data-value": value ?? "",
+          "data-disabled": dataAttr(isDisabled),
+          "aria-disabled": ariaAttr(isDisabled),
+          onClick: handlerAll(props.onClick, (ev) => onClick(ev, value)),
+        }
+      },
+      [
+        isMulti,
+        maxYear,
+        minYear,
+        onClick,
+        rangeYears,
+        selectMonthWith,
+        selectedValue,
+        year,
+        yearRefs,
+      ],
+    )
 
   return { rangeYears, getContainerProps, getButtonProps }
 }
@@ -1019,8 +1210,10 @@ export const useMonthList = () => {
       const focusedMonth = getFocused(monthRefs) ?? 0
 
       const actions: Record<string, Function | undefined> = {
-        ArrowDown: () => (focusedMonth + 3 <= 11 ? onFocusNext(focusedMonth + 3) : {}),
-        ArrowUp: () => (focusedMonth - 3 >= 0 ? onFocusPrev(focusedMonth - 3) : {}),
+        ArrowDown: () =>
+          focusedMonth + 3 <= 11 ? onFocusNext(focusedMonth + 3) : {},
+        ArrowUp: () =>
+          focusedMonth - 3 >= 0 ? onFocusPrev(focusedMonth - 3) : {},
         ArrowLeft: () => onFocusPrev(focusedMonth - 1),
         ArrowRight: () => onFocusNext(focusedMonth + 1),
         Home: () => onFocusPrev(0),
@@ -1048,13 +1241,13 @@ export const useMonthList = () => {
       if (isDisabled(ev.target as HTMLElement)) return
 
       setMonth(new Date(year, month, 1))
-      setType('date', year, month)
+      setType("date", year, month)
     },
     [year, setMonth, setType],
   )
 
   useUpdateEffect(() => {
-    if (typeof beforeYear.current !== 'number') return
+    if (typeof beforeYear.current !== "number") return
 
     onShouldFocus(monthRefs, () => false, beforeYear.current < year)
 
@@ -1066,42 +1259,65 @@ export const useMonthList = () => {
   })
 
   const getContainerProps: PropGetter = useCallback(
-    (props = {}) => ({ ...props, onKeyDown: handlerAll(onKeyDown, props.onKeyDown) }),
+    (props = {}) => ({
+      ...props,
+      onKeyDown: handlerAll(onKeyDown, props.onKeyDown),
+    }),
     [onKeyDown],
   )
 
   const getButtonProps: RequiredPropGetter<{ value: number }> = useCallback(
     ({ value, ...props } = {}, ref = null) => {
-      const isControlled = typeof beforeYear.current === 'number'
+      const isControlled = typeof beforeYear.current === "number"
       const isSelectedYear =
-        (selectMonthWith === 'month'
+        (selectMonthWith === "month"
           ? month.getFullYear()
           : !isMulti
           ? selectedValue?.getFullYear()
           : selectedValue[0]?.getFullYear()) === year
       const isSelected =
         isSelectedYear &&
-        (selectMonthWith === 'month'
+        (selectMonthWith === "month"
           ? month.getMonth()
           : !isMulti
           ? selectedValue?.getMonth()
           : selectedValue[0]?.getMonth()) === value
-      const isDisabled = !isMonthInRange({ date: new Date(year, value), minDate, maxDate })
+      const isDisabled = !isMonthInRange({
+        date: new Date(year, value),
+        minDate,
+        maxDate,
+      })
 
       monthRefs.current.set(value, createRef<HTMLButtonElement>())
 
       return {
         ref: mergeRefs(ref, monthRefs.current.get(value)),
         ...props,
-        tabIndex: isControlled ? -1 : !isSelectedYear && value === 0 ? 0 : isSelected ? 0 : -1,
-        'data-selected': dataAttr(isSelected),
-        'data-disabled': dataAttr(isDisabled),
-        'data-value': value ?? '',
-        'aria-disabled': ariaAttr(isDisabled),
+        tabIndex: isControlled
+          ? -1
+          : !isSelectedYear && value === 0
+          ? 0
+          : isSelected
+          ? 0
+          : -1,
+        "data-selected": dataAttr(isSelected),
+        "data-disabled": dataAttr(isDisabled),
+        "data-value": value ?? "",
+        "aria-disabled": ariaAttr(isDisabled),
         onClick: handlerAll(props.onClick, (ev) => onClick(ev, value)),
       }
     },
-    [isMulti, maxDate, minDate, month, monthRefs, onClick, selectMonthWith, selectedValue, year],
+    [
+      isMulti,
+      maxDate,
+      minDate,
+      month,
+      monthRefs,
+      onClick,
+      selectMonthWith,
+      selectedValue,
+      year,
+    ],
   )
 
   return { rangeMonths, getContainerProps, getButtonProps }
@@ -1137,7 +1353,8 @@ export const useMonth = () => {
 
   const onFocusPrev = useCallback(
     (targetIndex: number, targetMonth: number, targetDay: number) => {
-      const [firstIndex, , firstDay] = getRangeFirstDay(dayRefs)?.split('-').map(Number) ?? []
+      const [firstIndex, , firstDay] =
+        getRangeFirstDay(dayRefs)?.split("-").map(Number) ?? []
 
       if (firstIndex === targetDay && targetDay < firstDay) {
         if (!isMonthInRange({ date: prevMonth, minDate, maxDate })) return
@@ -1146,10 +1363,12 @@ export const useMonth = () => {
         setMonth((prev) => {
           beforeMonth.current = prev
 
-          return dayjs(prev).subtract(paginateBy, 'months').toDate()
+          return dayjs(prev).subtract(paginateBy, "months").toDate()
         })
       } else {
-        const ref = dayRefs.current.get(`${targetIndex}-${targetMonth}-${targetDay}`)
+        const ref = dayRefs.current.get(
+          `${targetIndex}-${targetMonth}-${targetDay}`,
+        )
 
         if (ref?.current) {
           ref.current.focus()
@@ -1162,7 +1381,8 @@ export const useMonth = () => {
 
   const onFocusNext = useCallback(
     (targetIndex: number, targetMonth: number, targetDay: number) => {
-      const [lastIndex, , lastDay] = getRangeLastDay(dayRefs)?.split('-').map(Number) ?? []
+      const [lastIndex, , lastDay] =
+        getRangeLastDay(dayRefs)?.split("-").map(Number) ?? []
 
       if (lastIndex === targetIndex && lastDay < targetDay) {
         if (!isMonthInRange({ date: nextMonth, minDate, maxDate })) return
@@ -1171,10 +1391,12 @@ export const useMonth = () => {
         setMonth((prev) => {
           beforeMonth.current = prev
 
-          return dayjs(prev).add(paginateBy, 'months').toDate()
+          return dayjs(prev).add(paginateBy, "months").toDate()
         })
       } else {
-        const ref = dayRefs.current.get(`${targetIndex}-${targetMonth}-${targetDay}`)
+        const ref = dayRefs.current.get(
+          `${targetIndex}-${targetMonth}-${targetDay}`,
+        )
 
         if (ref?.current) {
           ref.current.focus()
@@ -1187,39 +1409,52 @@ export const useMonth = () => {
 
   const onKeyDown = useCallback(
     (ev: KeyboardEvent<HTMLDivElement>) => {
-      const [focusedIndex, focusedMonth, focusedDay] = (getFocused(dayRefs) ?? '')
-        .split('-')
+      const [focusedIndex, focusedMonth, focusedDay] = (
+        getFocused(dayRefs) ?? ""
+      )
+        .split("-")
         .map(Number)
       const [firstIndex, firstMonth, firstDay] =
-        getRangeFirstDay(dayRefs)?.split('-').map(Number) ?? []
-      const [lastIndex, lastMonth, lastDay] = getRangeLastDay(dayRefs)?.split('-').map(Number) ?? []
+        getRangeFirstDay(dayRefs)?.split("-").map(Number) ?? []
+      const [lastIndex, lastMonth, lastDay] =
+        getRangeLastDay(dayRefs)?.split("-").map(Number) ?? []
 
       const actions: Record<string, Function | undefined> = {
         ArrowDown: () => {
-          const lastOfMonthDay = dayjs(new Date(year, focusedMonth)).endOf('month').date()
+          const lastOfMonthDay = dayjs(new Date(year, focusedMonth))
+            .endOf("month")
+            .date()
 
           if (focusedDay + 7 <= lastOfMonthDay)
             onFocusNext(focusedIndex, focusedMonth, focusedDay + 7)
         },
         ArrowUp: () => {
-          const firstOfMonthDay = dayjs(new Date(year, focusedMonth)).startOf('month').date()
+          const firstOfMonthDay = dayjs(new Date(year, focusedMonth))
+            .startOf("month")
+            .date()
 
           if (focusedDay - 7 >= firstOfMonthDay)
             onFocusNext(focusedIndex, focusedMonth, focusedDay - 7)
         },
         ArrowLeft: () => {
           if (focusedIndex !== firstIndex) {
-            const firstOfMonthDay = dayjs(new Date(year, focusedMonth)).startOf('month').date()
+            const firstOfMonthDay = dayjs(new Date(year, focusedMonth))
+              .startOf("month")
+              .date()
 
             if (firstOfMonthDay < focusedDay) {
               onFocusNext(focusedIndex, focusedMonth, focusedDay - 1)
             } else {
               const prevLastOfMonthDay = dayjs(new Date(year, focusedMonth))
-                .subtract(1, 'month')
-                .endOf('month')
+                .subtract(1, "month")
+                .endOf("month")
                 .date()
 
-              onFocusNext(focusedIndex - 1, focusedMonth - 1, prevLastOfMonthDay)
+              onFocusNext(
+                focusedIndex - 1,
+                focusedMonth - 1,
+                prevLastOfMonthDay,
+              )
             }
           } else {
             onFocusPrev(focusedIndex, focusedMonth, focusedDay - 1)
@@ -1227,17 +1462,23 @@ export const useMonth = () => {
         },
         ArrowRight: () => {
           if (focusedIndex !== lastIndex) {
-            const lastOfMonthDay = dayjs(new Date(year, focusedMonth)).endOf('month').date()
+            const lastOfMonthDay = dayjs(new Date(year, focusedMonth))
+              .endOf("month")
+              .date()
 
             if (focusedDay < lastOfMonthDay) {
               onFocusNext(focusedIndex, focusedMonth, focusedDay + 1)
             } else {
               const nextFirstOfMonthDay = dayjs(new Date(year, focusedMonth))
-                .add(1, 'month')
-                .startOf('month')
+                .add(1, "month")
+                .startOf("month")
                 .date()
 
-              onFocusNext(focusedIndex + 1, focusedMonth + 1, nextFirstOfMonthDay)
+              onFocusNext(
+                focusedIndex + 1,
+                focusedMonth + 1,
+                nextFirstOfMonthDay,
+              )
             }
           } else {
             onFocusNext(focusedIndex, focusedMonth, focusedDay + 1)
@@ -1289,7 +1530,11 @@ export const useMonth = () => {
   useUpdateEffect(() => {
     if (!(beforeMonth.current instanceof Date)) return
 
-    onShouldFocus(dayRefs, () => false, beforeMonth.current.getMonth() < month.getMonth())
+    onShouldFocus(
+      dayRefs,
+      () => false,
+      beforeMonth.current.getMonth() < month.getMonth(),
+    )
 
     beforeMonth.current = null
   }, [month.getMonth()])
@@ -1299,7 +1544,10 @@ export const useMonth = () => {
   })
 
   const getContainerProps: PropGetter = useCallback(
-    (props = {}) => ({ ...props, onKeyDown: handlerAll(onKeyDown, props.onKeyDown) }),
+    (props = {}) => ({
+      ...props,
+      onKeyDown: handlerAll(onKeyDown, props.onKeyDown),
+    }),
     [onKeyDown],
   )
 
@@ -1314,7 +1562,9 @@ export const useMonth = () => {
       const isWeekend = weekendDays.includes(value.getDay())
       const isSelected = !isMulti
         ? isSameDate(selectedValue, value)
-        : selectedValue.some((selectedValue) => isSameDate(selectedValue, value))
+        : selectedValue.some((selectedValue) =>
+            isSameDate(selectedValue, value),
+          )
       const isToday = today && isSameDate(new Date(), value)
       const isDisabled =
         isDisabledDate({
@@ -1328,7 +1578,8 @@ export const useMonth = () => {
         (!isSelected && isMulti && maxSelectedValues === selectedValue.length)
 
       const style: CSSProperties = {
-        pointerEvents: isDisabled && isOutside && disableOutsideDays ? 'none' : undefined,
+        pointerEvents:
+          isDisabled && isOutside && disableOutsideDays ? "none" : undefined,
         ...props.style,
       }
 
@@ -1348,20 +1599,22 @@ export const useMonth = () => {
             ? -1
             : (!(!isMulti
                 ? isSameMonth(month, selectedValue)
-                : selectedValue.some((selectedValue) => isSameMonth(month, selectedValue))) &&
+                : selectedValue.some((selectedValue) =>
+                    isSameMonth(month, selectedValue),
+                  )) &&
                 !isOutside &&
                 value.getDate() === 1) ||
               isSelected
             ? 0
             : -1,
-        'data-selected': dataAttr(isSelected),
-        'data-outside': dataAttr(isOutside),
-        'data-holiday': dataAttr(isHoliday),
-        'data-weekend': dataAttr(isWeekend),
-        'data-today': dataAttr(isToday),
-        'data-value': value ?? '',
-        'data-disabled': dataAttr(isDisabled),
-        'aria-disabled': ariaAttr(isDisabled),
+        "data-selected": dataAttr(isSelected),
+        "data-outside": dataAttr(isOutside),
+        "data-holiday": dataAttr(isHoliday),
+        "data-weekend": dataAttr(isWeekend),
+        "data-today": dataAttr(isToday),
+        "data-value": value ?? "",
+        "data-disabled": dataAttr(isDisabled),
+        "aria-disabled": ariaAttr(isDisabled),
         onClick: handlerAll((ev) => onClick(ev, value), props.onClick),
       }
     },

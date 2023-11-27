@@ -1,32 +1,48 @@
-import { Button, ButtonProps } from '@yamada-ui/button'
-import { ui, HTMLUIProps } from '@yamada-ui/core'
-import { cx, filterUndefined } from '@yamada-ui/utils'
-import dayjs from 'dayjs'
-import { FC, useMemo } from 'react'
-import { CalenderHeader, CalenderHeaderProps } from './calender-header'
+import type { ButtonProps } from "@yamada-ui/button"
+import { Button } from "@yamada-ui/button"
+import type { HTMLUIProps } from "@yamada-ui/core"
+import { ui } from "@yamada-ui/core"
+import { cx, filterUndefined } from "@yamada-ui/utils"
+import dayjs from "dayjs"
+import type { FC } from "react"
+import { useMemo } from "react"
+import type { CalendarHeaderProps } from "./calendar-header"
+import { CalendarHeader } from "./calendar-header"
 import {
   getFormattedLabel,
   getMonthDays,
   getWeekdays,
   useCalendarContext,
   useMonth,
-} from './use-calendar'
+} from "./use-calendar"
 
 type MonthOptions = {
-  headerProps?: HTMLUIProps<'div'>
-  tableProps?: HTMLUIProps<'table'> & {
-    thead?: HTMLUIProps<'thead'>
-    tbody?: HTMLUIProps<'tbody'>
-    tr?: HTMLUIProps<'tr'>
-    th?: HTMLUIProps<'th'>
-    td?: HTMLUIProps<'td'>
+  /**
+   * Props for calendar header element.
+   */
+  headerProps?: HTMLUIProps<"div">
+  /**
+   * Props for calendar month table element.
+   */
+  tableProps?: HTMLUIProps<"table"> & {
+    thead?: HTMLUIProps<"thead">
+    tbody?: HTMLUIProps<"tbody">
+    tr?: HTMLUIProps<"tr">
+    th?: HTMLUIProps<"th">
+    td?: HTMLUIProps<"td">
   }
-  weekdayProps?: HTMLUIProps<'div'> & { component?: FC<WeekdayProps> }
+  /**
+   * Props for calendar weekday element.
+   */
+  weekdayProps?: HTMLUIProps<"div"> & { component?: FC<WeekdayProps> }
+  /**
+   * Props for calendar day button element.
+   */
   dayProps?: ButtonProps & { component?: FC<DayProps> }
 }
 
-export type MonthProps = HTMLUIProps<'div'> &
-  Omit<CalenderHeaderProps, 'label' | 'index'> &
+export type MonthProps = HTMLUIProps<"div"> &
+  Omit<CalendarHeaderProps, "label" | "index"> &
   MonthOptions
 
 export const Month: FC<MonthProps> = ({
@@ -53,7 +69,8 @@ export const Month: FC<MonthProps> = ({
   } = useCalendarContext()
   const { getContainerProps, getButtonProps } = useMonth()
 
-  const { component: customWeekday = Weekday, ...computedWeekdayProps } = weekdayProps ?? {}
+  const { component: customWeekday = Weekday, ...computedWeekdayProps } =
+    weekdayProps ?? {}
   const { component: customDay = Day, ...computedDayProps } = dayProps ?? {}
   const {
     thead: theadProps,
@@ -81,12 +98,16 @@ export const Month: FC<MonthProps> = ({
       {Array(amountOfMonths)
         .fill(0)
         .map((_, index) => {
-          const month = dayjs(selectedMonth).add(index, 'months').toDate()
+          const month = dayjs(selectedMonth).add(index, "months").toDate()
           const days = getMonthDays(month, firstDayOfWeek)
 
           return (
-            <ui.div key={index} __css={{ ...styles.content }} {...filterUndefined(rest)}>
-              <CalenderHeader
+            <ui.div
+              key={index}
+              __css={{ ...styles.content }}
+              {...filterUndefined(rest)}
+            >
+              <CalendarHeader
                 {...{
                   ...headerProps,
                   label: getFormattedLabel(month, locale, dateFormat),
@@ -99,7 +120,7 @@ export const Month: FC<MonthProps> = ({
               />
 
               <ui.table
-                className={cx('ui-calendar-month', className)}
+                className={cx("ui-calendar__month", className)}
                 __css={{
                   w: styles.content?.w ?? styles.content?.width,
                   minW: styles.content?.minW ?? styles.content?.minWidth,
@@ -128,13 +149,17 @@ export const Month: FC<MonthProps> = ({
                         <ui.th
                           key={index}
                           __css={{
-                            fontWeight: 'normal',
+                            fontWeight: "normal",
                           }}
                           {...thProps}
                         >
                           <ui.div
-                            className='ui-calendar-month-weekday'
-                            __css={{ w: 'full', display: 'flex', ...styles.weekday }}
+                            className="ui-calendar__month__weekday"
+                            __css={{
+                              w: "full",
+                              display: "flex",
+                              ...styles.weekday,
+                            }}
                             {...computedWeekdayProps}
                           >
                             {customWeekday({ weekday, index })}
@@ -150,24 +175,25 @@ export const Month: FC<MonthProps> = ({
                     return (
                       <ui.tr key={row} {...trProps}>
                         {cells.map((date, col) => {
-                          const { isSelected, isWeekend, isOutside, ...props } = getButtonProps({
-                            ...computedDayProps,
-                            month,
-                            value: date,
-                            index,
-                          })
+                          const { isSelected, isWeekend, isOutside, ...props } =
+                            getButtonProps({
+                              ...computedDayProps,
+                              month,
+                              value: date,
+                              index,
+                            })
 
                           return (
                             <ui.td key={col} {...tdProps}>
                               <Button
-                                className='ui-calendar-month-day'
-                                variant='ghost'
+                                className="ui-calendar__month__day"
+                                variant="ghost"
                                 __css={{
-                                  minW: 'auto',
-                                  h: 'auto',
+                                  minW: "auto",
+                                  h: "auto",
                                   p: 0,
                                   fontSize: undefined,
-                                  fontWeight: 'normal',
+                                  fontWeight: "normal",
                                   ...styles.day,
                                 }}
                                 {...props}
@@ -200,7 +226,9 @@ export const Month: FC<MonthProps> = ({
 export type WeekdayProps = { weekday: string; index: number }
 
 export const Weekday: FC<WeekdayProps> = ({ weekday }) => {
-  return <ui.span className='ui-calendar-month-weekday-label'>{weekday}</ui.span>
+  return (
+    <ui.span className="ui-calendar__month__weekday__label">{weekday}</ui.span>
+  )
 }
 
 export type DayProps = {
@@ -214,5 +242,9 @@ export type DayProps = {
 }
 
 export const Day: FC<DayProps> = ({ date }) => {
-  return <ui.span className='ui-calendar-month-day-label'>{date.getDate()}</ui.span>
+  return (
+    <ui.span className="ui-calendar__month__day__label">
+      {date.getDate()}
+    </ui.span>
+  )
 }

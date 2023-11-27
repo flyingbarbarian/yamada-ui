@@ -1,11 +1,12 @@
-import { ui, CSSUIObject, forwardRef, HTMLUIProps } from '@yamada-ui/core'
-import { cx } from '@yamada-ui/utils'
-import { useStepContext } from './step'
-import { useStepperContext } from './use-stepper'
+import type { CSSUIObject, HTMLUIProps } from "@yamada-ui/core"
+import { ui, forwardRef } from "@yamada-ui/core"
+import { cx } from "@yamada-ui/utils"
+import { useStepContext } from "./step"
+import { useStepperContext } from "./use-stepper"
 
-export type StepDescriptionProps = HTMLUIProps<'p'>
+export type StepDescriptionProps = HTMLUIProps<"p">
 
-export const StepDescription = forwardRef<StepDescriptionProps, 'p'>(
+export const StepDescription = forwardRef<StepDescriptionProps, "p">(
   ({ className, ...rest }, ref) => {
     const { styles } = useStepperContext()
     const { status } = useStepContext()
@@ -15,7 +16,7 @@ export const StepDescription = forwardRef<StepDescriptionProps, 'p'>(
     return (
       <ui.p
         ref={ref}
-        className={cx('ui-step-description', className)}
+        className={cx("ui-step__description", className)}
         data-status={status}
         __css={css}
         {...rest}

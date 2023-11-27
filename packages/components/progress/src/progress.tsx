@@ -1,38 +1,83 @@
+import type {
+  HTMLUIProps,
+  ThemeProps,
+  CSSUIObject,
+  Interpolation,
+  ColorModeToken,
+  CSS,
+} from "@yamada-ui/core"
 import {
   ui,
   forwardRef,
-  HTMLUIProps,
-  ThemeProps,
   useMultiComponentStyle,
   omitThemeProps,
-  CSSUIObject,
-  Interpolation,
-  CSSUIProps,
-} from '@yamada-ui/core'
-import { useAnimation } from '@yamada-ui/use-animation'
-import { createContext, cx, valueToPercent } from '@yamada-ui/utils'
-import { FC } from 'react'
+} from "@yamada-ui/core"
+import { useAnimation } from "@yamada-ui/use-animation"
+import { createContext, cx, omitObject, valueToPercent } from "@yamada-ui/utils"
+import type { FC } from "react"
 
-const [ProgressProvider, useProgress] = createContext<Record<string, CSSUIObject>>({
+const [ProgressProvider, useProgress] = createContext<
+  Record<string, CSSUIObject>
+>({
   name: `ProgressStylesContext`,
   errorMessage: `useProgress returned is 'undefined'. Seems you forgot to wrap the components in "<Progress />" `,
 })
 
 type ProgressOptions = {
+  /**
+   * The value of the progress.
+   *
+   * @default 0
+   */
   value?: number
+  /**
+   * The minimum value of the progress.
+   *
+   * @default 0
+   */
   min?: number
+  /**
+   * The maximum value of the progress.
+   *
+   * @default 100
+   */
   max?: number
+  /**
+   * If `true`, the progress bar will show stripe.
+   *
+   * @default false
+   */
   hasStripe?: boolean
+  /**
+   * If `true`, and hasStripe is `true`, the stripes will be animated.
+   *
+   * @default false
+   */
   isStripeAnimation?: boolean
+  /**
+   * If `true`, the progress will be indeterminate and the `value` prop will be ignored.
+   *
+   * @default false
+   */
   isAnimation?: boolean
+  /**
+   * The animation speed in seconds.
+   *
+   * @default '1.4s'
+   */
   speed?: string | number
-  filledTrackColor?: CSSUIProps<'unResponsive'>['color']
+  /**
+   * The CSS `color` property.
+   */
+  filledTrackColor?: ColorModeToken<CSS.Property.Color, "colors">
 }
 
-export type ProgressProps = HTMLUIProps<'div'> & ThemeProps<'Progress'> & ProgressOptions
+export type ProgressProps = HTMLUIProps<"div"> &
+  ThemeProps<"Progress"> &
+  ProgressOptions
 
-export const Progress = forwardRef<ProgressProps, 'div'>((props, ref) => {
-  const [styles, mergedProps] = useMultiComponentStyle('Progress', props)
+export const Progress = forwardRef<ProgressProps, "div">((props, ref) => {
+  const [styles, mergedProps] = useMultiComponentStyle("Progress", props)
   const {
     className,
     children,
@@ -45,16 +90,16 @@ export const Progress = forwardRef<ProgressProps, 'div'>((props, ref) => {
     speed,
     borderRadius: _borderRadius,
     rounded,
-    filledTrackColor,
     ...rest
   } = omitThemeProps(mergedProps)
 
-  const borderRadius = _borderRadius ?? rounded ?? (styles.track.borderRadius as string | number)
+  const borderRadius =
+    _borderRadius ?? rounded ?? (styles.track.borderRadius as string | number)
 
   const css: CSSUIObject = {
-    w: '100%',
-    overflow: 'hidden',
-    pos: 'relative',
+    w: "100%",
+    overflow: "hidden",
+    pos: "relative",
     ...styles.track,
   }
 
@@ -62,10 +107,10 @@ export const Progress = forwardRef<ProgressProps, 'div'>((props, ref) => {
     <ProgressProvider value={styles}>
       <ui.div
         ref={ref}
-        className={cx('ui-progress', className)}
+        className={cx("ui-progress", className)}
         __css={css}
         borderRadius={borderRadius}
-        {...rest}
+        {...omitObject(rest, ["filledTrackColor"])}
       >
         <ProgressFilledTrack
           min={min}
@@ -83,7 +128,7 @@ export const Progress = forwardRef<ProgressProps, 'div'>((props, ref) => {
   )
 })
 
-type ProgressFilledTrackProps = HTMLUIProps<'div'> & ProgressProps
+type ProgressFilledTrackProps = HTMLUIProps<"div"> & ProgressProps
 
 const ProgressFilledTrack: FC<ProgressFilledTrackProps> = ({
   value = 0,
@@ -92,7 +137,7 @@ const ProgressFilledTrack: FC<ProgressFilledTrackProps> = ({
   hasStripe,
   isStripeAnimation,
   isAnimation,
-  speed = '1.4s',
+  speed = "1.4s",
   ...rest
 }) => {
   const percent = valueToPercent(value, min, max)
@@ -101,22 +146,22 @@ const ProgressFilledTrack: FC<ProgressFilledTrackProps> = ({
 
   const stripeAnimation = useAnimation({
     keyframes: {
-      '0%': { bgPosition: '1rem 0' },
-      '100%': { bgPosition: '0 0' },
+      "0%": { bgPosition: "1rem 0" },
+      "100%": { bgPosition: "0 0" },
     },
-    duration: typeof speed === 'string' ? speed : `${speed}s`,
-    iterationCount: 'infinite',
-    timingFunction: 'linear',
+    duration: typeof speed === "string" ? speed : `${speed}s`,
+    iterationCount: "infinite",
+    timingFunction: "linear",
   })
 
   const interpolationAnimation = useAnimation({
     keyframes: {
-      '0%': { left: '-40%' },
-      '100%': { left: '100%' },
+      "0%": { left: "-40%" },
+      "100%": { left: "100%" },
     },
-    duration: typeof speed === 'string' ? speed : `${speed}s`,
-    iterationCount: 'infinite',
-    timingFunction: 'ease',
+    duration: typeof speed === "string" ? speed : `${speed}s`,
+    iterationCount: "infinite",
+    timingFunction: "ease",
   })
 
   isStripeAnimation = !isAnimation && hasStripe && isStripeAnimation
@@ -129,9 +174,9 @@ const ProgressFilledTrack: FC<ProgressFilledTrackProps> = ({
       : {}),
     ...(isAnimation
       ? {
-          position: 'absolute',
-          willChange: 'left',
-          minWidth: '50%',
+          position: "absolute",
+          willChange: "left",
+          minWidth: "50%",
           animation: interpolationAnimation,
         }
       : {}),
@@ -139,7 +184,7 @@ const ProgressFilledTrack: FC<ProgressFilledTrackProps> = ({
 
   const __css: CSSUIObject = {
     w: `${percent}%`,
-    h: '100%',
+    h: "100%",
     ...styles.filledTrack,
   }
 

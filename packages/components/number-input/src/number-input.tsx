@@ -1,22 +1,27 @@
+import type {
+  CSSUIObject,
+  HTMLUIProps,
+  ThemeProps,
+  ColorModeToken,
+  CSS,
+} from "@yamada-ui/core"
 import {
   ui,
   forwardRef,
   useMultiComponentStyle,
   omitThemeProps,
-  CSSUIObject,
-  HTMLUIProps,
-  ThemeProps,
-  CSSUIProps,
-} from '@yamada-ui/core'
+} from "@yamada-ui/core"
+import type { UseFormControlProps } from "@yamada-ui/form-control"
 import {
   useFormControlProps,
-  UseFormControlProps,
   formControlProperties,
-} from '@yamada-ui/form-control'
-import { ChevronIcon } from '@yamada-ui/icon'
-import { useCounter, UseCounterProps } from '@yamada-ui/use-counter'
-import { useEventListener } from '@yamada-ui/use-event-listener'
-import { useInterval } from '@yamada-ui/use-interval'
+} from "@yamada-ui/form-control"
+import { ChevronIcon } from "@yamada-ui/icon"
+import type { UseCounterProps } from "@yamada-ui/use-counter"
+import { useCounter } from "@yamada-ui/use-counter"
+import { useEventListener } from "@yamada-ui/use-event-listener"
+import { useInterval } from "@yamada-ui/use-interval"
+import type { PropGetter } from "@yamada-ui/utils"
 import {
   ariaAttr,
   createContext,
@@ -25,23 +30,20 @@ import {
   mergeRefs,
   omitObject,
   pickObject,
-  PropGetter,
   useCallbackRef,
   useSafeLayoutEffect,
   useUpdateEffect,
-} from '@yamada-ui/utils'
-import {
+} from "@yamada-ui/utils"
+import type {
   ChangeEvent,
   InputHTMLAttributes,
   KeyboardEvent,
   KeyboardEventHandler,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+} from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
-const isDefaultValidCharacter = (character: string) => /^[Ee0-9+\-.]$/.test(character)
+const isDefaultValidCharacter = (character: string) =>
+  /^[Ee0-9+\-.]$/.test(character)
 
 const isValidNumericKeyboardEvent = (
   { key, ctrlKey, altKey, metaKey }: KeyboardEvent,
@@ -57,7 +59,11 @@ const isValidNumericKeyboardEvent = (
   return isValid(key)
 }
 
-const getStep = <Y extends KeyboardEvent | WheelEvent>({ ctrlKey, shiftKey, metaKey }: Y) => {
+const getStep = <Y extends KeyboardEvent | WheelEvent>({
+  ctrlKey,
+  shiftKey,
+  metaKey,
+}: Y) => {
   let ratio = 1
 
   if (metaKey || ctrlKey) ratio = 0.1
@@ -67,20 +73,74 @@ const getStep = <Y extends KeyboardEvent | WheelEvent>({ ctrlKey, shiftKey, meta
   return ratio
 }
 
-type ValidityState = 'rangeUnderflow' | 'rangeOverflow'
+type ValidityState = "rangeUnderflow" | "rangeOverflow"
 
 export type UseNumberInputProps = UseFormControlProps<HTMLInputElement> &
   UseCounterProps & {
+    /**
+     * The HTML `name` attribute used for forms.
+     */
     name?: string
-    inputMode?: InputHTMLAttributes<any>['inputMode']
-    pattern?: InputHTMLAttributes<any>['pattern']
+    /**
+     * Hints at the type of data that might be entered by the user.
+     * It also determines the type of keyboard shown to the user on mobile devices.
+     *
+     * @default 'decimal'
+     */
+    inputMode?: InputHTMLAttributes<any>["inputMode"]
+    /**
+     * The pattern used to check the <input> element's value against on form submission.
+     *
+     * @default '[0-9]*(.[0-9]+)?'
+     */
+    pattern?: InputHTMLAttributes<any>["pattern"]
+    /**
+     * If `true`, the input will be focused as you increment or decrement the value with the stepper.
+     *
+     * @default true
+     */
     focusInputOnChange?: boolean
+    /**
+     * This controls the value update when you blur out of the input.
+     * - If `true` and the value is greater than `max`, the value will be reset to `max`.
+     * - Else, the value remains the same.
+     *
+     * @default true
+     */
     clampValueOnBlur?: boolean
+    /**
+     * If `true`, the input's value will change based on mouse wheel.
+     *
+     * @default false
+     */
     allowMouseWheel?: boolean
-    onInvalid?: (message: ValidityState, value: string, valueAsNumber: number) => void
+    /**
+     * The callback invoked when invalid number is entered.
+     */
+    onInvalid?: (
+      message: ValidityState,
+      value: string,
+      valueAsNumber: number,
+    ) => void
+    /**
+     * This is used to format the value so that screen readers
+     * can speak out a more human-friendly value.
+     *
+     * It is used to set the `aria-valuetext` property of the input.
+     */
     getAriaValueText?: (value: string | number) => string
+    /**
+     * Whether the pressed key should be allowed in the input.
+     * The default behavior is to allow DOM floating point characters defined by /^[Ee0-9+\-.]$/.
+     */
     isValidCharacter?: (value: string) => boolean
+    /**
+     * If using a custom display format, this converts the custom format to a format `parseFloat` understands.
+     */
     parse?: (value: string) => string
+    /**
+     * If using a custom display format, this converts the default format to the custom format.
+     */
     format?: (value: string | number) => string | number
   }
 
@@ -88,8 +148,8 @@ export const useNumberInput = (props: UseNumberInputProps = {}) => {
   const {
     id,
     name,
-    inputMode = 'decimal',
-    pattern = '[0-9]*(.[0-9]+)?',
+    inputMode = "decimal",
+    pattern = "[0-9]*(.[0-9]+)?",
     required,
     disabled,
     readOnly,
@@ -100,7 +160,7 @@ export const useNumberInput = (props: UseNumberInputProps = {}) => {
     min = Number.MIN_SAFE_INTEGER,
     max = Number.MAX_SAFE_INTEGER,
     precision,
-    'aria-invalid': isInvalid,
+    "aria-invalid": isInvalid,
     ...rest
   } = useFormControlProps(props)
 
@@ -112,7 +172,10 @@ export const useNumberInput = (props: UseNumberInputProps = {}) => {
   const isInteractive = !(readOnly || disabled)
 
   const inputRef = useRef<HTMLInputElement>(null)
-  const inputSelectionRef = useRef<{ start: number | null; end: number | null } | null>(null)
+  const inputSelectionRef = useRef<{
+    start: number | null
+    end: number | null
+  } | null>(null)
   const incrementRef = useRef<HTMLButtonElement>(null)
   const decrementRef = useRef<HTMLButtonElement>(null)
 
@@ -122,7 +185,8 @@ export const useNumberInput = (props: UseNumberInputProps = {}) => {
 
       if (!inputSelectionRef.current) return
 
-      ev.target.selectionStart = inputSelectionRef.current.start ?? ev.currentTarget.value?.length
+      ev.target.selectionStart =
+        inputSelectionRef.current.start ?? ev.currentTarget.value?.length
       ev.currentTarget.selectionEnd =
         inputSelectionRef.current.end ?? ev.currentTarget.selectionStart
     }),
@@ -135,23 +199,37 @@ export const useNumberInput = (props: UseNumberInputProps = {}) => {
     }),
   )
   const onInvalid = useCallbackRef(rest.onInvalid)
-  const isValidCharacter = useCallbackRef(rest.isValidCharacter ?? isDefaultValidCharacter)
+  const isValidCharacter = useCallbackRef(
+    rest.isValidCharacter ?? isDefaultValidCharacter,
+  )
 
-  const { isMin, isMax, isOut, value, valueAsNumber, setValue, update, cast, ...counter } =
-    useCounter({
-      min,
-      max,
-      precision,
-      keepWithinRange,
-      ...rest,
-    })
+  const {
+    isMin,
+    isMax,
+    isOut,
+    value,
+    valueAsNumber,
+    setValue,
+    update,
+    cast,
+    ...counter
+  } = useCounter({
+    min,
+    max,
+    precision,
+    keepWithinRange,
+    ...rest,
+  })
 
   const sanitize = useCallback(
-    (value: string) => value.split('').filter(isValidCharacter).join(''),
+    (value: string) => value.split("").filter(isValidCharacter).join(""),
     [isValidCharacter],
   )
 
-  const parse = useCallback((value: string) => rest.parse?.(value) ?? value, [rest])
+  const parse = useCallback(
+    (value: string) => rest.parse?.(value) ?? value,
+    [rest],
+  )
 
   const format = useCallback(
     (value: string | number) => (rest.format?.(value) ?? value).toString(),
@@ -175,12 +253,12 @@ export const useNumberInput = (props: UseNumberInputProps = {}) => {
   const validateAndClamp = useCallback(() => {
     let next = value as string | number
 
-    if (value === '') return
+    if (value === "") return
 
     const valueStartsWithE = /^[eE]/.test(value.toString())
 
     if (valueStartsWithE) {
-      setValue('')
+      setValue("")
     } else {
       if (valueAsNumber < min) next = min
 
@@ -191,18 +269,16 @@ export const useNumberInput = (props: UseNumberInputProps = {}) => {
   }, [cast, max, min, setValue, value, valueAsNumber])
 
   const onChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const evt = event.nativeEvent as InputEvent
+    (ev: ChangeEvent<HTMLInputElement>) => {
+      if ((ev.nativeEvent as InputEvent).isComposing) return
 
-      if (evt.isComposing) return
-
-      const parsedInput = parse(event.currentTarget.value)
+      const parsedInput = parse(ev.currentTarget.value)
 
       update(sanitize(parsedInput))
 
       inputSelectionRef.current = {
-        start: event.currentTarget.selectionStart,
-        end: event.currentTarget.selectionEnd,
+        start: ev.currentTarget.selectionStart,
+        end: ev.currentTarget.selectionEnd,
       }
     },
     [parse, update, sanitize],
@@ -212,7 +288,8 @@ export const useNumberInput = (props: UseNumberInputProps = {}) => {
     (ev: KeyboardEvent) => {
       if (ev.nativeEvent.isComposing) return
 
-      if (!isValidNumericKeyboardEvent(ev, isValidCharacter)) ev.preventDefault()
+      if (!isValidNumericKeyboardEvent(ev, isValidCharacter))
+        ev.preventDefault()
 
       const step = getStep(ev) * (rest.step ?? 1)
 
@@ -235,8 +312,8 @@ export const useNumberInput = (props: UseNumberInputProps = {}) => {
 
   const { up, down, stop, isSpinning } = useSpinner(increment, decrement)
 
-  useAttributeObserver(incrementRef, ['disabled'], isSpinning, stop)
-  useAttributeObserver(decrementRef, ['disabled'], isSpinning, stop)
+  useAttributeObserver(incrementRef, ["disabled"], isSpinning, stop)
+  useAttributeObserver(decrementRef, ["disabled"], isSpinning, stop)
 
   const focusInput = useCallback(() => {
     if (focusInputOnChange)
@@ -265,9 +342,9 @@ export const useNumberInput = (props: UseNumberInputProps = {}) => {
 
   useUpdateEffect(() => {
     if (valueAsNumber > max) {
-      onInvalid?.('rangeOverflow', format(value), valueAsNumber)
+      onInvalid?.("rangeOverflow", format(value), valueAsNumber)
     } else if (valueAsNumber < min) {
-      onInvalid?.('rangeOverflow', format(value), valueAsNumber)
+      onInvalid?.("rangeOverflow", format(value), valueAsNumber)
     }
   }, [valueAsNumber, value, format, onInvalid])
 
@@ -285,7 +362,7 @@ export const useNumberInput = (props: UseNumberInputProps = {}) => {
 
   useEventListener(
     () => inputRef.current,
-    'wheel',
+    "wheel",
     (ev) => {
       const ownerDocument = inputRef.current?.ownerDocument ?? document
       const isFocused = ownerDocument.activeElement === inputRef.current
@@ -310,19 +387,19 @@ export const useNumberInput = (props: UseNumberInputProps = {}) => {
     (props = {}, ref = null) => ({
       id,
       name,
-      type: 'text',
+      type: "text",
       inputMode,
       pattern,
       required,
       disabled,
       readOnly,
       ...pickObject(rest, formControlProperties),
-      ...omitObject(props, ['defaultValue']),
+      ...omitObject(props, ["defaultValue"]),
       ref: mergeRefs(inputRef, ref),
       value: format(value),
-      'aria-invalid': ariaAttr(isInvalid ?? isOut),
-      autoComplete: 'off',
-      autoCorrect: 'off',
+      "aria-invalid": ariaAttr(isInvalid ?? isOut),
+      autoComplete: "off",
+      autoCorrect: "off",
       onChange: handlerAll(props.onChange, onChange),
       onKeyDown: handlerAll(props.onKeyDown, onKeyDown),
       onFocus: handlerAll(props.onFocus, onFocus),
@@ -359,9 +436,9 @@ export const useNumberInput = (props: UseNumberInputProps = {}) => {
         ...pickObject(rest, formControlProperties),
         ...props,
         ref: mergeRefs(ref, incrementRef),
-        role: 'button',
+        role: "button",
         tabIndex: -1,
-        cursor: readOnly ? 'not-allowed' : props.cursor,
+        cursor: readOnly ? "not-allowed" : props.cursor,
         onPointerDown: handlerAll(props.onPointerDown, (ev) => {
           if (ev.button === 0 && !disabled) eventUp(ev)
         }),
@@ -383,9 +460,9 @@ export const useNumberInput = (props: UseNumberInputProps = {}) => {
         ...pickObject(rest, formControlProperties),
         ...props,
         ref: mergeRefs(ref, decrementRef),
-        role: 'button',
+        role: "button",
         tabIndex: -1,
-        cursor: readOnly ? 'not-allowed' : props.cursor,
+        cursor: readOnly ? "not-allowed" : props.cursor,
         onPointerDown: handlerAll(props.onPointerDown, (ev) => {
           if (ev.button === 0 && !disabled) eventDown(ev)
         }),
@@ -415,7 +492,7 @@ const INTERVAL = 50
 
 const DELAY = 300
 
-type Action = 'increment' | 'decrement'
+type Action = "increment" | "decrement"
 
 const useSpinner = (increment: Function, decrement: Function) => {
   const [isSpinning, setIsSpinning] = useState(false)
@@ -427,9 +504,9 @@ const useSpinner = (increment: Function, decrement: Function) => {
 
   useInterval(
     () => {
-      if (action === 'increment') increment()
+      if (action === "increment") increment()
 
-      if (action === 'decrement') decrement()
+      if (action === "decrement") decrement()
     },
     isSpinning ? INTERVAL : null,
   )
@@ -440,7 +517,7 @@ const useSpinner = (increment: Function, decrement: Function) => {
     timeoutRef.current = setTimeout(() => {
       setIsOnce(false)
       setIsSpinning(true)
-      setAction('increment')
+      setAction("increment")
     }, DELAY)
   }, [increment, isOnce])
 
@@ -450,7 +527,7 @@ const useSpinner = (increment: Function, decrement: Function) => {
     timeoutRef.current = setTimeout(() => {
       setIsOnce(false)
       setIsSpinning(true)
-      setAction('decrement')
+      setAction("decrement")
     }, DELAY)
   }, [decrement, isOnce])
 
@@ -480,7 +557,11 @@ const useAttributeObserver = (
 
     const observer = new ownerDocument.MutationObserver((changes) => {
       for (const { type, attributeName } of changes) {
-        if (type === 'attributes' && attributeName && attributeFilter.includes(attributeName))
+        if (
+          type === "attributes" &&
+          attributeName &&
+          attributeFilter.includes(attributeName)
+        )
           func()
       }
     })
@@ -492,21 +573,42 @@ const useAttributeObserver = (
 }
 
 type NumberInputOptions = {
+  /**
+   * If `true`, display the addon for the number input.
+   */
   isStepper?: boolean
-  container?: HTMLUIProps<'div'>
-  addon?: HTMLUIProps<'div'>
-  increment?: NumberIncrementStepperProps
-  decrement?: NumberDecrementStepperProps
-  focusBorderColor?: CSSUIProps<'unresponsive'>['borderColor']
-  errorBorderColor?: CSSUIProps<'unresponsive'>['borderColor']
+  /**
+   * Props for container element.
+   */
+  containerProps?: HTMLUIProps<"div">
+  /**
+   * Props for addon component.
+   */
+  addonProps?: HTMLUIProps<"div">
+  /**
+   * Props for increment component.
+   */
+  incrementProps?: NumberIncrementStepperProps
+  /**
+   * Props for decrement component.
+   */
+  decrementProps?: NumberDecrementStepperProps
+  /**
+   * The border color when the input is focused.
+   */
+  focusBorderColor?: ColorModeToken<CSS.Property.BorderColor, "colors">
+  /**
+   * The border color when the input is invalid.
+   */
+  errorBorderColor?: ColorModeToken<CSS.Property.BorderColor, "colors">
 }
 
 export type NumberInputProps = Omit<
-  HTMLUIProps<'input'>,
-  'disabled' | 'required' | 'readOnly' | 'size' | 'onChange'
+  HTMLUIProps<"input">,
+  "disabled" | "required" | "readOnly" | "size" | "onChange"
 > &
-  ThemeProps<'NumberInput'> &
-  Omit<UseNumberInputProps, 'disabled' | 'required' | 'readOnly'> &
+  ThemeProps<"NumberInput"> &
+  Omit<UseNumberInputProps, "disabled" | "required" | "readOnly"> &
   NumberInputOptions
 
 type NumberInputContext = {
@@ -516,70 +618,78 @@ type NumberInputContext = {
   styles: Record<string, CSSUIObject>
 }
 
-const [NumberInputContextProvider, useNumberInputContext] = createContext<NumberInputContext>({
-  strict: false,
-  name: 'NumberInputContext',
-})
-
-export const NumberInput = forwardRef<NumberInputProps, 'input'>((props, ref) => {
-  const [styles, mergedProps] = useMultiComponentStyle('NumberInput', props)
-  const {
-    className,
-    isStepper = true,
-    container,
-    addon,
-    increment,
-    decrement,
-    onChange,
-    ...rest
-  } = omitThemeProps(mergedProps)
-  const { getInputProps, getIncrementProps, getDecrementProps } = useNumberInput({
-    onChange,
-    ...rest,
+const [NumberInputContextProvider, useNumberInputContext] =
+  createContext<NumberInputContext>({
+    strict: false,
+    name: "NumberInputContext",
   })
 
-  const css: CSSUIObject = {
-    position: 'relative',
-    zIndex: 0,
-    ...styles.container,
-  }
+export const NumberInput = forwardRef<NumberInputProps, "input">(
+  (props, ref) => {
+    const [styles, mergedProps] = useMultiComponentStyle("NumberInput", props)
+    const {
+      className,
+      isStepper = true,
+      containerProps,
+      addonProps,
+      incrementProps,
+      decrementProps,
+      onChange,
+      ...rest
+    } = omitThemeProps(mergedProps)
+    const { getInputProps, getIncrementProps, getDecrementProps } =
+      useNumberInput({
+        onChange,
+        ...rest,
+      })
 
-  return (
-    <NumberInputContextProvider
-      value={{ getInputProps, getIncrementProps, getDecrementProps, styles }}
-    >
-      <ui.div className={cx('ui-number-input', className)} __css={css} {...container}>
-        <NumberInputField {...getInputProps(rest, ref)} />
+    const css: CSSUIObject = {
+      position: "relative",
+      zIndex: 0,
+      ...styles.container,
+    }
 
-        {isStepper ? (
-          <NumberInputAddon {...addon}>
-            <NumberIncrementStepper {...increment} />
-            <NumberDecrementStepper {...decrement} />
-          </NumberInputAddon>
-        ) : null}
-      </ui.div>
-    </NumberInputContextProvider>
-  )
-})
+    return (
+      <NumberInputContextProvider
+        value={{ getInputProps, getIncrementProps, getDecrementProps, styles }}
+      >
+        <ui.div
+          className={cx("ui-number-input", className)}
+          __css={css}
+          {...containerProps}
+        >
+          <NumberInputField {...getInputProps(rest, ref)} />
+
+          {isStepper ? (
+            <NumberInputAddon {...addonProps}>
+              <NumberIncrementStepper {...incrementProps} />
+              <NumberDecrementStepper {...decrementProps} />
+            </NumberInputAddon>
+          ) : null}
+        </ui.div>
+      </NumberInputContextProvider>
+    )
+  },
+)
 
 type NumberInputFieldProps = Omit<
-  HTMLUIProps<'input'>,
-  'disabled' | 'required' | 'readOnly' | 'size'
+  HTMLUIProps<"input">,
+  "disabled" | "required" | "readOnly" | "size"
 >
 
-const NumberInputField = forwardRef<NumberInputFieldProps, 'input'>(
+const NumberInputField = forwardRef<NumberInputFieldProps, "input">(
   ({ className, ...rest }, ref) => {
     const { styles } = useNumberInputContext()
 
     const css: CSSUIObject = {
-      width: '100%',
+      width: "100%",
       ...styles.field,
     }
 
     return (
       <ui.input
         ref={ref}
-        className={cx('ui-number-input-field', className)}
+        className={cx("ui-number-input__field", className)}
         __css={css}
         {...rest}
       />
@@ -587,51 +697,53 @@ const NumberInputField = forwardRef<NumberInputFieldProps, 'input'>(
   },
 )
 
-type NumberInputAddonProps = HTMLUIProps<'div'>
+type NumberInputAddonProps = HTMLUIProps<"div">
 
-const NumberInputAddon = forwardRef<NumberInputAddonProps, 'div'>(({ className, ...rest }, ref) => {
-  const { styles } = useNumberInputContext()
+const NumberInputAddon = forwardRef<NumberInputAddonProps, "div">(
+  ({ className, ...rest }, ref) => {
+    const { styles } = useNumberInputContext()
 
-  const css: CSSUIObject = {
-    display: 'flex',
-    flexDirection: 'column',
-    position: 'absolute',
-    top: '0',
-    insetEnd: '0px',
-    margin: '1px',
-    height: 'calc(100% - 2px)',
-    zIndex: 1,
-    ...styles.addon,
-  }
+    const css: CSSUIObject = {
+      display: "flex",
+      flexDirection: "column",
+      position: "absolute",
+      top: "0",
+      insetEnd: "0px",
+      margin: "1px",
+      height: "calc(100% - 2px)",
+      zIndex: "yamcha",
+      ...styles.addon,
+    }
 
-  return (
-    <ui.div
-      ref={ref}
-      className={cx('ui-number-input-addon', className)}
-      aria-hidden
-      __css={css}
-      {...rest}
-    />
-  )
-})
+    return (
+      <ui.div
+        ref={ref}
+        className={cx("ui-number-input__addon", className)}
+        aria-hidden
+        __css={css}
+        {...rest}
+      />
+    )
+  },
+)
 
-const Stepper = ui('div', {
+const Stepper = ui("div", {
   baseStyle: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     flex: 1,
-    transitionProperty: 'common',
-    transitionDuration: 'normal',
-    userSelect: 'none',
-    cursor: 'pointer',
-    lineHeight: 'normal',
+    transitionProperty: "common",
+    transitionDuration: "normal",
+    userSelect: "none",
+    cursor: "pointer",
+    lineHeight: "normal",
   },
 })
 
-type NumberIncrementStepperProps = HTMLUIProps<'div'>
+type NumberIncrementStepperProps = HTMLUIProps<"div">
 
-const NumberIncrementStepper = forwardRef<NumberIncrementStepperProps, 'div'>(
+const NumberIncrementStepper = forwardRef<NumberIncrementStepperProps, "div">(
   ({ className, children, ...rest }, ref) => {
     const { getIncrementProps, styles } = useNumberInputContext()
 
@@ -639,19 +751,19 @@ const NumberIncrementStepper = forwardRef<NumberIncrementStepperProps, 'div'>(
 
     return (
       <Stepper
-        className={cx('ui-number-input-stepper', className)}
+        className={cx("ui-number-input__stepper--up", className)}
         {...getIncrementProps(rest, ref)}
         __css={css}
       >
-        {children ?? <ChevronIcon __css={{ transform: 'rotate(180deg)' }} />}
+        {children ?? <ChevronIcon __css={{ transform: "rotate(180deg)" }} />}
       </Stepper>
     )
   },
 )
 
-type NumberDecrementStepperProps = HTMLUIProps<'div'>
+type NumberDecrementStepperProps = HTMLUIProps<"div">
 
-const NumberDecrementStepper = forwardRef<NumberDecrementStepperProps, 'div'>(
+const NumberDecrementStepper = forwardRef<NumberDecrementStepperProps, "div">(
   ({ className, children, ...rest }, ref) => {
     const { getDecrementProps, styles } = useNumberInputContext()
 
@@ -659,7 +771,7 @@ const NumberDecrementStepper = forwardRef<NumberDecrementStepperProps, 'div'>(
 
     return (
       <Stepper
-        className={cx('ui-number-input-stepper', className)}
+        className={cx("ui-number-input__stepper--down", className)}
         {...getDecrementProps(rest, ref)}
         __css={css}
       >

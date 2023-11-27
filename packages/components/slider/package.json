@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/slider",
-  "version": "0.1.12",
+  "version": "0.4.14",
   "description": "Yamada UI slider components",
   "keywords": [
     "yamada",
@@ -68,6 +68,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

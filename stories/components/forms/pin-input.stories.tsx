@@ -1,106 +1,118 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { Button, FormControl, PinInput, PinInputField, VStack, useLoading } from '@yamada-ui/react'
-import { useState } from 'react'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import type { Meta, StoryFn } from "@storybook/react"
+import {
+  Button,
+  FormControl,
+  PinInput,
+  PinInputField,
+  VStack,
+  useLoading,
+} from "@yamada-ui/react"
+import { useState } from "react"
+import type { SubmitHandler } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 
-export default {
-  title: 'Components / Forms / PinInput',
+type Story = StoryFn<typeof PinInput>
+
+const meta: Meta<typeof PinInput> = {
+  title: "Components / Forms / PinInput",
   component: PinInput,
-} as ComponentMeta<typeof PinInput>
+}
 
-export const basic: ComponentStory<typeof PinInput> = () => {
+export default meta
+
+export const basic: Story = () => {
   return <PinInput />
 }
 
-export const withSize: ComponentStory<typeof PinInput> = () => {
+export const withSize: Story = () => {
   return (
     <>
-      <PinInput size='xs' />
+      <PinInput size="xs" />
 
-      <PinInput size='sm' />
+      <PinInput size="sm" />
 
-      <PinInput size='md' />
+      <PinInput size="md" />
 
-      <PinInput size='lg' />
+      <PinInput size="lg" />
     </>
   )
 }
 
-export const withVariant: ComponentStory<typeof PinInput> = () => {
+export const withVariant: Story = () => {
   return (
     <>
-      <PinInput variant='outline' />
+      <PinInput variant="outline" />
 
-      <PinInput variant='filled' />
+      <PinInput variant="filled" />
 
-      <PinInput variant='flushed' />
+      <PinInput variant="flushed" />
 
-      <PinInput variant='unstyled' />
+      <PinInput variant="unstyled" />
     </>
   )
 }
 
-export const withFields: ComponentStory<typeof PinInput> = () => {
+export const withFields: Story = () => {
   return (
     <>
-      <PinInput fileds={3} />
+      <PinInput items={3} />
 
-      <PinInput fileds={4} />
+      <PinInput items={4} />
 
-      <PinInput fileds={5} />
+      <PinInput items={5} />
 
-      <PinInput fileds={6} />
+      <PinInput items={6} />
     </>
   )
 }
 
-export const withType: ComponentStory<typeof PinInput> = () => {
-  return (
-    <>
-      <PinInput />
-
-      <PinInput type='alphanumeric' />
-    </>
-  )
-}
-
-export const withDefaultValue: ComponentStory<typeof PinInput> = () => {
-  return (
-    <>
-      <PinInput defaultValue='1234' />
-
-      <PinInput defaultValue='123' />
-    </>
-  )
-}
-
-export const withBorderColor: ComponentStory<typeof PinInput> = () => {
+export const withType: Story = () => {
   return (
     <>
       <PinInput />
 
-      <PinInput focusBorderColor='green.500' />
-
-      <PinInput isInvalid errorBorderColor='orange.500' />
+      <PinInput type="alphanumeric" />
     </>
   )
 }
 
-export const withOnComplete: ComponentStory<typeof PinInput> = () => {
+export const withDefaultValue: Story = () => {
+  return (
+    <>
+      <PinInput defaultValue="1234" />
+
+      <PinInput defaultValue="123" />
+    </>
+  )
+}
+
+export const withBorderColor: Story = () => {
+  return (
+    <>
+      <PinInput />
+
+      <PinInput focusBorderColor="green.500" />
+
+      <PinInput isInvalid errorBorderColor="orange.500" />
+    </>
+  )
+}
+
+export const withOnComplete: Story = () => {
   const { page } = useLoading()
 
-  return <PinInput onComplete={() => page.start({ timeout: 5000 })} />
+  return <PinInput onComplete={() => page.start({ duration: 5000 })} />
 }
 
-export const useOneTimePassword: ComponentStory<typeof PinInput> = () => {
+export const useOneTimePassword: Story = () => {
   return <PinInput otp />
 }
 
-export const maskingValue: ComponentStory<typeof PinInput> = () => {
+export const maskingValue: Story = () => {
   return <PinInput mask />
 }
 
-export const customFields: ComponentStory<typeof PinInput> = () => {
+export const customFields: Story = () => {
   return (
     <PinInput>
       <PinInputField />
@@ -111,24 +123,24 @@ export const customFields: ComponentStory<typeof PinInput> = () => {
   )
 }
 
-export const costomPlaceholder: ComponentStory<typeof PinInput> = () => {
-  return <PinInput placeholder='💩' />
+export const costomPlaceholder: Story = () => {
+  return <PinInput placeholder="💩" />
 }
 
-export const customControl: ComponentStory<typeof PinInput> = () => {
+export const customControl: Story = () => {
   const { page } = useLoading()
-  const [value, onChange] = useState('')
+  const [value, onChange] = useState("")
 
-  const onComplete = () => page.start({ timeout: 5000 })
+  const onComplete = () => page.start({ duration: 5000 })
 
   return <PinInput value={value} onChange={onChange} onComplete={onComplete} />
 }
 
-export const disabledFocusManagement: ComponentStory<typeof PinInput> = () => {
+export const disabledFocusManagement: Story = () => {
   return <PinInput manageFocus={false} />
 }
 
-export const isDisabled: ComponentStory<typeof PinInput> = () => {
+export const isDisabled: Story = () => {
   return (
     <>
       <PinInput isDisabled />
@@ -142,9 +154,9 @@ export const isDisabled: ComponentStory<typeof PinInput> = () => {
 
       <FormControl
         isDisabled
-        label='Please one-time password'
-        helperMessage='Just sent you a one-time password to your e-mail address.'
-        errorMessage='one-time password is required.'
+        label="Please one-time password"
+        helperMessage="Just sent you a one-time password to your e-mail address."
+        errorMessage="one-time password is required."
       >
         <PinInput />
       </FormControl>
@@ -152,7 +164,7 @@ export const isDisabled: ComponentStory<typeof PinInput> = () => {
   )
 }
 
-export const isReadonly: ComponentStory<typeof PinInput> = () => {
+export const isReadonly: Story = () => {
   return (
     <>
       <PinInput isReadOnly />
@@ -166,9 +178,9 @@ export const isReadonly: ComponentStory<typeof PinInput> = () => {
 
       <FormControl
         isReadOnly
-        label='Please one-time password'
-        helperMessage='Just sent you a one-time password to your e-mail address.'
-        errorMessage='one-time password is required.'
+        label="Please one-time password"
+        helperMessage="Just sent you a one-time password to your e-mail address."
+        errorMessage="one-time password is required."
       >
         <PinInput />
       </FormControl>
@@ -176,7 +188,7 @@ export const isReadonly: ComponentStory<typeof PinInput> = () => {
   )
 }
 
-export const isInvalid: ComponentStory<typeof PinInput> = () => {
+export const isInvalid: Story = () => {
   return (
     <>
       <PinInput isInvalid />
@@ -190,9 +202,9 @@ export const isInvalid: ComponentStory<typeof PinInput> = () => {
 
       <FormControl
         isInvalid
-        label='Please one-time password'
-        helperMessage='Just sent you a one-time password to your e-mail address.'
-        errorMessage='one-time password is required.'
+        label="Please one-time password"
+        helperMessage="Just sent you a one-time password to your e-mail address."
+        errorMessage="one-time password is required."
       >
         <PinInput />
       </FormControl>
@@ -200,7 +212,7 @@ export const isInvalid: ComponentStory<typeof PinInput> = () => {
   )
 }
 
-export const reactHookForm: ComponentStory<typeof PinInput> = () => {
+export const reactHookForm: Story = () => {
   type Data = { pinInput: string }
 
   const {
@@ -210,40 +222,40 @@ export const reactHookForm: ComponentStory<typeof PinInput> = () => {
     formState: { errors },
   } = useForm<Data>()
 
-  const onSubmit: SubmitHandler<Data> = (data) => console.log('submit:', data)
+  const onSubmit: SubmitHandler<Data> = (data) => console.log("submit:", data)
 
-  console.log('watch:', watch())
+  console.log("watch:", watch())
 
   return (
-    <VStack as='form' onSubmit={handleSubmit(onSubmit)}>
+    <VStack as="form" onSubmit={handleSubmit(onSubmit)}>
       <FormControl
         isInvalid={!!errors.pinInput}
-        label='Token'
+        label="Token"
         errorMessage={errors.pinInput?.message}
       >
         <Controller
-          name='pinInput'
+          name="pinInput"
           control={control}
           rules={{
-            required: { value: true, message: 'This is required.' },
-            minLength: { value: 4, message: 'This is required.' },
+            required: { value: true, message: "This is required." },
+            minLength: { value: 4, message: "This is required." },
           }}
           render={({ field }) => <PinInput {...field} />}
         />
       </FormControl>
 
-      <Button type='submit' alignSelf='flex-end'>
+      <Button type="submit" alignSelf="flex-end">
         Submit
       </Button>
     </VStack>
   )
 }
 
-export const reactHookFormWithDefaultValue: ComponentStory<typeof PinInput> = () => {
+export const reactHookFormWithDefaultValue: Story = () => {
   type Data = { pinInput: string }
 
   const defaultValues: Data = {
-    pinInput: '5',
+    pinInput: "5",
   }
 
   const {
@@ -253,29 +265,29 @@ export const reactHookFormWithDefaultValue: ComponentStory<typeof PinInput> = ()
     formState: { errors },
   } = useForm<Data>({ defaultValues })
 
-  const onSubmit: SubmitHandler<Data> = (data) => console.log('submit:', data)
+  const onSubmit: SubmitHandler<Data> = (data) => console.log("submit:", data)
 
-  console.log('watch:', watch())
+  console.log("watch:", watch())
 
   return (
-    <VStack as='form' onSubmit={handleSubmit(onSubmit)}>
+    <VStack as="form" onSubmit={handleSubmit(onSubmit)}>
       <FormControl
         isInvalid={!!errors.pinInput}
-        label='Token'
+        label="Token"
         errorMessage={errors.pinInput?.message}
       >
         <Controller
-          name='pinInput'
+          name="pinInput"
           control={control}
           rules={{
-            required: { value: true, message: 'This is required.' },
-            minLength: { value: 4, message: 'This is required.' },
+            required: { value: true, message: "This is required." },
+            minLength: { value: 4, message: "This is required." },
           }}
           render={({ field }) => <PinInput {...field} />}
         />
       </FormControl>
 
-      <Button type='submit' alignSelf='flex-end'>
+      <Button type="submit" alignSelf="flex-end">
         Submit
       </Button>
     </VStack>

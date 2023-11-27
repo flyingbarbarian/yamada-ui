@@ -1,6 +1,10 @@
-import { isObject, isArray, Dict, isFunction } from '.'
+import type { Dict } from "."
+import { isObject, isArray, isFunction } from "."
 
-export const omitObject = <T extends Dict, K extends keyof T>(obj: T, keys: K[]): Omit<T, K> => {
+export const omitObject = <T extends Dict, K extends keyof T>(
+  obj: T,
+  keys: K[],
+): Omit<T, K> => {
   const result: Dict = {}
 
   Object.keys(obj).forEach((key) => {
@@ -25,7 +29,10 @@ export const pickObject = <T extends Dict, K extends keyof T>(
   return result
 }
 
-export const splitObject = <T extends Dict, K extends keyof T>(obj: T, keys: K[]) => {
+export const splitObject = <T extends Dict, K extends keyof T>(
+  obj: T,
+  keys: K[],
+) => {
   const picked: Dict = {}
   const omitted: Dict = {}
 
@@ -61,39 +68,52 @@ export const filterUndefined = <T extends Dict>(obj: T): T =>
 export const merge = <T extends Dict>(
   target: any,
   source: any,
-  overrideArray: boolean = false,
+  mergeArray: boolean = false,
 ): T => {
   let result = Object.assign({}, target)
 
-  if (isObject(target) && isObject(source)) {
-    for (const [sourceKey, sourceValue] of Object.entries(source)) {
-      const targetValue = target[sourceKey]
+  if (isObject(source)) {
+    if (isObject(target)) {
+      for (const [sourceKey, sourceValue] of Object.entries(source)) {
+        const targetValue = target[sourceKey]
 
-      if (overrideArray && Array.isArray(sourceValue) && Array.isArray(targetValue)) {
-        result[sourceKey] = targetValue.concat(...sourceValue)
-      } else if (
-        !isFunction(sourceValue) &&
-        isObject(sourceValue) &&
-        target.hasOwnProperty(sourceKey)
-      ) {
-        result[sourceKey] = merge(targetValue, sourceValue, overrideArray)
-      } else {
-        Object.assign(result, { [sourceKey]: sourceValue })
+        if (mergeArray && isArray(sourceValue) && isArray(targetValue)) {
+          result[sourceKey] = targetValue.concat(...sourceValue)
+        } else if (
+          !isFunction(sourceValue) &&
+          isObject(sourceValue) &&
+          target.hasOwnProperty(sourceKey)
+        ) {
+          result[sourceKey] = merge(targetValue, sourceValue, mergeArray)
+        } else {
+          Object.assign(result, { [sourceKey]: sourceValue })
+        }
       }
+    } else {
+      result = source
     }
   }
 
   return result as T
 }
 
-export const flattenObject = <T extends Dict>(obj: any, maxDepth: number = Infinity): T => {
+export const flattenObject = <T extends Dict>(
+  obj: any,
+  maxDepth: number = Infinity,
+  omitKeys: string[] = [],
+): T => {
   if ((!isObject(obj) && !isArray(obj)) || !maxDepth) return obj
 
   return Object.entries(obj).reduce((result, [key, value]) => {
-    if (isObject(value)) {
-      Object.entries(flattenObject(value, maxDepth - 1)).forEach(([childKey, childValue]) => {
-        result[`${key}.${childKey}`] = childValue
-      })
+    if (
+      isObject(value) &&
+      !Object.keys(value).some((key) => omitKeys.includes(key))
+    ) {
+      Object.entries(flattenObject(value, maxDepth - 1, omitKeys)).forEach(
+        ([childKey, childValue]) => {
+          result[`${key}.${childKey}`] = childValue
+        },
+      )
     } else {
       result[key] = value
     }
@@ -109,9 +129,13 @@ export const objectFromEntries = <T extends Dict>(entries: any[][]): T =>
     return result
   }, {} as any) as T
 
-export const keysFormObject = <T extends Dict>(obj: T): (keyof T)[] => Object.keys(obj)
+export const keysFormObject = <T extends Dict>(obj: T): (keyof T)[] =>
+  Object.keys(obj)
 
-export const replaceObject = <T extends any>(objOrArray: T, callBack: (value: any) => any): T => {
+export const replaceObject = <T extends any>(
+  objOrArray: T,
+  callBack: (value: any) => any,
+): T => {
   if (isArray(objOrArray)) {
     return objOrArray.map(callBack) as T
   } else if (isObject(objOrArray)) {
@@ -125,8 +149,13 @@ export const replaceObject = <T extends any>(objOrArray: T, callBack: (value: an
   }
 }
 
-export const getObject = (obj: Dict, path: string | number, fallback?: any, i?: number) => {
-  const k = typeof path === 'string' ? path.split('.') : [path]
+export const getObject = (
+  obj: Dict,
+  path: string | number,
+  fallback?: any,
+  i?: number,
+) => {
+  const k = typeof path === "string" ? path.split(".") : [path]
 
   for (i = 0; i < k.length; i += 1) {
     if (!obj) break
@@ -139,8 +168,13 @@ export const getObject = (obj: Dict, path: string | number, fallback?: any, i?: 
 export const memoizeObject = (func: typeof getObject) => {
   const cache = new WeakMap()
 
-  const memoizedFunc: typeof getObject = (obj, path, fallback, i) => {
-    if (typeof obj === 'undefined') {
+  const memoizedFunc = <T extends unknown = any>(
+    obj: Dict,
+    path: string | number,
+    fallback?: any,
+    i?: number,
+  ): T => {
+    if (typeof obj === "undefined") {
       return func(obj, path, fallback)
     }
 
@@ -154,7 +188,7 @@ export const memoizeObject = (func: typeof getObject) => {
 
     map.set(path, value)
 
-    return value
+    return value as T
   }
 
   return memoizedFunc
@@ -163,7 +197,8 @@ export const memoizeObject = (func: typeof getObject) => {
 export const getMemoizedObject = memoizeObject(getObject)
 
 export const assignAfter = (target: Record<string, any>, ...sources: any[]) => {
-  if (target == null) throw new TypeError('Cannot convert undefined or null to object')
+  if (target == null)
+    throw new TypeError("Cannot convert undefined or null to object")
 
   const result: Record<string, unknown> = { ...target }
 

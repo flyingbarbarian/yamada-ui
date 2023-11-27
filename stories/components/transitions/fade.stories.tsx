@@ -1,12 +1,16 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { Box, Button, Fade, useBoolean } from '@yamada-ui/react'
+import type { Meta, StoryFn } from "@storybook/react"
+import { Box, Button, Fade, useBoolean } from "@yamada-ui/react"
 
-export default {
-  title: 'Components / Transitions / Fade',
+type Story = StoryFn<typeof Fade>
+
+const meta: Meta<typeof Fade> = {
+  title: "Components / Transitions / Fade",
   component: Fade,
-} as ComponentMeta<typeof Fade>
+}
 
-export const basic: ComponentStory<typeof Fade> = () => {
+export default meta
+
+export const basic: Story = () => {
   const [isOpen, { toggle }] = useBoolean()
 
   return (
@@ -14,19 +18,19 @@ export const basic: ComponentStory<typeof Fade> = () => {
       <Button onClick={toggle}>Please Click</Button>
 
       <Fade isOpen={isOpen}>
-        <Box w='full' bg='orange.500' rounded='md' p='md' color='white'>
+        <Box w="full" bg="orange.500" rounded="md" p="md" color="white">
           クリリンのことか……クリリンのことかーーーっ！！！！！
         </Box>
       </Fade>
 
-      <Box w='full' bg='purple.500' rounded='md' p='md' color='white'>
+      <Box w="full" bg="purple.500" rounded="md" p="md" color="white">
         私の戦闘力は530000です。ですがもちろんフルパワーであなたと戦う気はありませんからご心配なく……
       </Box>
     </>
   )
 }
 
-export const withDuration: ComponentStory<typeof Fade> = () => {
+export const withDuration: Story = () => {
   const [isOpen, { toggle }] = useBoolean()
 
   return (
@@ -34,19 +38,19 @@ export const withDuration: ComponentStory<typeof Fade> = () => {
       <Button onClick={toggle}>Please Click</Button>
 
       <Fade isOpen={isOpen} duration={0.4}>
-        <Box w='full' bg='orange.500' rounded='md' p='md' color='white'>
+        <Box w="full" bg="orange.500" rounded="md" p="md" color="white">
           クリリンのことか……クリリンのことかーーーっ！！！！！
         </Box>
       </Fade>
 
-      <Box w='full' bg='purple.500' rounded='md' p='md' color='white'>
+      <Box w="full" bg="purple.500" rounded="md" p="md" color="white">
         私の戦闘力は530000です。ですがもちろんフルパワーであなたと戦う気はありませんからご心配なく……
       </Box>
     </>
   )
 }
 
-export const exitUnmount: ComponentStory<typeof Fade> = () => {
+export const exitUnmount: Story = () => {
   const [isOpen, { toggle }] = useBoolean()
 
   return (
@@ -54,12 +58,12 @@ export const exitUnmount: ComponentStory<typeof Fade> = () => {
       <Button onClick={toggle}>Please Click</Button>
 
       <Fade isOpen={isOpen} unmountOnExit>
-        <Box w='full' bg='orange.500' rounded='md' p='md' color='white'>
+        <Box w="full" bg="orange.500" rounded="md" p="md" color="white">
           クリリンのことか……クリリンのことかーーーっ！！！！！
         </Box>
       </Fade>
 
-      <Box w='full' bg='purple.500' rounded='md' p='md' color='white'>
+      <Box w="full" bg="purple.500" rounded="md" p="md" color="white">
         私の戦闘力は530000です。ですがもちろんフルパワーであなたと戦う気はありませんからご心配なく……
       </Box>
     </>

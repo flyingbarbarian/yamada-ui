@@ -1,39 +1,61 @@
-import { ui, forwardRef, HTMLUIProps, CSSUIObject, UIProps } from '@yamada-ui/core'
-import { cx } from '@yamada-ui/utils'
-import { useCarouselContext, useCarouselSlide, UseCarouselSlideProps } from './use-carousel'
+import type { HTMLUIProps, CSSUIObject } from "@yamada-ui/core"
+import { ui, forwardRef } from "@yamada-ui/core"
+import { cx } from "@yamada-ui/utils"
+import type { UseCarouselSlideProps } from "./use-carousel"
+import { useCarouselContext, useCarouselSlide } from "./use-carousel"
 
 type CarouselSlideOptions = {
-  size?: UIProps['width']
+  /**
+   * The CSS `width` property.
+   */
+  size?: CSSUIObject["width"]
 }
 
-export type CarouselSlideProps = HTMLUIProps<'div'> & UseCarouselSlideProps & CarouselSlideOptions
+export type CarouselSlideProps = HTMLUIProps<"div"> &
+  UseCarouselSlideProps &
+  CarouselSlideOptions
 
-export const CarouselSlide = forwardRef<CarouselSlideProps, 'div'>(
+export const CarouselSlide = forwardRef<CarouselSlideProps, "div">(
   ({ className, size, ...rest }, ref) => {
-    const { slideSize, includeGapInSize, orientation, gap } = useCarouselContext()
+    const { slideSize, includeGapInSize, orientation, gap } =
+      useCarouselContext()
 
     const { getSlideProps } = useCarouselSlide(rest)
 
     size ??= slideSize
 
     const css: CSSUIObject = {
-      position: 'relative',
+      position: "relative",
       flex: `0 0 ${size}`,
       ...(includeGapInSize
-        ? { [orientation === 'vertical' ? 'pb' : 'pr']: gap }
-        : { [orientation === 'vertical' ? 'mb' : 'mr']: gap }),
+        ? { [orientation === "vertical" ? "pb" : "pr"]: gap }
+        : { [orientation === "vertical" ? "mb" : "mr"]: gap }),
     }
 
     return (
-      <ui.div className={cx('ui-carousel-slide', className)} __css={css} {...getSlideProps({})}>
+      <ui.div
+        className={cx("ui-carousel__slide", className)}
+        __css={css}
+        {...getSlideProps({})}
+      >
         <CarouselSlideInner ref={ref} {...rest} />
       </ui.div>
     )
   },
 )
 
-type CarouselSlideInnerProps = HTMLUIProps<'div'>
+type CarouselSlideInnerProps = HTMLUIProps<"div">
 
-const CarouselSlideInner = forwardRef<CarouselSlideInnerProps, 'div'>(({ ...rest }, ref) => {
-  return <ui.div ref={ref} className='ui-carousel-slide-inner' w='100%' h='100%' {...rest} />
-})
+const CarouselSlideInner = forwardRef<CarouselSlideInnerProps, "div">(
+  ({ ...rest }, ref) => {
+    return (
+      <ui.div
+        ref={ref}
+        className="ui-carousel__slide__inner"
+        w="100%"
+        h="100%"
+        {...rest}
+      />
+    )
+  },
+)

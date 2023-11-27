@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/skeleton",
-  "version": "0.1.11",
+  "version": "0.4.1",
   "description": "Yamada UI skeleton component",
   "keywords": [
     "yamada",
@@ -65,6 +65,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

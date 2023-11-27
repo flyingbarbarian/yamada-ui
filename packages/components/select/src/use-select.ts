@@ -1,22 +1,22 @@
-import { CSSUIObject, HTMLUIProps, layoutStylesProperties } from '@yamada-ui/core'
+import type { CSSUIObject, HTMLUIProps } from "@yamada-ui/core"
+import { layoutStylesProperties } from "@yamada-ui/core"
+import type { FormControlOptions } from "@yamada-ui/form-control"
 import {
-  FormControlOptions,
   formControlProperties,
   useFormControlProps,
-} from '@yamada-ui/form-control'
-import { PopoverProps } from '@yamada-ui/popover'
-import { useControllableState } from '@yamada-ui/use-controllable-state'
-import { createDescendant } from '@yamada-ui/use-descendant'
-import { useOutsideClick } from '@yamada-ui/use-outside-click'
+} from "@yamada-ui/form-control"
+import type { PopoverProps } from "@yamada-ui/popover"
+import { useControllableState } from "@yamada-ui/use-controllable-state"
+import { createDescendant } from "@yamada-ui/use-descendant"
+import { useOutsideClick } from "@yamada-ui/use-outside-click"
+import type { Dict, PropGetter } from "@yamada-ui/utils"
 import {
   createContext,
   dataAttr,
-  Dict,
   funcAll,
   handlerAll,
   omitObject,
   pickObject,
-  PropGetter,
   splitObject,
   useUnmountEffect,
   useUpdateEffect,
@@ -27,25 +27,23 @@ import {
   isUndefined,
   getEventRelatedTarget,
   isContains,
-} from '@yamada-ui/utils'
-import {
+} from "@yamada-ui/utils"
+import type {
   Dispatch,
   ForwardedRef,
   KeyboardEvent,
   RefObject,
   SetStateAction,
-  useCallback,
-  useRef,
-  useState,
   FocusEvent,
   MouseEvent,
-  useEffect,
   CSSProperties,
-} from 'react'
-import { OptionProps } from './'
+} from "react"
+import { useCallback, useRef, useState, useEffect } from "react"
+import type { OptionProps } from "./"
 
 const isTargetOption = (target: EventTarget | null): boolean =>
-  isHTMLElement(target) && !!target?.getAttribute('role')?.startsWith('select-item')
+  isHTMLElement(target) &&
+  !!target?.getAttribute("role")?.startsWith("select-item")
 
 export const {
   DescendantsContextProvider: SelectDescendantsContextProvider,
@@ -56,11 +54,14 @@ export const {
 
 export type MaybeValue = string | string[]
 
-type SelectContext = Omit<UseSelectProps, 'value' | 'defaultValue' | 'onChange' | 'isEmpty'> & {
+type SelectContext = Omit<
+  UseSelectProps,
+  "value" | "defaultValue" | "onChange" | "isEmpty"
+> & {
   value: MaybeValue
-  displayValue: MaybeValue | undefined
+  label: MaybeValue | undefined
   onChange: (newValue: string) => void
-  onChangeDisplayValue: (newValue: string, runOmit?: boolean) => void
+  onChangeLabel: (newValue: string, runOmit?: boolean) => void
   isOpen: boolean
   onOpen: () => void
   onClose: () => void
@@ -78,25 +79,68 @@ type SelectContext = Omit<UseSelectProps, 'value' | 'defaultValue' | 'onChange' 
 
 export const [SelectProvider, useSelectContext] = createContext<SelectContext>({
   strict: false,
-  name: 'SelectContext',
+  name: "SelectContext",
 })
 
 export type UseSelectProps<T extends MaybeValue = string> = Omit<
-  HTMLUIProps<'div'>,
-  'defaultValue' | 'onChange'
+  HTMLUIProps<"div">,
+  "defaultValue" | "onChange"
 > &
-  Omit<PopoverProps, 'initialFocusRef' | 'closeOnButton' | 'isOpen'> &
+  Omit<
+    PopoverProps,
+    | "initialFocusRef"
+    | "closeOnButton"
+    | "isOpen"
+    | "trigger"
+    | "autoFocus"
+    | "restoreFocus"
+    | "openDelay"
+    | "closeDelay"
+  > &
   FormControlOptions & {
+    /**
+     * The HTML `name` attribute used for forms.
+     */
     name?: string
+    /**
+     * The value of the select.
+     */
     value?: T
+    /**
+     * The initial value of the select.
+     */
     defaultValue?: T
+    /**
+     * The callback invoked when value state changes.
+     */
     onChange?: (value: T) => void
+    /**
+     * If `true`, the list element will be closed when value is selected.
+     *
+     * @default true
+     */
     closeOnSelect?: boolean
+    /**
+     * If `true`, include placeholders in options.
+     *
+     * @default true
+     */
     placeholderInOptions?: boolean
     isEmpty: boolean
+    /**
+     * If `true`, the selected item(s) will be excluded from the list.
+     *
+     * @default false
+     */
     omitSelectedValues?: boolean
+    /**
+     * The maximum selectable value.
+     */
     maxSelectedValues?: number
-    optionProps?: Omit<OptionProps, 'value' | 'children'>
+    /**
+     * Props for select option element.
+     */
+    optionProps?: Omit<OptionProps, "value" | "children">
   }
 
 export const useSelect = <T extends MaybeValue = string>({
@@ -109,7 +153,7 @@ export const useSelect = <T extends MaybeValue = string>({
   omitSelectedValues = false,
   maxSelectedValues,
   isEmpty,
-  placement = 'bottom-start',
+  placement = "bottom-start",
   duration = 0.2,
   optionProps,
   ...rest
@@ -134,18 +178,22 @@ export const useSelect = <T extends MaybeValue = string>({
     defaultValue: rest.defaultValue,
     onChange: rest.onChange,
   })
-  const [displayValue, setDisplayValue] = useState<T | undefined>(undefined)
+  const [label, setLabel] = useState<T | undefined>(undefined)
 
   const isFocused = focusedIndex > -1
   const isMulti = isArray(value)
-  const isEmptyValue = (!isMulti ? !value : !value.length) && !(placeholder && placeholderInOptions)
+  const isEmptyValue =
+    (!isMulti ? !value : !value.length) &&
+    !(placeholder && placeholderInOptions)
 
   const selectedValues = descendants.values(
-    ({ node }) => isMulti && value.includes(node.dataset.value ?? ''),
+    ({ node }) => isMulti && value.includes(node.dataset.value ?? ""),
   )
 
   const selectedIndexes = selectedValues.map(({ index }) => index)
-  const enabledValues = descendants.enabledValues(({ index }) => !selectedIndexes.includes(index))
+  const enabledValues = descendants.enabledValues(
+    ({ index }) => !selectedIndexes.includes(index),
+  )
 
   const onFocusFirst = useCallback(() => {
     const id = setTimeout(() => {
@@ -196,7 +244,9 @@ export const useSelect = <T extends MaybeValue = string>({
       const values = descendants.enabledValues()
 
       const selected = values.find(({ node }) =>
-        !isMulti ? node.dataset.value === value : value.includes(node.dataset.value ?? ''),
+        !isMulti
+          ? node.dataset.value === value
+          : value.includes(node.dataset.value ?? ""),
       )
 
       if (selected) setFocusedIndex(selected.index)
@@ -216,7 +266,8 @@ export const useSelect = <T extends MaybeValue = string>({
       } else {
         if (selectedIndexes.includes(next.index)) {
           const enabledNext =
-            enabledValues.find(({ index }) => next.index < index) ?? enabledValues[0]
+            enabledValues.find(({ index }) => next.index < index) ??
+            enabledValues[0]
 
           setFocusedIndex(enabledNext.index)
         } else {
@@ -247,7 +298,8 @@ export const useSelect = <T extends MaybeValue = string>({
       } else {
         if (selectedIndexes.includes(prev.index)) {
           const enabledPrev =
-            enabledValues.reverse().find(({ index }) => index < prev.index) ?? enabledValues[0]
+            enabledValues.reverse().find(({ index }) => index < prev.index) ??
+            enabledValues[0]
 
           setFocusedIndex(enabledPrev.index)
         } else {
@@ -267,32 +319,37 @@ export const useSelect = <T extends MaybeValue = string>({
     setFocusedIndex,
   ])
 
-  const onFocusFirstOrSelected = isEmptyValue || omitSelectedValues ? onFocusFirst : onFocusSelected
-  const onFocusLastOrSelected = isEmptyValue || omitSelectedValues ? onFocusLast : onFocusSelected
+  const onFocusFirstOrSelected =
+    isEmptyValue || omitSelectedValues ? onFocusFirst : onFocusSelected
+  const onFocusLastOrSelected =
+    isEmptyValue || omitSelectedValues ? onFocusLast : onFocusSelected
 
-  const onChangeDisplayValue = useCallback(
+  const onChangeLabel = useCallback(
     (newValue: string, runOmit: boolean = true) => {
       const values = descendants.values()
       const selectedValues = values
         .filter(({ node }) => node.dataset.value === newValue)
         .map(({ node, index }) =>
           !(!!placeholder && placeholderInOptions) || index !== 0
-            ? node.textContent ?? ''
+            ? node.textContent ?? ""
             : undefined,
         )
 
-      setDisplayValue((prev) => {
+      setLabel((prev) => {
         if (!isMulti) {
           return selectedValues[0] as T
         } else {
           selectedValues.forEach((selectedValue) => {
-            const isSelected = isArray(prev) && prev.includes(selectedValue ?? '')
+            const isSelected =
+              isArray(prev) && prev.includes(selectedValue ?? "")
 
             if (!isSelected) {
               prev = [...(isArray(prev) ? prev : []), selectedValue] as T
             } else if (runOmit) {
               prev = (
-                isArray(prev) ? prev.filter((value) => value !== selectedValue) : undefined
+                isArray(prev)
+                  ? prev.filter((value) => value !== selectedValue)
+                  : undefined
               ) as T
             }
           })
@@ -320,9 +377,9 @@ export const useSelect = <T extends MaybeValue = string>({
         }
       })
 
-      onChangeDisplayValue(newValue)
+      onChangeLabel(newValue)
     },
-    [onChangeDisplayValue, setValue],
+    [onChangeLabel, setValue],
   )
 
   const onClear = useCallback(
@@ -330,9 +387,9 @@ export const useSelect = <T extends MaybeValue = string>({
       ev.stopPropagation()
 
       setValue([] as unknown as T)
-      setDisplayValue(undefined)
+      setLabel(undefined)
     },
-    [setDisplayValue, setValue],
+    [setLabel, setValue],
   )
 
   const [isOpen, setIsOpen] = useState<boolean>(defaultIsOpen ?? false)
@@ -356,21 +413,31 @@ export const useSelect = <T extends MaybeValue = string>({
   const onSelect = useCallback(() => {
     let enabledValue = descendants.value(focusedIndex)
 
-    if ('disabled' in (enabledValue?.node.dataset ?? {})) enabledValue = undefined
+    if ("disabled" in (enabledValue?.node.dataset ?? {}))
+      enabledValue = undefined
 
     if (!enabledValue) return
 
-    const value = enabledValue.node.dataset.value ?? ''
+    const value = enabledValue.node.dataset.value ?? ""
 
     onChange(value)
 
     if (closeOnSelect) onClose()
 
     if (omitSelectedValues) onFocusNext()
-  }, [closeOnSelect, descendants, focusedIndex, omitSelectedValues, onChange, onClose, onFocusNext])
+  }, [
+    closeOnSelect,
+    descendants,
+    focusedIndex,
+    omitSelectedValues,
+    onChange,
+    onClose,
+    onFocusNext,
+  ])
 
   const onClick = useCallback(() => {
     if (isOpen) return
+
     onOpen()
 
     onFocusFirstOrSelected()
@@ -399,7 +466,7 @@ export const useSelect = <T extends MaybeValue = string>({
 
   const onKeyDown = useCallback(
     (ev: KeyboardEvent<HTMLDivElement>) => {
-      if (ev.key === ' ') ev.key = ev.code
+      if (ev.key === " ") ev.key = ev.code
 
       if (formControlProps.disabled || formControlProps.readOnly) return
 
@@ -414,8 +481,16 @@ export const useSelect = <T extends MaybeValue = string>({
           : !isOpen
           ? funcAll(onOpen, onFocusLastOrSelected)
           : undefined,
-        Space: isFocused ? onSelect : !isOpen ? funcAll(onOpen, onFocusFirstOrSelected) : undefined,
-        Enter: isFocused ? onSelect : !isOpen ? funcAll(onOpen, onFocusFirstOrSelected) : undefined,
+        Space: isFocused
+          ? onSelect
+          : !isOpen
+          ? funcAll(onOpen, onFocusFirstOrSelected)
+          : undefined,
+        Enter: isFocused
+          ? onSelect
+          : !isOpen
+          ? funcAll(onOpen, onFocusFirstOrSelected)
+          : undefined,
         Home: isOpen ? onFocusFirst : undefined,
         End: isOpen ? onFocusLast : undefined,
         Escape: closeOnEsc ? onClose : undefined,
@@ -467,7 +542,14 @@ export const useSelect = <T extends MaybeValue = string>({
     } else {
       setIsAllSelected(false)
     }
-  }, [omitSelectedValues, value, descendants, isMulti, onClose, maxSelectedValues])
+  }, [
+    omitSelectedValues,
+    value,
+    descendants,
+    isMulti,
+    onClose,
+    maxSelectedValues,
+  ])
 
   useUpdateEffect(() => {
     if (!isOpen) setFocusedIndex(-1)
@@ -480,6 +562,7 @@ export const useSelect = <T extends MaybeValue = string>({
 
   const getPopoverProps = useCallback(
     (props?: PopoverProps): PopoverProps => ({
+      matchWidth: true,
       ...rest,
       ...props,
       isOpen,
@@ -487,7 +570,7 @@ export const useSelect = <T extends MaybeValue = string>({
       onClose,
       placement,
       duration,
-      trigger: 'never',
+      trigger: "never",
       closeOnButton: false,
     }),
     [duration, onClose, onOpen, placement, rest, isOpen],
@@ -500,30 +583,37 @@ export const useSelect = <T extends MaybeValue = string>({
       ...props,
       ...formControlProps,
       onClick: handlerAll(props.onClick, rest.onClick, onClick),
-      onFocus: handlerAll(props.onFocus, rest.onFocus, onFocus),
+
       onBlur: handlerAll(props.onBlur, rest.onBlur, onBlur),
     }),
-    [computedProps, formControlProps, onBlur, onClick, onFocus, rest],
+    [computedProps, formControlProps, onBlur, onClick, rest],
   )
 
   const getFieldProps: PropGetter = useCallback(
     (props = {}, ref = null) => ({
       ref: mergeRefs(fieldRef, ref),
       tabIndex: 0,
-      ...omitObject(computedProps[1] as Dict, ['value', 'defaultValue', 'onChange']),
+      ...omitObject(computedProps[1] as Dict, [
+        "value",
+        "defaultValue",
+        "onChange",
+      ]),
       ...props,
-      'data-active': dataAttr(isOpen),
-      'data-placeholder': dataAttr(!isMulti ? displayValue === undefined : !displayValue?.length),
-      'aria-expanded': dataAttr(isOpen),
+      "data-active": dataAttr(isOpen),
+      "data-placeholder": dataAttr(
+        !isMulti ? label === undefined : !label?.length,
+      ),
+      "aria-expanded": dataAttr(isOpen),
+      onFocus: handlerAll(props.onFocus, rest.onFocus, onFocus),
       onKeyDown: handlerAll(props.onKeyDown, rest.onKeyDown, onKeyDown),
     }),
-    [computedProps, isOpen, isMulti, displayValue, rest, onKeyDown],
+    [computedProps, isOpen, isMulti, label, rest, onFocus, onKeyDown],
   )
 
   return {
     descendants,
     value,
-    displayValue,
+    label,
     focusedIndex,
     placeholder,
     placeholderInOptions,
@@ -535,7 +625,7 @@ export const useSelect = <T extends MaybeValue = string>({
     listRef,
     optionProps,
     formControlProps,
-    onChangeDisplayValue,
+    onChangeLabel,
     onChange,
     onClear,
     onOpen,
@@ -599,9 +689,9 @@ export const useSelectList = () => {
 
   const getListProps: PropGetter = useCallback(
     (props = {}, ref = null) => ({
-      as: 'ul',
+      as: "ul",
       ref: mergeRefs(listRef, ref),
-      role: 'select',
+      role: "select",
       tabIndex: -1,
       ...props,
     }),
@@ -615,11 +705,17 @@ export const useSelectList = () => {
 
 export type UseSelectListReturn = ReturnType<typeof useSelectList>
 
-export type UseSelectOptionGroupProps = HTMLUIProps<'ul'> & {
+export type UseSelectOptionGroupProps = HTMLUIProps<"ul"> & {
+  /**
+   * The label of the option group.
+   */
   label: string
 }
 
-export const useSelectOptionGroup = ({ label, ...rest }: UseSelectOptionGroupProps) => {
+export const useSelectOptionGroup = ({
+  label,
+  ...rest
+}: UseSelectOptionGroupProps) => {
   const { value, omitSelectedValues } = useSelectContext()
 
   const isMulti = isArray(value)
@@ -629,12 +725,15 @@ export const useSelectOptionGroup = ({ label, ...rest }: UseSelectOptionGroupPro
   const values = descendants.values()
   const selectedValues =
     isMulti && omitSelectedValues
-      ? descendants.values(({ node }) => value.includes(node.dataset.value ?? ''))
+      ? descendants.values(({ node }) =>
+          value.includes(node.dataset.value ?? ""),
+        )
       : []
   const selectedIndexes = selectedValues.map(({ index }) => index)
   const childValues = values.filter(
     ({ node, index }) =>
-      node.parentElement?.dataset.label === label && !selectedIndexes.includes(index),
+      node.parentElement?.dataset.label === label &&
+      !selectedIndexes.includes(index),
   )
 
   const isEmpty = !childValues.length
@@ -644,15 +743,15 @@ export const useSelectOptionGroup = ({ label, ...rest }: UseSelectOptionGroupPro
   const getContainerProps: PropGetter = useCallback(
     (props = {}, ref = null) => {
       const style: CSSProperties = {
-        border: '0px',
-        clip: 'rect(0px, 0px, 0px, 0px)',
-        height: '1px',
-        width: '1px',
-        margin: '-1px',
-        padding: '0px',
-        overflow: 'hidden',
-        whiteSpace: 'nowrap',
-        position: 'absolute',
+        border: "0px",
+        clip: "rect(0px, 0px, 0px, 0px)",
+        height: "1px",
+        width: "1px",
+        margin: "-1px",
+        padding: "0px",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        position: "absolute",
       }
 
       return {
@@ -670,7 +769,7 @@ export const useSelectOptionGroup = ({ label, ...rest }: UseSelectOptionGroupPro
       ref,
       ...props,
       ...computedRest[1],
-      'data-label': label,
+      "data-label": label,
     }),
     [computedRest, label],
   )
@@ -684,11 +783,35 @@ export const useSelectOptionGroup = ({ label, ...rest }: UseSelectOptionGroupPro
 
 export type UseSelectOptionGroupReturn = ReturnType<typeof useSelectOptionGroup>
 
-export type UseSelectOptionProps = Omit<HTMLUIProps<'li'>, 'value' | 'children'> & {
+export type UseSelectOptionProps = Omit<
+  HTMLUIProps<"li">,
+  "value" | "children"
+> & {
+  /**
+   * The value of the select option.
+   */
   value?: string
+  /**
+   * The label of the select option.
+   */
   children?: string
+  /**
+   * If `true`, the select option will be disabled.
+   *
+   * @default false
+   */
   isDisabled?: boolean
+  /**
+   * If `true`, the select option will be focusable.
+   *
+   * @default false
+   */
   isFocusable?: boolean
+  /**
+   * If `true`, the list element will be closed when selected.
+   *
+   * @default false
+   */
   closeOnSelect?: boolean
 }
 
@@ -706,7 +829,7 @@ export const useSelectOption = (
     focusedIndex,
     optionProps,
     onChange,
-    onChangeDisplayValue,
+    onChangeLabel,
     onFocusNext,
     onClose,
     setFocusedIndex,
@@ -725,25 +848,36 @@ export const useSelectOption = (
 
   const itemRef = useRef<HTMLLIElement>(null)
 
-  const { index, register, descendants } = useSelectDescendant({ disabled: trulyDisabled })
+  const { index, register, descendants } = useSelectDescendant({
+    disabled: trulyDisabled,
+  })
 
   const values = descendants.values()
   const frontValues = values.slice(0, index)
 
   const isMulti = isArray(value)
   const isDuplicated = !isMulti
-    ? frontValues.some(({ node }) => node.dataset.value === (computedProps.value ?? ''))
+    ? frontValues.some(
+        ({ node }) => node.dataset.value === (computedProps.value ?? ""),
+      )
     : false
 
   const isSelected =
     !isDuplicated &&
-    (!isMulti ? (computedProps.value ?? '') === value : value.includes(computedProps.value ?? ''))
+    (!isMulti
+      ? (computedProps.value ?? "") === value
+      : value.includes(computedProps.value ?? ""))
   const isFocused = index === focusedIndex
 
-  if (!!placeholder && index > 0 && placeholderInOptions && !computedProps.value) {
+  if (
+    !!placeholder &&
+    index > 0 &&
+    placeholderInOptions &&
+    !computedProps.value
+  ) {
     console.warn(
       `${
-        !isMulti ? 'Select' : 'MultiSelect'
+        !isMulti ? "Select" : "MultiSelect"
       }: If placeholders are present, All options must be set value. If want to set an empty value, either don't set the placeholder or set 'placeholderInOptions' to false.`,
     )
   }
@@ -766,7 +900,7 @@ export const useSelectOption = (
 
       setFocusedIndex(index)
 
-      onChange(computedProps.value ?? '')
+      onChange(computedProps.value ?? "")
 
       if (fieldRef.current) fieldRef.current.focus()
 
@@ -790,39 +924,48 @@ export const useSelectOption = (
   )
 
   useEffect(() => {
-    if (isSelected) onChangeDisplayValue(computedProps.value ?? '', false)
-  }, [computedProps, isSelected, onChangeDisplayValue])
+    if (isSelected) onChangeLabel(computedProps.value ?? "", false)
+  }, [computedProps, isSelected, onChangeLabel])
 
   const getOptionProps: PropGetter = useCallback(
     (props = {}) => {
       const style: CSSProperties = {
-        border: '0px',
-        clip: 'rect(0px, 0px, 0px, 0px)',
-        height: '1px',
-        width: '1px',
-        margin: '-1px',
-        padding: '0px',
-        overflow: 'hidden',
-        whiteSpace: 'nowrap',
-        position: 'absolute',
+        border: "0px",
+        clip: "rect(0px, 0px, 0px, 0px)",
+        height: "1px",
+        width: "1px",
+        margin: "-1px",
+        padding: "0px",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        position: "absolute",
       }
 
       return {
         ref: mergeRefs(itemRef, ref, register),
-        ...omitObject(computedProps, ['value']),
+        ...omitObject(computedProps, ["value"]),
         ...props,
-        role: 'select-item',
+        role: "select-item",
         tabIndex: -1,
         style: omitSelectedValues && isSelected ? style : undefined,
-        'data-value': computedProps.value ?? '',
-        'data-focus': dataAttr(isFocused),
-        'data-disabled': dataAttr(isDisabled),
-        'aria-checked': ariaAttr(isSelected),
-        'aria-disabled': ariaAttr(isDisabled),
+        "data-value": computedProps.value ?? "",
+        "data-focus": dataAttr(isFocused),
+        "data-disabled": dataAttr(isDisabled),
+        "aria-checked": ariaAttr(isSelected),
+        "aria-disabled": ariaAttr(isDisabled),
         onClick: handlerAll(computedProps.onClick, props.onClick, onClick),
       }
     },
-    [computedProps, isDisabled, isFocused, isSelected, omitSelectedValues, onClick, ref, register],
+    [
+      computedProps,
+      isDisabled,
+      isFocused,
+      isSelected,
+      omitSelectedValues,
+      onClick,
+      ref,
+      register,
+    ],
   )
 
   return {

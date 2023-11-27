@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/focus-lock",
-  "version": "0.1.1",
+  "version": "0.3.6",
   "description": "Yamada UI focus lock component",
   "keywords": [
     "yamada",
@@ -62,6 +62,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

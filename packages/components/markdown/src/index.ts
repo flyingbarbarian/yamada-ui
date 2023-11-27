@@ -1,6 +1,7 @@
-export { Markdown } from './markdown'
+export { Markdown } from "./markdown"
 export type {
   MarkdownProps,
+  MarkdownComponents,
   MarkdownComponentProps,
   MarkdownComponentCodeProps,
   MarkdownComponentHeadingProps,
@@ -9,4 +10,4 @@ export type {
   MarkdownComponentUnorderedListProps,
   MarkdownComponentTableCellProps,
   MarkdownComponentTableRowProps,
-} from './markdown'
+} from "./markdown"

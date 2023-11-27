@@ -1,12 +1,16 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { Box, Button, ScaleFade, useBoolean } from '@yamada-ui/react'
+import type { Meta, StoryFn } from "@storybook/react"
+import { Box, Button, ScaleFade, useBoolean } from "@yamada-ui/react"
 
-export default {
-  title: 'Components / Transitions / ScaleFade',
+type Story = StoryFn<typeof ScaleFade>
+
+const meta: Meta<typeof ScaleFade> = {
+  title: "Components / Transitions / ScaleFade",
   component: ScaleFade,
-} as ComponentMeta<typeof ScaleFade>
+}
 
-export const basic: ComponentStory<typeof ScaleFade> = () => {
+export default meta
+
+export const basic: Story = () => {
   const [isOpen, { toggle }] = useBoolean()
 
   return (
@@ -14,19 +18,19 @@ export const basic: ComponentStory<typeof ScaleFade> = () => {
       <Button onClick={toggle}>Please Click</Button>
 
       <ScaleFade isOpen={isOpen}>
-        <Box w='full' bg='orange.500' rounded='md' p='md' color='white'>
+        <Box w="full" bg="orange.500" rounded="md" p="md" color="white">
           クリリンのことか……クリリンのことかーーーっ！！！！！
         </Box>
       </ScaleFade>
 
-      <Box w='full' bg='purple.500' rounded='md' p='md' color='white'>
+      <Box w="full" bg="purple.500" rounded="md" p="md" color="white">
         私の戦闘力は530000です。ですがもちろんフルパワーであなたと戦う気はありませんからご心配なく……
       </Box>
     </>
   )
 }
 
-export const withScale: ComponentStory<typeof ScaleFade> = () => {
+export const withScale: Story = () => {
   const [isOpen, { toggle }] = useBoolean()
 
   return (
@@ -34,19 +38,19 @@ export const withScale: ComponentStory<typeof ScaleFade> = () => {
       <Button onClick={toggle}>Please Click</Button>
 
       <ScaleFade isOpen={isOpen} scale={0.75}>
-        <Box w='full' bg='orange.500' rounded='md' p='md' color='white'>
+        <Box w="full" bg="orange.500" rounded="md" p="md" color="white">
           クリリンのことか……クリリンのことかーーーっ！！！！！
         </Box>
       </ScaleFade>
 
-      <Box w='full' bg='purple.500' rounded='md' p='md' color='white'>
+      <Box w="full" bg="purple.500" rounded="md" p="md" color="white">
         私の戦闘力は530000です。ですがもちろんフルパワーであなたと戦う気はありませんからご心配なく……
       </Box>
     </>
   )
 }
 
-export const withDuration: ComponentStory<typeof ScaleFade> = () => {
+export const withDuration: Story = () => {
   const [isOpen, { toggle }] = useBoolean()
 
   return (
@@ -54,19 +58,19 @@ export const withDuration: ComponentStory<typeof ScaleFade> = () => {
       <Button onClick={toggle}>Please Click</Button>
 
       <ScaleFade isOpen={isOpen} duration={0.4}>
-        <Box w='full' bg='orange.500' rounded='md' p='md' color='white'>
+        <Box w="full" bg="orange.500" rounded="md" p="md" color="white">
           クリリンのことか……クリリンのことかーーーっ！！！！！
         </Box>
       </ScaleFade>
 
-      <Box w='full' bg='purple.500' rounded='md' p='md' color='white'>
+      <Box w="full" bg="purple.500" rounded="md" p="md" color="white">
         私の戦闘力は530000です。ですがもちろんフルパワーであなたと戦う気はありませんからご心配なく……
       </Box>
     </>
   )
 }
 
-export const exitUnmount: ComponentStory<typeof ScaleFade> = () => {
+export const exitUnmount: Story = () => {
   const [isOpen, { toggle }] = useBoolean()
 
   return (
@@ -74,12 +78,12 @@ export const exitUnmount: ComponentStory<typeof ScaleFade> = () => {
       <Button onClick={toggle}>Please Click</Button>
 
       <ScaleFade isOpen={isOpen} unmountOnExit>
-        <Box w='full' bg='orange.500' rounded='md' p='md' color='white'>
+        <Box w="full" bg="orange.500" rounded="md" p="md" color="white">
           クリリンのことか……クリリンのことかーーーっ！！！！！
         </Box>
       </ScaleFade>
 
-      <Box w='full' bg='purple.500' rounded='md' p='md' color='white'>
+      <Box w="full" bg="purple.500" rounded="md" p="md" color="white">
         私の戦闘力は530000です。ですがもちろんフルパワーであなたと戦う気はありませんからご心配なく……
       </Box>
     </>

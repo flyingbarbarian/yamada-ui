@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import type { Meta, StoryFn } from "@storybook/react"
+import type { DrawerProps } from "@yamada-ui/react"
 import {
   Button,
   useDisclosure,
   Drawer,
-  DrawerProps,
   DrawerOverlay,
   DrawerCloseButton,
   DrawerHeader,
@@ -14,16 +14,20 @@ import {
   Image,
   Heading,
   Text,
-} from '@yamada-ui/react'
-import { useState } from 'react'
+} from "@yamada-ui/react"
+import { useState } from "react"
 
-export default {
-  title: 'Components / Overlay / Drawer',
+type Story = StoryFn<typeof Drawer>
+
+const meta: Meta<typeof Drawer> = {
+  title: "Components / Overlay / Drawer",
   component: Drawer,
-} as ComponentMeta<typeof Drawer>
+}
 
-export const basic: ComponentStory<typeof Drawer> = () => {
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export default meta
+
+export const basic: Story = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
@@ -38,18 +42,18 @@ export const basic: ComponentStory<typeof Drawer> = () => {
         </DrawerBody>
 
         <DrawerFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </DrawerFooter>
       </Drawer>
     </>
   )
 }
 
-export const withDuration: ComponentStory<typeof Drawer> = () => {
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const withDuration: Story = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
@@ -64,26 +68,26 @@ export const withDuration: ComponentStory<typeof Drawer> = () => {
         </DrawerBody>
 
         <DrawerFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </DrawerFooter>
       </Drawer>
     </>
   )
 }
 
-export const withSize: ComponentStory<typeof Drawer> = () => {
-  const [size, setSize] = useState<DrawerProps['size']>('md')
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const withSize: Story = () => {
+  const [size, setSize] = useState<DrawerProps["size"]>("md")
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
-      <Wrap gap='md'>
+      <Wrap gap="md">
         <Button
           onClick={() => {
-            setSize('sm')
+            setSize("sm")
             onOpen()
           }}
         >
@@ -92,7 +96,7 @@ export const withSize: ComponentStory<typeof Drawer> = () => {
 
         <Button
           onClick={() => {
-            setSize('md')
+            setSize("md")
             onOpen()
           }}
         >
@@ -101,7 +105,7 @@ export const withSize: ComponentStory<typeof Drawer> = () => {
 
         <Button
           onClick={() => {
-            setSize('lg')
+            setSize("lg")
             onOpen()
           }}
         >
@@ -110,7 +114,7 @@ export const withSize: ComponentStory<typeof Drawer> = () => {
 
         <Button
           onClick={() => {
-            setSize('xl')
+            setSize("xl")
             onOpen()
           }}
         >
@@ -119,7 +123,7 @@ export const withSize: ComponentStory<typeof Drawer> = () => {
 
         <Button
           onClick={() => {
-            setSize('full')
+            setSize("full")
             onOpen()
           }}
         >
@@ -136,26 +140,26 @@ export const withSize: ComponentStory<typeof Drawer> = () => {
         </DrawerBody>
 
         <DrawerFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </DrawerFooter>
       </Drawer>
     </>
   )
 }
 
-export const withPosition: ComponentStory<typeof Drawer> = () => {
-  const [placement, setPlacement] = useState<DrawerProps['placement']>('right')
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const withPosition: Story = () => {
+  const [placement, setPlacement] = useState<DrawerProps["placement"]>("right")
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
-      <Wrap gap='md'>
+      <Wrap gap="md">
         <Button
           onClick={() => {
-            setPlacement('top')
+            setPlacement("top")
             onOpen()
           }}
         >
@@ -164,7 +168,7 @@ export const withPosition: ComponentStory<typeof Drawer> = () => {
 
         <Button
           onClick={() => {
-            setPlacement('left')
+            setPlacement("left")
             onOpen()
           }}
         >
@@ -173,7 +177,7 @@ export const withPosition: ComponentStory<typeof Drawer> = () => {
 
         <Button
           onClick={() => {
-            setPlacement('bottom')
+            setPlacement("bottom")
             onOpen()
           }}
         >
@@ -182,7 +186,7 @@ export const withPosition: ComponentStory<typeof Drawer> = () => {
 
         <Button
           onClick={() => {
-            setPlacement('right')
+            setPlacement("right")
             onOpen()
           }}
         >
@@ -199,24 +203,24 @@ export const withPosition: ComponentStory<typeof Drawer> = () => {
         </DrawerBody>
 
         <DrawerFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </DrawerFooter>
       </Drawer>
     </>
   )
 }
 
-export const withFullHeight: ComponentStory<typeof Drawer> = () => {
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const withFullHeight: Story = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
       <Button onClick={onOpen}>Open Drawer</Button>
 
-      <Drawer isOpen={isOpen} onClose={onClose} placement='bottom' isFullHeight>
+      <Drawer isOpen={isOpen} onClose={onClose} placement="bottom" isFullHeight>
         <DrawerHeader>ドラゴンボール</DrawerHeader>
 
         <DrawerBody>
@@ -225,18 +229,18 @@ export const withFullHeight: ComponentStory<typeof Drawer> = () => {
         </DrawerBody>
 
         <DrawerFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </DrawerFooter>
       </Drawer>
     </>
   )
 }
 
-export const disabledCloseButton: ComponentStory<typeof Drawer> = () => {
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const disabledCloseButton: Story = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
@@ -251,25 +255,25 @@ export const disabledCloseButton: ComponentStory<typeof Drawer> = () => {
         </DrawerBody>
 
         <DrawerFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </DrawerFooter>
       </Drawer>
     </>
   )
 }
 
-export const customCloseButton: ComponentStory<typeof Drawer> = () => {
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const customCloseButton: Story = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
       <Button onClick={onOpen}>Open Drawer</Button>
 
       <Drawer isOpen={isOpen} onClose={onClose}>
-        <DrawerCloseButton color='gray.400' />
+        <DrawerCloseButton color="gray.400" />
 
         <DrawerHeader>ドラゴンボール</DrawerHeader>
 
@@ -279,18 +283,18 @@ export const customCloseButton: ComponentStory<typeof Drawer> = () => {
         </DrawerBody>
 
         <DrawerFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </DrawerFooter>
       </Drawer>
     </>
   )
 }
 
-export const disabledOverlay: ComponentStory<typeof Drawer> = () => {
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const disabledOverlay: Story = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
@@ -305,25 +309,25 @@ export const disabledOverlay: ComponentStory<typeof Drawer> = () => {
         </DrawerBody>
 
         <DrawerFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </DrawerFooter>
       </Drawer>
     </>
   )
 }
 
-export const customOverlay: ComponentStory<typeof Drawer> = () => {
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const customOverlay: Story = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
       <Button onClick={onOpen}>Open Drawer</Button>
 
       <Drawer isOpen={isOpen} onClose={onClose}>
-        <DrawerOverlay bg='blackAlpha.300' backdropFilter='blur(10px)' />
+        <DrawerOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
 
         <DrawerHeader>ドラゴンボール</DrawerHeader>
 
@@ -333,36 +337,39 @@ export const customOverlay: ComponentStory<typeof Drawer> = () => {
         </DrawerBody>
 
         <DrawerFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </DrawerFooter>
       </Drawer>
     </>
   )
 }
 
-export const scrollOnMount: ComponentStory<typeof Drawer> = () => {
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const scrollOnMount: Story = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
       <Button onClick={onOpen}>Open Drawer</Button>
 
       <Container
-        p='md'
-        gap='md'
-        rounded='md'
-        alignItems='center'
-        textAlign='center'
-        border='1px solid'
-        borderColor='inherit'
-        boxShadow='md'
+        p="md"
+        gap="md"
+        rounded="md"
+        alignItems="center"
+        textAlign="center"
+        border="1px solid"
+        borderColor="inherit"
+        boxShadow="md"
       >
-        <Image src='https://dragon-ball-official.com/assets/img/intro/intro_2.png' maxW='sm' />
+        <Image
+          src="https://dragon-ball-official.com/assets/img/intro/intro_2.png"
+          maxW="sm"
+        />
 
-        <Heading size='xl'>『ドラゴンボール』（DRAGON BALL）</Heading>
+        <Heading size="xl">『ドラゴンボール』（DRAGON BALL）</Heading>
 
         <Text>
           『ドラゴンボール』（DRAGON
@@ -401,10 +408,10 @@ export const scrollOnMount: ComponentStory<typeof Drawer> = () => {
         </DrawerBody>
 
         <DrawerFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </DrawerFooter>
       </Drawer>
     </>

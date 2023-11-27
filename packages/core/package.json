@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/core",
-  "version": "0.3.0",
+  "version": "0.12.7",
   "description": "Yamada UI core",
   "keywords": [
     "yamada",
@@ -47,17 +47,18 @@
     "postpack": "clean-package restore"
   },
   "dependencies": {
-    "@yamada-ui/utils": "workspace:*",
-    "@yamada-ui/portal": "workspace:*",
     "@emotion/react": "^11.11.0",
+    "@emotion/sheet": "^1.2.2",
     "@emotion/styled": "^11.11.0",
-    "react-fast-compare": "^3.2.0",
-    "csstype": "^3.1.1"
+    "@yamada-ui/portal": "workspace:*",
+    "@yamada-ui/utils": "workspace:*",
+    "csstype": "^3.1.1",
+    "react-fast-compare": "^3.2.0"
   },
   "devDependencies": {
-    "react": "^18.0.0",
     "clean-package": "2.2.0",
-    "framer-motion": "^9.1.7"
+    "framer-motion": "^9.1.7",
+    "react": "^18.0.0"
   },
   "peerDependencies": {
     "react": ">=18"
@@ -69,6 +70,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

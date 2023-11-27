@@ -1,47 +1,71 @@
-import { ui, HTMLUIProps, forwardRef, CSSUIObject, Token } from '@yamada-ui/core'
+import type { HTMLUIProps, CSSUIObject, Token } from "@yamada-ui/core"
+import { ui, forwardRef } from "@yamada-ui/core"
+import type {
+  HTMLMotionProps,
+  WithTransitionProps,
+  MotionTransitionVariants,
+} from "@yamada-ui/motion"
 import {
   motion,
-  HTMLMotionProps,
   AnimatePresence,
   transitionEnter,
   transitionExit,
-  WithTransitionProps,
-  MotionTransitionVariants,
   MOTION_TRANSITION_VARIANTS,
-} from '@yamada-ui/motion'
-import { useValue } from '@yamada-ui/use-value'
-import { cx } from '@yamada-ui/utils'
+} from "@yamada-ui/motion"
+import { useValue } from "@yamada-ui/use-value"
+import { cx } from "@yamada-ui/utils"
 
-type Placement = 'top' | 'left' | 'bottom' | 'right'
-
-export const getSlideProps = (placement: Placement = 'right') => {
+export const getSlideProps = (
+  placement: "top" | "left" | "bottom" | "right" = "right",
+) => {
   switch (placement) {
-    case 'right':
+    case "right":
       return MOTION_TRANSITION_VARIANTS.slideRight
-    case 'left':
+    case "left":
       return MOTION_TRANSITION_VARIANTS.slideLeft
-    case 'bottom':
+    case "bottom":
       return MOTION_TRANSITION_VARIANTS.slideDown
-    case 'top':
+    case "top":
       return MOTION_TRANSITION_VARIANTS.slideUp
   }
 }
 
 type SlideOptions = {
-  placement?: Token<Placement>
+  /**
+   * The placement of the slide.
+   *
+   * @default 'right'
+   */
+  placement?: Token<"top" | "left" | "bottom" | "right">
 }
 
-export type SlideProps = WithTransitionProps<HTMLUIProps<'div'> & HTMLMotionProps<'div'>> &
+export type SlideProps = WithTransitionProps<
+  HTMLUIProps<"div"> & HTMLMotionProps<"div">
+> &
   SlideOptions
 
 const variants: MotionTransitionVariants = {
-  enter: ({ placement, transition, transitionEnd, delay, duration, enter } = {}) => ({
+  enter: ({
+    placement,
+    transition,
+    transitionEnd,
+    delay,
+    duration,
+    enter,
+  } = {}) => ({
     ...getSlideProps(placement).enter,
     transition: transitionEnter(transition?.enter)(delay, duration),
     transitionEnd: transitionEnd?.enter,
     ...enter,
   }),
-  exit: ({ placement, transition, transitionEnd, delay, duration, exit } = {}) => ({
+  exit: ({
+    placement,
+    transition,
+    transitionEnd,
+    delay,
+    duration,
+    exit,
+  } = {}) => ({
     ...getSlideProps(placement).exit,
     transition: transitionExit(transition?.exit)(delay, duration),
     transitionEnd: transitionEnd?.exit,
@@ -50,18 +74,18 @@ const variants: MotionTransitionVariants = {
 }
 
 export const slideProps = {
-  initial: 'exit',
-  animate: 'enter',
-  exit: 'exit',
+  initial: "exit",
+  animate: "enter",
+  exit: "exit",
   variants,
 }
 
-export const Slide = forwardRef<SlideProps, 'div'>(
+export const Slide = forwardRef<SlideProps, "div">(
   (
     {
       unmountOnExit,
       isOpen,
-      placement: _placement = 'right',
+      placement: _placement = "right",
       transition,
       transitionEnd,
       delay,
@@ -72,7 +96,7 @@ export const Slide = forwardRef<SlideProps, 'div'>(
     },
     ref,
   ) => {
-    const animate = isOpen || unmountOnExit ? 'enter' : 'exit'
+    const animate = isOpen || unmountOnExit ? "enter" : "exit"
 
     const placement = useValue(_placement)
 
@@ -83,7 +107,8 @@ export const Slide = forwardRef<SlideProps, 'div'>(
     const { position } = getSlideProps(placement)
 
     const css: CSSUIObject = {
-      position: 'fixed',
+      position: "fixed",
+      zIndex: "jeice",
       ...__css,
       ...position,
     }
@@ -94,7 +119,7 @@ export const Slide = forwardRef<SlideProps, 'div'>(
           <ui.div
             as={motion.div}
             ref={ref}
-            className={cx('ui-slide', className)}
+            className={cx("ui-slide", className)}
             custom={custom}
             {...slideProps}
             animate={animate}

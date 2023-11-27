@@ -1,23 +1,5 @@
-export type {
-  HTMLMotionProps,
-  SVGMotionProps,
-  Variants as MotionVariants,
-  Transition as MotionTransition,
-  AnimatePresenceProps as MotionAnimatePresenceProps,
-  LayoutProps as MotionLayoutProps,
-  LazyProps as MotionLazyProps,
-  MotionConfigProps,
-  MotionStyle,
-  DragControls,
-  AnimationControls as MotionAnimationControls,
-  AnimationProps as MotionAnimationProps,
-  AnimationType as MotionAnimationType,
-  AnimationLifecycles as MotionAnimationLifecycles,
-  AnimationOptions as MotionAnimationOptions,
-  AnimationPlaybackControls as MotionAnimationPlaybackControls,
-  MotionValue,
-} from 'framer-motion'
 export {
+  m,
   motion,
   AnimatePresence,
   LayoutGroup,
@@ -29,6 +11,7 @@ export {
   useSpring,
   useTime,
   useTransform,
+  transform,
   useVelocity,
   useViewportScroll,
   useAnimation as useMotionAnimation,
@@ -39,5 +22,10 @@ export {
   useIsPresent,
   useReducedMotion,
   useMotionValue,
-} from 'framer-motion'
-export * from './motion'
+  useMotionValueEvent,
+  useCycle,
+} from "framer-motion"
+export { Motion } from "./motion"
+export type { MotionProps } from "./motion"
+export * from "./motion.types"
+export * from "./utils"

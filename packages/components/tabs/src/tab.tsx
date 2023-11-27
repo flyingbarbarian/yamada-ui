@@ -1,13 +1,32 @@
-import { ui, forwardRef, CSSUIObject, HTMLUIProps } from '@yamada-ui/core'
-import { useClickable, UseClickableProps } from '@yamada-ui/use-clickable'
-import { ariaAttr, cx, handlerAll, mergeRefs } from '@yamada-ui/utils'
-import { useTabsContext, useTabsDescendant } from './tabs'
+import type { CSSUIObject, HTMLUIProps } from "@yamada-ui/core"
+import { ui, forwardRef } from "@yamada-ui/core"
+import type { UseClickableProps } from "@yamada-ui/use-clickable"
+import { useClickable } from "@yamada-ui/use-clickable"
+import { ariaAttr, cx, handlerAll, mergeRefs } from "@yamada-ui/utils"
+import { useTabsContext, useTabsDescendant } from "./tabs"
 
-export type TabProps = HTMLUIProps<'button'> & Omit<UseClickableProps, 'ref' | 'color'>
+export type TabProps = HTMLUIProps<"button"> &
+  Omit<UseClickableProps, "ref" | "color">
 
-export const Tab = forwardRef<TabProps, 'button'>(
-  ({ className, isDisabled, isFocusable, clickOnEnter, clickOnSpace, ...props }, ref) => {
-    const { selectedIndex, isManual, setSelectedIndex, setFocusedIndex, styles } = useTabsContext()
+export const Tab = forwardRef<TabProps, "button">(
+  (
+    {
+      className,
+      isDisabled,
+      isFocusable,
+      clickOnEnter,
+      clickOnSpace,
+      ...props
+    },
+    ref,
+  ) => {
+    const {
+      selectedIndex,
+      isManual,
+      setSelectedIndex,
+      setFocusedIndex,
+      styles,
+    } = useTabsContext()
 
     const { index, register } = useTabsDescendant({
       disabled: isDisabled && !isFocusable,
@@ -18,11 +37,9 @@ export const Tab = forwardRef<TabProps, 'button'>(
     const onClick = () => setSelectedIndex(index)
 
     const onFocus = () => {
-      if (isDisabled) return
-
       setFocusedIndex(index)
 
-      if (!isManual && !isFocusable) setSelectedIndex(index)
+      if (!isManual && !(isDisabled && isFocusable)) setSelectedIndex(index)
     }
 
     const rest = useClickable({
@@ -35,23 +52,24 @@ export const Tab = forwardRef<TabProps, 'button'>(
     })
 
     const css: CSSUIObject = {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      outline: '0',
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      outline: "0",
       ...styles.tab,
     }
 
     return (
       <ui.button
-        className={cx('ui-tabs-tab', className)}
+        className={cx("ui-tabs__tab", className)}
         __css={css}
+        role="tab"
         {...props}
         {...rest}
-        type='button'
+        type="button"
         tabIndex={isSelected ? 0 : -1}
         aria-selected={ariaAttr(isSelected)}
-        onFocus={handlerAll(props.onFocus, onFocus)}
+        onFocus={isDisabled ? undefined : handlerAll(props.onFocus, onFocus)}
       />
     )
   },

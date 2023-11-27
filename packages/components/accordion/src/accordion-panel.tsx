@@ -1,13 +1,19 @@
-import { ui, forwardRef, CSSUIObject, HTMLUIProps } from '@yamada-ui/core'
-import { WithTransitionProps } from '@yamada-ui/motion'
-import { Collapse, CollapseProps } from '@yamada-ui/transitions'
-import { cx } from '@yamada-ui/utils'
-import { useAccordionItemContext, useAccordionContext } from './'
+import type { CSSUIObject, HTMLUIProps } from "@yamada-ui/core"
+import { ui, forwardRef } from "@yamada-ui/core"
+import type { WithTransitionProps } from "@yamada-ui/motion"
+import type { CollapseProps } from "@yamada-ui/transitions"
+import { Collapse } from "@yamada-ui/transitions"
+import { cx } from "@yamada-ui/utils"
+import { useAccordionContext } from "./accordion"
+import { useAccordionItemContext } from "./accordion-item"
 
-export type AccordionPanelProps = Omit<WithTransitionProps<HTMLUIProps<'div'>>, 'isOpen'> &
-  Pick<CollapseProps, 'animationOpacity' | 'startingHeight' | 'endingHeight'>
+export type AccordionPanelProps = Omit<
+  WithTransitionProps<HTMLUIProps<"div">>,
+  "isOpen"
+> &
+  Pick<CollapseProps, "animationOpacity" | "startingHeight" | "endingHeight">
 
-export const AccordionPanel = forwardRef<AccordionPanelProps, 'div'>(
+export const AccordionPanel = forwardRef<AccordionPanelProps, "div">(
   (
     {
       className,
@@ -19,12 +25,16 @@ export const AccordionPanel = forwardRef<AccordionPanelProps, 'div'>(
       transitionEnd,
       delay,
       duration,
+      children,
       ...rest
     },
     ref,
   ) => {
     const { isOpen, getPanelProps } = useAccordionItemContext()
     const { styles } = useAccordionContext()
+
+    const resolvedChildren =
+      typeof children === "string" ? <p>{children}</p> : children
 
     const css: CSSUIObject = { ...styles.panel }
 
@@ -44,9 +54,11 @@ export const AccordionPanel = forwardRef<AccordionPanelProps, 'div'>(
       >
         <ui.div
           {...getPanelProps(rest, ref)}
-          className={cx('ui-accordion-panel', className)}
+          className={cx("ui-accordion__panel", className)}
           __css={css}
-        />
+        >
+          {resolvedChildren}
+        </ui.div>
       </Collapse>
     )
   },

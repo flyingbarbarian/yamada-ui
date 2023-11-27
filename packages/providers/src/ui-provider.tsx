@@ -1,74 +1,109 @@
-import { Global, Theme } from '@emotion/react'
-import {
-  css,
-  StyledTheme,
+import type {
   ThemeConfig,
-  ThemeScheme,
+  ColorModeManager,
+  ThemeSchemeManager,
+} from "@yamada-ui/core"
+import {
   ThemeProvider,
   ColorModeProvider,
-  useColorMode,
-  ChangeThemeScheme,
-  UIStyle,
-  Interpolation,
-} from '@yamada-ui/core'
-import { defaultTheme, defaultConfig } from '@yamada-ui/theme'
-import { Dict, getMemoizedObject as get, isUndefined, runIfFunc } from '@yamada-ui/utils'
-import { FC, ReactNode, useCallback, useMemo, useState } from 'react'
-import { EnvironmentProvider, EnvironmentProviderProps, LoadingProvider, NoticeProvider } from '.'
+  ResetStyle,
+  GlobalStyle,
+} from "@yamada-ui/core"
+import { LoadingProvider } from "@yamada-ui/loading"
+import { NoticeProvider } from "@yamada-ui/notice"
+import { defaultTheme, defaultConfig } from "@yamada-ui/theme"
+import type { Dict } from "@yamada-ui/utils"
+import type { FC, ReactNode } from "react"
+import type { Environment } from "./environment-provider"
+import { EnvironmentProvider } from "./environment-provider"
 
 export type UIProviderProps = {
-  theme?: Dict | Dict[]
+  /**
+   * The theme of the yamada ui.
+   *
+   * If omitted, uses the default theme provided by yamada ui.
+   */
+  theme?: Dict
+  /**
+   * The config of the yamada ui.
+   *
+   * If omitted, uses the default config provided by yamada ui.
+   */
   config?: ThemeConfig
-  reset?: boolean
-  colorModeManager?: any
-  environment?: EnvironmentProviderProps['environment']
+  /**
+   * If `true`, `ResetStyle` component will be mounted to help reset browser styles.
+   *
+   * @default true
+   */
+  disableResetStyle?: boolean
+  /**
+   * If `true`, will not mount the global styles defined in the theme.
+   *
+   * @default true
+   */
+  disableGlobalStyle?: boolean
+  /**
+   * Manager to persist a user's color mode preference.
+   *
+   * Omit if you don't render server-side.
+   * For SSR, choose `cookieStorageManager`.
+   *
+   * @default 'localStorageManager'
+   */
+  colorModeManager?: ColorModeManager
+  /**
+   * Manager to persist a user's theme scheme preference.
+   *
+   * Omit if you don't render server-side.
+   * For SSR, choose `cookieStorageManager`.
+   *
+   * @default 'localStorageManager'
+   */
+  themeSchemeManager?: ThemeSchemeManager
+  /**
+   * The environment `window` and `document` to be used by all components and hooks.
+   *
+   * By default, we smartly determine the ownerDocument and defaultView
+   * based on where `UIProvider` is rendered.
+   */
+  environment?: Environment
+  /**
+   * If `true`,  the use of automatic window and document detection will be disabled.
+   *
+   * @default false
+   */
   disableEnvironment?: boolean
+  /**
+   * Application content.
+   */
   children: ReactNode
 }
 
 export const UIProvider: FC<UIProviderProps> = ({
-  theme: initialTheme = defaultTheme,
+  theme = defaultTheme,
   config = defaultConfig,
-  reset = true,
+  disableResetStyle,
+  disableGlobalStyle,
   colorModeManager,
+  themeSchemeManager,
   environment,
   disableEnvironment,
   children,
 }) => {
-  const [themeScheme, setThemeScheme] = useState<ThemeScheme | undefined>(
-    config?.initialThemeScheme,
-  )
-  const theme = useMemo(
-    () => (isUndefined(themeScheme) ? initialTheme : (initialTheme as Dict)[themeScheme]),
-    [initialTheme, themeScheme],
-  )
-
-  const changeThemeScheme: ChangeThemeScheme = useCallback(
-    (themeSchemeOrFunc: ThemeScheme | ((themeScheme: ThemeScheme) => ThemeScheme)) => {
-      if (isUndefined(themeScheme))
-        throw Error(
-          'changeThemeScheme: `themeScheme` is undefined. Seems you forgot to wrap your config in `initialThemeScheme`',
-        )
-
-      const nextThemeScheme = runIfFunc(themeSchemeOrFunc, themeScheme)
-
-      setThemeScheme(nextThemeScheme)
-    },
-    [themeScheme],
-  )
-
   return (
     <ThemeProvider
       theme={theme}
-      themeScheme={themeScheme}
-      changeThemeScheme={changeThemeScheme}
       config={config}
+      themeSchemeManager={themeSchemeManager}
     >
       <ColorModeProvider colorModeManager={colorModeManager} config={config}>
-        <EnvironmentProvider environment={environment} disabled={disableEnvironment}>
+        <EnvironmentProvider
+          environment={environment}
+          disabled={disableEnvironment}
+        >
           <LoadingProvider {...config.loading}>
-            {reset ? <ResetStyle /> : null}
-            <GlobalStyle />
+            {!disableResetStyle ? <ResetStyle /> : null}
+            {!disableGlobalStyle ? <GlobalStyle /> : null}
 
             {children}
 
@@ -77,45 +112,5 @@ export const UIProvider: FC<UIProviderProps> = ({
         </EnvironmentProvider>
       </ColorModeProvider>
     </ThemeProvider>
-  )
-}
-
-const ResetStyle: FC = () => {
-  const { colorMode } = useColorMode()
-
-  return (
-    <Global
-      styles={
-        ((theme: StyledTheme<Dict>) => {
-          let style = get(theme, 'styles.resetStyle', {})
-
-          const computedStyle = runIfFunc(style, { theme, colorMode })
-
-          if (!computedStyle) return undefined
-
-          return css(computedStyle)(theme)
-        }) as Interpolation<Theme>
-      }
-    />
-  )
-}
-
-const GlobalStyle: FC = () => {
-  const { colorMode } = useColorMode()
-
-  return (
-    <Global
-      styles={
-        ((theme: StyledTheme<Dict>) => {
-          let style: UIStyle = get(theme, 'styles.globalStyle', {})
-
-          const computedStyle = runIfFunc(style, { theme, colorMode })
-
-          if (!computedStyle) return undefined
-
-          return css(computedStyle)(theme)
-        }) as Interpolation<Theme>
-      }
-    />
   )
 }

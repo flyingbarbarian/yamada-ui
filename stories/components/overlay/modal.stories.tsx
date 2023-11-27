@@ -1,4 +1,5 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import type { Meta, StoryFn } from "@storybook/react"
+import type { ModalProps } from "@yamada-ui/react"
 import {
   Button,
   useDisclosure,
@@ -8,22 +9,25 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  ModalProps,
   Wrap,
   Text,
   Container,
   Image,
   Heading,
-} from '@yamada-ui/react'
-import { useState } from 'react'
+} from "@yamada-ui/react"
+import { useState } from "react"
 
-export default {
-  title: 'Components / Overlay / Modal',
+type Story = StoryFn<typeof Modal>
+
+const meta: Meta<typeof Modal> = {
+  title: "Components / Overlay / Modal",
   component: Modal,
-} as ComponentMeta<typeof Modal>
+}
 
-export const basic: ComponentStory<typeof Modal> = () => {
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export default meta
+
+export const basic: Story = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
@@ -38,18 +42,18 @@ export const basic: ComponentStory<typeof Modal> = () => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </ModalFooter>
       </Modal>
     </>
   )
 }
 
-export const withDuration: ComponentStory<typeof Modal> = () => {
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const withDuration: Story = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
@@ -64,26 +68,26 @@ export const withDuration: ComponentStory<typeof Modal> = () => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </ModalFooter>
       </Modal>
     </>
   )
 }
 
-export const withSize: ComponentStory<typeof Modal> = () => {
-  const [size, setSize] = useState<ModalProps['size']>('md')
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const withSize: Story = () => {
+  const [size, setSize] = useState<ModalProps["size"]>("md")
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
-      <Wrap gap='md'>
+      <Wrap gap="md">
         <Button
           onClick={() => {
-            setSize('sm')
+            setSize("sm")
             onOpen()
           }}
         >
@@ -92,7 +96,7 @@ export const withSize: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setSize('md')
+            setSize("md")
             onOpen()
           }}
         >
@@ -101,7 +105,7 @@ export const withSize: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setSize('lg')
+            setSize("lg")
             onOpen()
           }}
         >
@@ -110,7 +114,7 @@ export const withSize: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setSize('xl')
+            setSize("xl")
             onOpen()
           }}
         >
@@ -119,7 +123,7 @@ export const withSize: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setSize('full')
+            setSize("full")
             onOpen()
           }}
         >
@@ -136,26 +140,26 @@ export const withSize: ComponentStory<typeof Modal> = () => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </ModalFooter>
       </Modal>
     </>
   )
 }
 
-export const withPlacement: ComponentStory<typeof Modal> = () => {
-  const [placement, setPlacement] = useState<ModalProps['placement']>('center')
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const withPlacement: Story = () => {
+  const [placement, setPlacement] = useState<ModalProps["placement"]>("center")
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
-      <Wrap gap='md'>
+      <Wrap gap="md">
         <Button
           onClick={() => {
-            setPlacement('center')
+            setPlacement("center")
             onOpen()
           }}
         >
@@ -164,7 +168,7 @@ export const withPlacement: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setPlacement('top')
+            setPlacement("top")
             onOpen()
           }}
         >
@@ -173,7 +177,7 @@ export const withPlacement: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setPlacement('top-left')
+            setPlacement("top-left")
             onOpen()
           }}
         >
@@ -182,7 +186,7 @@ export const withPlacement: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setPlacement('left')
+            setPlacement("left")
             onOpen()
           }}
         >
@@ -191,7 +195,7 @@ export const withPlacement: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setPlacement('bottom-left')
+            setPlacement("bottom-left")
             onOpen()
           }}
         >
@@ -200,7 +204,7 @@ export const withPlacement: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setPlacement('bottom')
+            setPlacement("bottom")
             onOpen()
           }}
         >
@@ -209,7 +213,7 @@ export const withPlacement: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setPlacement('bottom-right')
+            setPlacement("bottom-right")
             onOpen()
           }}
         >
@@ -218,7 +222,7 @@ export const withPlacement: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setPlacement('right')
+            setPlacement("right")
             onOpen()
           }}
         >
@@ -227,7 +231,7 @@ export const withPlacement: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setPlacement('top-right')
+            setPlacement("top-right")
             onOpen()
           }}
         >
@@ -244,26 +248,26 @@ export const withPlacement: ComponentStory<typeof Modal> = () => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </ModalFooter>
       </Modal>
     </>
   )
 }
 
-export const withAnimation: ComponentStory<typeof Modal> = () => {
-  const [animation, setAnimation] = useState<ModalProps['animation']>('scale')
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const withAnimation: Story = () => {
+  const [animation, setAnimation] = useState<ModalProps["animation"]>("scale")
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
-      <Wrap gap='md'>
+      <Wrap gap="md">
         <Button
           onClick={() => {
-            setAnimation('scale')
+            setAnimation("scale")
             onOpen()
           }}
         >
@@ -272,7 +276,7 @@ export const withAnimation: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setAnimation('top')
+            setAnimation("top")
             onOpen()
           }}
         >
@@ -281,7 +285,7 @@ export const withAnimation: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setAnimation('left')
+            setAnimation("left")
             onOpen()
           }}
         >
@@ -290,7 +294,7 @@ export const withAnimation: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setAnimation('bottom')
+            setAnimation("bottom")
             onOpen()
           }}
         >
@@ -299,7 +303,7 @@ export const withAnimation: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setAnimation('right')
+            setAnimation("right")
             onOpen()
           }}
         >
@@ -316,25 +320,25 @@ export const withAnimation: ComponentStory<typeof Modal> = () => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </ModalFooter>
       </Modal>
     </>
   )
 }
 
-export const nestedModal: ComponentStory<typeof Modal> = () => {
-  const [isFirstOpen, onFirstOpen, onFirstClose] = useDisclosure()
-  const [isSecondOpen, onSecondOpen, onSecondClose] = useDisclosure()
+export const nestedModal: Story = () => {
+  const firstControls = useDisclosure()
+  const secondControls = useDisclosure()
 
   return (
     <>
-      <Button onClick={onFirstOpen}>Open Modal</Button>
+      <Button onClick={firstControls.onOpen}>Open Modal</Button>
 
-      <Modal isOpen={isFirstOpen} onClose={onFirstClose}>
+      <Modal isOpen={firstControls.isOpen} onClose={firstControls.onClose}>
         <ModalHeader>ドラゴンボール</ModalHeader>
 
         <ModalBody>
@@ -343,15 +347,19 @@ export const nestedModal: ComponentStory<typeof Modal> = () => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant='ghost' onClick={onFirstClose}>
+          <Button variant="ghost" onClick={firstControls.onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary' onClick={onSecondOpen}>
+          <Button colorScheme="primary" onClick={secondControls.onOpen}>
             あらすじ
           </Button>
         </ModalFooter>
 
-        <Modal isOpen={isSecondOpen} onClose={onSecondClose} size='sm'>
+        <Modal
+          isOpen={secondControls.isOpen}
+          onClose={secondControls.onClose}
+          size="sm"
+        >
           <ModalHeader>あらすじ</ModalHeader>
 
           <ModalBody>
@@ -359,10 +367,10 @@ export const nestedModal: ComponentStory<typeof Modal> = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button variant='ghost' onClick={onSecondClose}>
+            <Button variant="ghost" onClick={secondControls.onClose}>
               とじる
             </Button>
-            <Button colorScheme='primary'>Wikipadia</Button>
+            <Button colorScheme="primary">Wikipadia</Button>
           </ModalFooter>
         </Modal>
       </Modal>
@@ -370,8 +378,8 @@ export const nestedModal: ComponentStory<typeof Modal> = () => {
   )
 }
 
-export const disabledCloseButton: ComponentStory<typeof Modal> = () => {
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const disabledCloseButton: Story = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
@@ -386,25 +394,25 @@ export const disabledCloseButton: ComponentStory<typeof Modal> = () => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </ModalFooter>
       </Modal>
     </>
   )
 }
 
-export const customCloseButton: ComponentStory<typeof Modal> = () => {
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const customCloseButton: Story = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
       <Button onClick={onOpen}>Open Modal</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalCloseButton color='gray.400' />
+        <ModalCloseButton color="gray.400" />
 
         <ModalHeader>ドラゴンボール</ModalHeader>
 
@@ -414,18 +422,18 @@ export const customCloseButton: ComponentStory<typeof Modal> = () => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </ModalFooter>
       </Modal>
     </>
   )
 }
 
-export const disabledOverlay: ComponentStory<typeof Modal> = () => {
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const disabledOverlay: Story = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
@@ -440,25 +448,25 @@ export const disabledOverlay: ComponentStory<typeof Modal> = () => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </ModalFooter>
       </Modal>
     </>
   )
 }
 
-export const customOverlay: ComponentStory<typeof Modal> = () => {
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const customOverlay: Story = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
       <Button onClick={onOpen}>Open Modal</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay bg='blackAlpha.300' backdropFilter='blur(10px)' />
+        <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
 
         <ModalHeader>ドラゴンボール</ModalHeader>
 
@@ -468,26 +476,27 @@ export const customOverlay: ComponentStory<typeof Modal> = () => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </ModalFooter>
       </Modal>
     </>
   )
 }
 
-export const scrollBehavior: ComponentStory<typeof Modal> = () => {
-  const [scrollBehavior, setScrollBehavior] = useState<ModalProps['scrollBehavior']>('inside')
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const scrollBehavior: Story = () => {
+  const [scrollBehavior, setScrollBehavior] =
+    useState<ModalProps["scrollBehavior"]>("inside")
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
-      <Wrap gap='md'>
+      <Wrap gap="md">
         <Button
           onClick={() => {
-            setScrollBehavior('inside')
+            setScrollBehavior("inside")
             onOpen()
           }}
         >
@@ -496,7 +505,7 @@ export const scrollBehavior: ComponentStory<typeof Modal> = () => {
 
         <Button
           onClick={() => {
-            setScrollBehavior('outside')
+            setScrollBehavior("outside")
             onOpen()
           }}
         >
@@ -537,36 +546,39 @@ export const scrollBehavior: ComponentStory<typeof Modal> = () => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </ModalFooter>
       </Modal>
     </>
   )
 }
 
-export const scrollOnMount: ComponentStory<typeof Modal> = () => {
-  const [isOpen, onOpen, onClose] = useDisclosure()
+export const scrollOnMount: Story = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
       <Button onClick={onOpen}>Open Modal</Button>
 
       <Container
-        p='md'
-        gap='md'
-        rounded='md'
-        alignItems='center'
-        textAlign='center'
-        border='1px solid'
-        borderColor='inherit'
-        boxShadow='md'
+        p="md"
+        gap="md"
+        rounded="md"
+        alignItems="center"
+        textAlign="center"
+        border="1px solid"
+        borderColor="inherit"
+        boxShadow="md"
       >
-        <Image src='https://dragon-ball-official.com/assets/img/intro/intro_2.png' maxW='sm' />
+        <Image
+          src="https://dragon-ball-official.com/assets/img/intro/intro_2.png"
+          maxW="sm"
+        />
 
-        <Heading size='xl'>『ドラゴンボール』（DRAGON BALL）</Heading>
+        <Heading size="xl">『ドラゴンボール』（DRAGON BALL）</Heading>
 
         <Text>
           『ドラゴンボール』（DRAGON
@@ -605,10 +617,10 @@ export const scrollOnMount: ComponentStory<typeof Modal> = () => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant='ghost' onClick={onClose}>
+          <Button variant="ghost" onClick={onClose}>
             とじる
           </Button>
-          <Button colorScheme='primary'>Wikipadia</Button>
+          <Button colorScheme="primary">Wikipadia</Button>
         </ModalFooter>
       </Modal>
     </>

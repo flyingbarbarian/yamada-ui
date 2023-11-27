@@ -1,12 +1,15 @@
-import { useSafeLayoutEffect, isRefObject } from '@yamada-ui/utils'
-import { useState } from 'react'
+import { useSafeLayoutEffect, isRefObject, isArray } from "@yamada-ui/utils"
+import { useState } from "react"
 
 type Size = {
   width: number
   height: number
 }
 
-export const trackElementSize = (el: HTMLElement | null, cb: (size: Size | undefined) => void) => {
+export const trackElementSize = (
+  el: HTMLElement | null,
+  cb: (size: Size | undefined) => void,
+) => {
   if (!el) {
     cb(undefined)
 
@@ -18,15 +21,17 @@ export const trackElementSize = (el: HTMLElement | null, cb: (size: Size | undef
   const win = el.ownerDocument.defaultView ?? window
 
   const observer = new win.ResizeObserver((entries) => {
-    if (!Array.isArray(entries) || !entries.length) return
+    if (!isArray(entries) || !entries.length) return
 
     const [entry] = entries
     let width: number
     let height: number
 
-    if ('borderBoxSize' in entry) {
+    if ("borderBoxSize" in entry) {
       const borderSizeEntry = entry.borderBoxSize
-      const borderSize = Array.isArray(borderSizeEntry) ? borderSizeEntry[0] : borderSizeEntry
+      const borderSize = isArray(borderSizeEntry)
+        ? borderSizeEntry[0]
+        : borderSizeEntry
 
       width = borderSize.inlineSize
       height = borderSize.blockSize
@@ -38,7 +43,7 @@ export const trackElementSize = (el: HTMLElement | null, cb: (size: Size | undef
     cb({ width, height })
   })
 
-  observer.observe(el, { box: 'border-box' })
+  observer.observe(el, { box: "border-box" })
 
   return () => observer.unobserve(el)
 }
@@ -75,7 +80,11 @@ export const useSizes = <T extends HTMLElement | null>({
     const cleanups = elements.map((element, index) =>
       trackElementSize(element, (size) => {
         setSizes((sizes) => {
-          return [...sizes.slice(0, index), size, ...sizes.slice(index + 1)] as Size[]
+          return [
+            ...sizes.slice(0, index),
+            size,
+            ...sizes.slice(index + 1),
+          ] as Size[]
         })
       }),
     )
@@ -100,7 +109,9 @@ export const useSizes = <T extends HTMLElement | null>({
   return sizes as (Size | undefined)[]
 }
 
-export const useSize = <T extends HTMLElement | null>(refOrEl: T | React.RefObject<T>) => {
+export const useSize = <T extends HTMLElement | null>(
+  refOrEl: T | React.RefObject<T>,
+) => {
   const [size] = useSizes({
     observeMutation: false,
 

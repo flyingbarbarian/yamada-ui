@@ -1,7 +1,10 @@
-import { faker } from '@faker-js/faker'
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { ComponentStory } from '@storybook/react'
-import { Icon } from '@yamada-ui/fontawesome'
+import { faker } from "@faker-js/faker"
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons"
+import type { Meta, StoryFn } from "@storybook/react"
+import { Icon } from "@yamada-ui/fontawesome"
 import {
   HStack,
   IconButton,
@@ -11,13 +14,19 @@ import {
   Spacer,
   NumberInput,
   useLoading,
-} from '@yamada-ui/react'
-import { PagingTable, Column } from '@yamada-ui/table'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+} from "@yamada-ui/react"
+import type { Column } from "@yamada-ui/table"
+import { PagingTable } from "@yamada-ui/table"
+import { useCallback, useEffect, useMemo, useState } from "react"
 
-export default {
-  title: 'Components / Data Display / PagingTable',
+type Story = StoryFn<typeof PagingTable>
+
+const meta: Meta<typeof PagingTable> = {
+  title: "Components / Data Display / PagingTable",
+  component: PagingTable,
 }
+
+export default meta
 
 type Data = {
   id: string
@@ -51,24 +60,24 @@ const createData = (n: number = 100): Data[] => {
   return mergedData
 }
 
-export const basic: ComponentStory<typeof PagingTable> = () => {
+export const basic: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: 'First Name',
-        accessorKey: 'firstName',
+        header: "First Name",
+        accessorKey: "firstName",
       },
       {
-        header: 'Last Name',
-        accessorKey: 'lastName',
+        header: "Last Name",
+        accessorKey: "lastName",
       },
       {
-        header: 'Age',
-        accessorKey: 'age',
+        header: "Age",
+        accessorKey: "age",
       },
       {
-        header: 'Email',
-        accessorKey: 'email',
+        header: "Email",
+        accessorKey: "email",
       },
     ],
     [],
@@ -79,92 +88,24 @@ export const basic: ComponentStory<typeof PagingTable> = () => {
   return <PagingTable columns={columns} data={data} />
 }
 
-export const withSize: ComponentStory<typeof PagingTable> = () => {
+export const withSize: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: 'First Name',
-        accessorKey: 'firstName',
+        header: "First Name",
+        accessorKey: "firstName",
       },
       {
-        header: 'Last Name',
-        accessorKey: 'lastName',
+        header: "Last Name",
+        accessorKey: "lastName",
       },
       {
-        header: 'Age',
-        accessorKey: 'age',
+        header: "Age",
+        accessorKey: "age",
       },
       {
-        header: 'Email',
-        accessorKey: 'email',
-      },
-    ],
-    [],
-  )
-
-  const data = useMemo<Data[]>(createData, [])
-
-  return (
-    <>
-      <PagingTable size='sm' columns={columns} data={data} defaultPageSize={5} />
-      <PagingTable size='md' columns={columns} data={data} defaultPageSize={5} />
-      <PagingTable size='lg' columns={columns} data={data} defaultPageSize={5} />
-      <PagingTable size='xl' columns={columns} data={data} defaultPageSize={5} />
-    </>
-  )
-}
-
-export const withVariant: ComponentStory<typeof PagingTable> = () => {
-  const columns = useMemo<Column<Data>[]>(
-    () => [
-      {
-        header: 'First Name',
-        accessorKey: 'firstName',
-      },
-      {
-        header: 'Last Name',
-        accessorKey: 'lastName',
-      },
-      {
-        header: 'Age',
-        accessorKey: 'age',
-      },
-      {
-        header: 'Email',
-        accessorKey: 'email',
-      },
-    ],
-    [],
-  )
-
-  const data = useMemo<Data[]>(createData, [])
-
-  return (
-    <>
-      <PagingTable variant='simple' columns={columns} data={data} defaultPageSize={5} />
-      <PagingTable variant='striped' columns={columns} data={data} defaultPageSize={5} />
-    </>
-  )
-}
-
-export const withColorScheme: ComponentStory<typeof PagingTable> = () => {
-  const columns = useMemo<Column<Data>[]>(
-    () => [
-      {
-        header: 'First Name',
-        accessorKey: 'firstName',
-      },
-      {
-        header: 'Last Name',
-        accessorKey: 'lastName',
-      },
-      {
-        header: 'Age',
-        accessorKey: 'age',
-      },
-      {
-        header: 'Email',
-        accessorKey: 'email',
+        header: "Email",
+        accessorKey: "email",
       },
     ],
     [],
@@ -175,120 +116,25 @@ export const withColorScheme: ComponentStory<typeof PagingTable> = () => {
   return (
     <>
       <PagingTable
-        variant='striped'
-        colorScheme='primary'
+        size="sm"
         columns={columns}
         data={data}
         defaultPageSize={5}
       />
-
       <PagingTable
-        variant='striped'
-        colorScheme='secondary'
+        size="md"
         columns={columns}
         data={data}
         defaultPageSize={5}
       />
-
       <PagingTable
-        variant='striped'
-        colorScheme='warning'
+        size="lg"
         columns={columns}
         data={data}
         defaultPageSize={5}
       />
-
       <PagingTable
-        variant='striped'
-        colorScheme='danger'
-        columns={columns}
-        data={data}
-        defaultPageSize={5}
-      />
-
-      <PagingTable
-        variant='striped'
-        colorScheme='link'
-        columns={columns}
-        data={data}
-        defaultPageSize={5}
-      />
-
-      <PagingTable
-        variant='striped'
-        colorScheme='gray'
-        columns={columns}
-        data={data}
-        defaultPageSize={5}
-      />
-
-      <PagingTable
-        variant='striped'
-        colorScheme='red'
-        columns={columns}
-        data={data}
-        defaultPageSize={5}
-      />
-
-      <PagingTable
-        variant='striped'
-        colorScheme='orange'
-        columns={columns}
-        data={data}
-        defaultPageSize={5}
-      />
-
-      <PagingTable
-        variant='striped'
-        colorScheme='yellow'
-        columns={columns}
-        data={data}
-        defaultPageSize={5}
-      />
-
-      <PagingTable
-        variant='striped'
-        colorScheme='green'
-        columns={columns}
-        data={data}
-        defaultPageSize={5}
-      />
-
-      <PagingTable
-        variant='striped'
-        colorScheme='teal'
-        columns={columns}
-        data={data}
-        defaultPageSize={5}
-      />
-
-      <PagingTable
-        variant='striped'
-        colorScheme='blue'
-        columns={columns}
-        data={data}
-        defaultPageSize={5}
-      />
-
-      <PagingTable
-        variant='striped'
-        colorScheme='cyan'
-        columns={columns}
-        data={data}
-        defaultPageSize={5}
-      />
-
-      <PagingTable
-        variant='striped'
-        colorScheme='purple'
-        columns={columns}
-        data={data}
-        defaultPageSize={5}
-      />
-
-      <PagingTable
-        variant='striped'
-        colorScheme='pink'
+        size="xl"
         columns={columns}
         data={data}
         defaultPageSize={5}
@@ -297,24 +143,305 @@ export const withColorScheme: ComponentStory<typeof PagingTable> = () => {
   )
 }
 
-export const withDefaultPageSize: ComponentStory<typeof PagingTable> = () => {
+export const withVariant: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: 'First Name',
-        accessorKey: 'firstName',
+        header: "First Name",
+        accessorKey: "firstName",
       },
       {
-        header: 'Last Name',
-        accessorKey: 'lastName',
+        header: "Last Name",
+        accessorKey: "lastName",
       },
       {
-        header: 'Age',
-        accessorKey: 'age',
+        header: "Age",
+        accessorKey: "age",
       },
       {
-        header: 'Email',
-        accessorKey: 'email',
+        header: "Email",
+        accessorKey: "email",
+      },
+    ],
+    [],
+  )
+
+  const data = useMemo<Data[]>(createData, [])
+
+  return (
+    <>
+      <PagingTable
+        variant="simple"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+      <PagingTable
+        variant="striped"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+    </>
+  )
+}
+
+export const withColorScheme: Story = () => {
+  const columns = useMemo<Column<Data>[]>(
+    () => [
+      {
+        header: "First Name",
+        accessorKey: "firstName",
+      },
+      {
+        header: "Last Name",
+        accessorKey: "lastName",
+      },
+      {
+        header: "Age",
+        accessorKey: "age",
+      },
+      {
+        header: "Email",
+        accessorKey: "email",
+      },
+    ],
+    [],
+  )
+
+  const data = useMemo<Data[]>(createData, [])
+
+  return (
+    <>
+      <PagingTable
+        variant="striped"
+        colorScheme="primary"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="secondary"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="warning"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="danger"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="link"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="gray"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="zinc"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="neutral"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="stone"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="red"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="rose"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="pink"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="orange"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="amber"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="yellow"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="lime"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="green"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="emerald"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="teal"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="cyan"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="sky"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="blue"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="indigo"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="violet"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="purple"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+
+      <PagingTable
+        variant="striped"
+        colorScheme="fuchsia"
+        columns={columns}
+        data={data}
+        defaultPageSize={5}
+      />
+    </>
+  )
+}
+
+export const withDefaultPageSize: Story = () => {
+  const columns = useMemo<Column<Data>[]>(
+    () => [
+      {
+        header: "First Name",
+        accessorKey: "firstName",
+      },
+      {
+        header: "Last Name",
+        accessorKey: "lastName",
+      },
+      {
+        header: "Age",
+        accessorKey: "age",
+      },
+      {
+        header: "Email",
+        accessorKey: "email",
       },
     ],
     [],
@@ -328,30 +455,30 @@ export const withDefaultPageSize: ComponentStory<typeof PagingTable> = () => {
       data={data}
       defaultPageSize={10}
       onChangePageSize={(pageSize) => {
-        console.log('pageSize', pageSize)
+        console.log("pageSize", pageSize)
       }}
     />
   )
 }
 
-export const withPageSizeList: ComponentStory<typeof PagingTable> = () => {
+export const withPageSizeList: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: 'First Name',
-        accessorKey: 'firstName',
+        header: "First Name",
+        accessorKey: "firstName",
       },
       {
-        header: 'Last Name',
-        accessorKey: 'lastName',
+        header: "Last Name",
+        accessorKey: "lastName",
       },
       {
-        header: 'Age',
-        accessorKey: 'age',
+        header: "Age",
+        accessorKey: "age",
       },
       {
-        header: 'Email',
-        accessorKey: 'email',
+        header: "Email",
+        accessorKey: "email",
       },
     ],
     [],
@@ -366,32 +493,32 @@ export const withPageSizeList: ComponentStory<typeof PagingTable> = () => {
       defaultPageSize={30}
       pageSizeList={[30, 60, 90]}
       onChangePageSize={(pageSize) => {
-        console.log('pageSize', pageSize)
+        console.log("pageSize", pageSize)
       }}
     />
   )
 }
 
-export const customControlPageSize: ComponentStory<typeof PagingTable> = () => {
+export const customControlPageSize: Story = () => {
   const [pageSize, onChangePageSize] = useState<number>(20)
 
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: 'First Name',
-        accessorKey: 'firstName',
+        header: "First Name",
+        accessorKey: "firstName",
       },
       {
-        header: 'Last Name',
-        accessorKey: 'lastName',
+        header: "Last Name",
+        accessorKey: "lastName",
       },
       {
-        header: 'Age',
-        accessorKey: 'age',
+        header: "Age",
+        accessorKey: "age",
       },
       {
-        header: 'Email',
-        accessorKey: 'email',
+        header: "Email",
+        accessorKey: "email",
       },
     ],
     [],
@@ -409,24 +536,24 @@ export const customControlPageSize: ComponentStory<typeof PagingTable> = () => {
   )
 }
 
-export const withDefaultPageIndex: ComponentStory<typeof PagingTable> = () => {
+export const withDefaultPageIndex: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: 'First Name',
-        accessorKey: 'firstName',
+        header: "First Name",
+        accessorKey: "firstName",
       },
       {
-        header: 'Last Name',
-        accessorKey: 'lastName',
+        header: "Last Name",
+        accessorKey: "lastName",
       },
       {
-        header: 'Age',
-        accessorKey: 'age',
+        header: "Age",
+        accessorKey: "age",
       },
       {
-        header: 'Email',
-        accessorKey: 'email',
+        header: "Email",
+        accessorKey: "email",
       },
     ],
     [],
@@ -440,32 +567,32 @@ export const withDefaultPageIndex: ComponentStory<typeof PagingTable> = () => {
       data={data}
       defaultPageIndex={2}
       onChangePageIndex={(pageIndex) => {
-        console.log('pageIndex', pageIndex)
+        console.log("pageIndex", pageIndex)
       }}
     />
   )
 }
 
-export const customControlPageIndex: ComponentStory<typeof PagingTable> = () => {
+export const customControlPageIndex: Story = () => {
   const [pageIndex, onChangePageIndex] = useState<number>(0)
 
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: 'First Name',
-        accessorKey: 'firstName',
+        header: "First Name",
+        accessorKey: "firstName",
       },
       {
-        header: 'Last Name',
-        accessorKey: 'lastName',
+        header: "Last Name",
+        accessorKey: "lastName",
       },
       {
-        header: 'Age',
-        accessorKey: 'age',
+        header: "Age",
+        accessorKey: "age",
       },
       {
-        header: 'Email',
-        accessorKey: 'email',
+        header: "Email",
+        accessorKey: "email",
       },
     ],
     [],
@@ -483,7 +610,7 @@ export const customControlPageIndex: ComponentStory<typeof PagingTable> = () => 
   )
 }
 
-export const withManualPagination: ComponentStory<typeof PagingTable> = () => {
+export const withManualPagination: Story = () => {
   const [pageIndex, onChangePageIndex] = useState<number>(0)
   const [pageSize, onChangePageSize] = useState<number>(20)
   const [data, setData] = useState<Data[]>([])
@@ -496,7 +623,10 @@ export const withManualPagination: ComponentStory<typeof PagingTable> = () => {
     async (pageIndex: number, pageSize: number) => {
       page.start()
 
-      const data = initData.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
+      const data = initData.slice(
+        pageIndex * pageSize,
+        (pageIndex + 1) * pageSize,
+      )
       const pageCount = maxPageCount / pageSize
 
       await wait(1000)
@@ -516,20 +646,20 @@ export const withManualPagination: ComponentStory<typeof PagingTable> = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: 'First Name',
-        accessorKey: 'firstName',
+        header: "First Name",
+        accessorKey: "firstName",
       },
       {
-        header: 'Last Name',
-        accessorKey: 'lastName',
+        header: "Last Name",
+        accessorKey: "lastName",
       },
       {
-        header: 'Age',
-        accessorKey: 'age',
+        header: "Age",
+        accessorKey: "age",
       },
       {
-        header: 'Email',
-        accessorKey: 'email',
+        header: "Email",
+        accessorKey: "email",
       },
     ],
     [],
@@ -545,7 +675,7 @@ export const withManualPagination: ComponentStory<typeof PagingTable> = () => {
           data={data}
           manualPagination
           pageCount={pageCount}
-          rowId='id'
+          rowId="id"
           pageIndex={pageIndex}
           onChangePageIndex={onChangePageIndex}
           pageSize={pageSize}
@@ -556,24 +686,24 @@ export const withManualPagination: ComponentStory<typeof PagingTable> = () => {
   )
 }
 
-export const withFormatPageSizeLabel: ComponentStory<typeof PagingTable> = () => {
+export const withFormatPageSizeLabel: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: 'First Name',
-        accessorKey: 'firstName',
+        header: "First Name",
+        accessorKey: "firstName",
       },
       {
-        header: 'Last Name',
-        accessorKey: 'lastName',
+        header: "Last Name",
+        accessorKey: "lastName",
       },
       {
-        header: 'Age',
-        accessorKey: 'age',
+        header: "Age",
+        accessorKey: "age",
       },
       {
-        header: 'Email',
-        accessorKey: 'email',
+        header: "Email",
+        accessorKey: "email",
       },
     ],
     [],
@@ -590,24 +720,24 @@ export const withFormatPageSizeLabel: ComponentStory<typeof PagingTable> = () =>
   )
 }
 
-export const customProps: ComponentStory<typeof PagingTable> = () => {
+export const customProps: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: 'First Name',
-        accessorKey: 'firstName',
+        header: "First Name",
+        accessorKey: "firstName",
       },
       {
-        header: 'Last Name',
-        accessorKey: 'lastName',
+        header: "Last Name",
+        accessorKey: "lastName",
       },
       {
-        header: 'Age',
-        accessorKey: 'age',
+        header: "Age",
+        accessorKey: "age",
       },
       {
-        header: 'Email',
-        accessorKey: 'email',
+        header: "Email",
+        accessorKey: "email",
       },
     ],
     [],
@@ -621,51 +751,51 @@ export const customProps: ComponentStory<typeof PagingTable> = () => {
         columns={columns}
         data={data}
         defaultPageSize={5}
-        containerProps={{ flexDirection: 'column-reverse' }}
+        containerProps={{ flexDirection: "column-reverse" }}
       />
 
       <PagingTable
         columns={columns}
         data={data}
         defaultPageSize={5}
-        pagingControlProps={{ py: 4, bg: 'gray.100' }}
+        pagingControlProps={{ py: 4, bg: "gray.100" }}
       />
 
       <PagingTable
         columns={columns}
         data={data}
         defaultPageSize={5}
-        paginationProps={{ variant: 'outline', colorScheme: 'pink' }}
+        paginationProps={{ variant: "outline", colorScheme: "pink" }}
       />
 
       <PagingTable
         columns={columns}
         data={data}
         defaultPageSize={5}
-        selectProps={{ variant: 'flushed' }}
+        selectProps={{ variant: "flushed" }}
       />
     </>
   )
 }
 
-export const customPagination: ComponentStory<typeof PagingTable> = () => {
+export const customPagination: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: 'First Name',
-        accessorKey: 'firstName',
+        header: "First Name",
+        accessorKey: "firstName",
       },
       {
-        header: 'Last Name',
-        accessorKey: 'lastName',
+        header: "Last Name",
+        accessorKey: "lastName",
       },
       {
-        header: 'Age',
-        accessorKey: 'age',
+        header: "Age",
+        accessorKey: "age",
       },
       {
-        header: 'Email',
-        accessorKey: 'email',
+        header: "Email",
+        accessorKey: "email",
       },
     ],
     [],
@@ -693,15 +823,15 @@ export const customPagination: ComponentStory<typeof PagingTable> = () => {
             </Text>
 
             <IconButton
-              size='sm'
+              size="sm"
               icon={<Icon icon={faChevronLeft} />}
               isDisabled={!getCanPreviousPage()}
               onClick={previousPage}
             />
 
             <NumberInput
-              variant='flushed'
-              size='sm'
+              variant="flushed"
+              size="sm"
               min={1}
               max={totalPage}
               value={pageIndex + 1}
@@ -709,7 +839,7 @@ export const customPagination: ComponentStory<typeof PagingTable> = () => {
             />
 
             <IconButton
-              size='sm'
+              size="sm"
               icon={<Icon icon={faChevronRight} />}
               isDisabled={!getCanNextPage()}
               onClick={nextPage}
@@ -718,13 +848,13 @@ export const customPagination: ComponentStory<typeof PagingTable> = () => {
             <Spacer />
 
             <SegmentedControl
-              size='sm'
+              size="sm"
               value={String(pageSize)}
               onChange={(pageSize) => setPageSize(Number(pageSize))}
             >
-              <SegmentedControlButton value='20'>20</SegmentedControlButton>
-              <SegmentedControlButton value='50'>50</SegmentedControlButton>
-              <SegmentedControlButton value='100'>100</SegmentedControlButton>
+              <SegmentedControlButton value="20">20</SegmentedControlButton>
+              <SegmentedControlButton value="50">50</SegmentedControlButton>
+              <SegmentedControlButton value="100">100</SegmentedControlButton>
             </SegmentedControl>
           </HStack>
         )

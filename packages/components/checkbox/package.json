@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/checkbox",
-  "version": "0.1.12",
+  "version": "0.5.0",
   "description": "Yamada UI checkbox component",
   "keywords": [
     "yamada",
@@ -67,6 +67,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

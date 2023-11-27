@@ -1,13 +1,14 @@
-import * as CSS from 'csstype'
-import { Token } from '../css'
-import { Configs, configs } from './config'
+import type * as CSS from "csstype"
+import type { Token } from "../css"
+import type { Configs } from "./config"
+import { configs } from "./config"
 
 export const effect: Configs = {
-  boxShadow: configs.shadow('boxShadow'),
+  boxShadow: configs.shadow("boxShadow"),
   mixBlendMode: true,
-  blendMode: configs.prop('mixBlendMode'),
+  blendMode: configs.prop("mixBlendMode"),
   backgroundBlendMode: true,
-  bgBlendMode: configs.prop('backgroundBlendMode'),
+  bgBlendMode: configs.prop("backgroundBlendMode"),
   opacity: true,
 }
 
@@ -15,33 +16,33 @@ Object.assign(effect, {
   shadow: effect.boxShadow,
 })
 
-export type EffectProps<Y = 'responsive', M = 'colorMode'> = {
+export type EffectProps = {
   /**
-   * The `box-shadow` property
+   * The `box-shadow` property.
    */
-  boxShadow?: Token<CSS.Property.BoxShadow | number, 'shadows', Y, M>
+  boxShadow?: Token<CSS.Property.BoxShadow | number, "shadows">
   /**
-   * The `box-shadow` property
+   * The `box-shadow` property.
    */
-  shadow?: Token<CSS.Property.BoxShadow | number, 'shadows', Y, M>
+  shadow?: Token<CSS.Property.BoxShadow | number, "shadows">
   /**
-   * The `mix-blend-mode` property
+   * The `mix-blend-mode` property.
    */
-  mixBlendMode?: Token<CSS.Property.MixBlendMode, unknown, Y, M>
+  mixBlendMode?: Token<CSS.Property.MixBlendMode>
   /**
-   * The `blend-mode` property
+   * The `mix-blend-mode` property.
    */
-  blendMode?: Token<CSS.Property.MixBlendMode, unknown, Y, M>
+  blendMode?: Token<CSS.Property.MixBlendMode>
   /**
-   * The CSS `background-blend-mode` property
+   * The CSS `background-blend-mode` property.
    */
-  backgroundBlendMode?: Token<CSS.Property.BackgroundBlendMode, unknown, Y, M>
+  backgroundBlendMode?: Token<CSS.Property.BackgroundBlendMode>
   /**
-   * The CSS `background-blend-mode` property
+   * The CSS `background-blend-mode` property.
    */
-  bgBlendMode?: Token<CSS.Property.BackgroundBlendMode, unknown, Y, M>
+  bgBlendMode?: Token<CSS.Property.BackgroundBlendMode>
   /**
-   * The CSS `opacity` property
+   * The CSS `opacity` property.
    */
-  opacity?: Token<CSS.Property.Opacity, unknown, Y, M>
+  opacity?: Token<CSS.Property.Opacity>
 }

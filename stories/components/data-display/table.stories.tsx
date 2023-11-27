@@ -1,11 +1,17 @@
-import { ComponentStory } from '@storybook/react'
-import { TableCaption, Button, Text } from '@yamada-ui/react'
-import { Table, Column, Sort } from '@yamada-ui/table'
-import { useMemo, useState } from 'react'
+import type { Meta, StoryFn } from "@storybook/react"
+import { TableCaption, Button, Text } from "@yamada-ui/react"
+import type { Column, Sort } from "@yamada-ui/table"
+import { Table } from "@yamada-ui/table"
+import { useMemo, useState } from "react"
 
-export default {
-  title: 'Components / Data Display / Table',
+type Story = StoryFn<typeof Table>
+
+const meta: Meta<typeof Table> = {
+  title: "Components / Data Display / Table",
+  component: Table,
 }
+
+export default meta
 
 type Data = {
   name: string
@@ -13,20 +19,20 @@ type Data = {
   episode: string
 }
 
-export const basic: ComponentStory<typeof Table> = () => {
+export const basic: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -35,29 +41,29 @@ export const basic: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -66,20 +72,20 @@ export const basic: ComponentStory<typeof Table> = () => {
   return <Table columns={columns} data={data} />
 }
 
-export const withSize: ComponentStory<typeof Table> = () => {
+export const withSize: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -88,29 +94,29 @@ export const withSize: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -118,28 +124,28 @@ export const withSize: ComponentStory<typeof Table> = () => {
 
   return (
     <>
-      <Table size='sm' columns={columns} data={data} />
-      <Table size='md' columns={columns} data={data} />
-      <Table size='lg' columns={columns} data={data} />
-      <Table size='xl' columns={columns} data={data} />
+      <Table size="sm" columns={columns} data={data} />
+      <Table size="md" columns={columns} data={data} />
+      <Table size="lg" columns={columns} data={data} />
+      <Table size="xl" columns={columns} data={data} />
     </>
   )
 }
 
-export const withVariant: ComponentStory<typeof Table> = () => {
+export const withVariant: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -148,29 +154,29 @@ export const withVariant: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -178,26 +184,26 @@ export const withVariant: ComponentStory<typeof Table> = () => {
 
   return (
     <>
-      <Table variant='simple' columns={columns} data={data} />
-      <Table variant='striped' columns={columns} data={data} />
+      <Table variant="simple" columns={columns} data={data} />
+      <Table variant="striped" columns={columns} data={data} />
     </>
   )
 }
 
-export const withColorScheme: ComponentStory<typeof Table> = () => {
+export const withColorScheme: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -206,29 +212,29 @@ export const withColorScheme: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -236,53 +242,205 @@ export const withColorScheme: ComponentStory<typeof Table> = () => {
 
   return (
     <>
-      <Table variant='striped' colorScheme='primary' columns={columns} data={data} />
+      <Table
+        variant="striped"
+        colorScheme="primary"
+        columns={columns}
+        data={data}
+      />
 
-      <Table variant='striped' colorScheme='secondary' columns={columns} data={data} />
+      <Table
+        variant="striped"
+        colorScheme="secondary"
+        columns={columns}
+        data={data}
+      />
 
-      <Table variant='striped' colorScheme='warning' columns={columns} data={data} />
+      <Table
+        variant="striped"
+        colorScheme="warning"
+        columns={columns}
+        data={data}
+      />
 
-      <Table variant='striped' colorScheme='danger' columns={columns} data={data} />
+      <Table
+        variant="striped"
+        colorScheme="danger"
+        columns={columns}
+        data={data}
+      />
 
-      <Table variant='striped' colorScheme='link' columns={columns} data={data} />
+      <Table
+        variant="striped"
+        colorScheme="link"
+        columns={columns}
+        data={data}
+      />
 
-      <Table variant='striped' colorScheme='gray' columns={columns} data={data} />
+      <Table
+        variant="striped"
+        colorScheme="gray"
+        columns={columns}
+        data={data}
+      />
 
-      <Table variant='striped' colorScheme='red' columns={columns} data={data} />
+      <Table
+        variant="striped"
+        colorScheme="zinc"
+        columns={columns}
+        data={data}
+      />
 
-      <Table variant='striped' colorScheme='orange' columns={columns} data={data} />
+      <Table
+        variant="striped"
+        colorScheme="neutral"
+        columns={columns}
+        data={data}
+      />
 
-      <Table variant='striped' colorScheme='yellow' columns={columns} data={data} />
+      <Table
+        variant="striped"
+        colorScheme="stone"
+        columns={columns}
+        data={data}
+      />
 
-      <Table variant='striped' colorScheme='green' columns={columns} data={data} />
+      <Table
+        variant="striped"
+        colorScheme="red"
+        columns={columns}
+        data={data}
+      />
 
-      <Table variant='striped' colorScheme='teal' columns={columns} data={data} />
+      <Table
+        variant="striped"
+        colorScheme="rose"
+        columns={columns}
+        data={data}
+      />
 
-      <Table variant='striped' colorScheme='blue' columns={columns} data={data} />
+      <Table
+        variant="striped"
+        colorScheme="pink"
+        columns={columns}
+        data={data}
+      />
 
-      <Table variant='striped' colorScheme='cyan' columns={columns} data={data} />
+      <Table
+        variant="striped"
+        colorScheme="orange"
+        columns={columns}
+        data={data}
+      />
 
-      <Table variant='striped' colorScheme='purple' columns={columns} data={data} />
+      <Table
+        variant="striped"
+        colorScheme="amber"
+        columns={columns}
+        data={data}
+      />
 
-      <Table variant='striped' colorScheme='pink' columns={columns} data={data} />
+      <Table
+        variant="striped"
+        colorScheme="yellow"
+        columns={columns}
+        data={data}
+      />
+
+      <Table
+        variant="striped"
+        colorScheme="lime"
+        columns={columns}
+        data={data}
+      />
+
+      <Table
+        variant="striped"
+        colorScheme="green"
+        columns={columns}
+        data={data}
+      />
+
+      <Table
+        variant="striped"
+        colorScheme="emerald"
+        columns={columns}
+        data={data}
+      />
+
+      <Table
+        variant="striped"
+        colorScheme="teal"
+        columns={columns}
+        data={data}
+      />
+
+      <Table
+        variant="striped"
+        colorScheme="cyan"
+        columns={columns}
+        data={data}
+      />
+
+      <Table
+        variant="striped"
+        colorScheme="sky"
+        columns={columns}
+        data={data}
+      />
+
+      <Table
+        variant="striped"
+        colorScheme="blue"
+        columns={columns}
+        data={data}
+      />
+
+      <Table
+        variant="striped"
+        colorScheme="indigo"
+        columns={columns}
+        data={data}
+      />
+
+      <Table
+        variant="striped"
+        colorScheme="violet"
+        columns={columns}
+        data={data}
+      />
+
+      <Table
+        variant="striped"
+        colorScheme="purple"
+        columns={columns}
+        data={data}
+      />
+
+      <Table
+        variant="striped"
+        colorScheme="fuchsia"
+        columns={columns}
+        data={data}
+      />
     </>
   )
 }
 
-export const withColumnBorders: ComponentStory<typeof Table> = () => {
+export const withColumnBorders: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -291,29 +449,29 @@ export const withColumnBorders: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -322,20 +480,20 @@ export const withColumnBorders: ComponentStory<typeof Table> = () => {
   return <Table columns={columns} data={data} withColumnBorders />
 }
 
-export const withBorder: ComponentStory<typeof Table> = () => {
+export const withBorder: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -344,29 +502,29 @@ export const withBorder: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -375,20 +533,20 @@ export const withBorder: ComponentStory<typeof Table> = () => {
   return <Table columns={columns} data={data} withBorder />
 }
 
-export const withHighlightOnHover: ComponentStory<typeof Table> = () => {
+export const withHighlightOnHover: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -397,29 +555,29 @@ export const withHighlightOnHover: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -428,20 +586,20 @@ export const withHighlightOnHover: ComponentStory<typeof Table> = () => {
   return <Table columns={columns} data={data} highlightOnHover />
 }
 
-export const withCaption: ComponentStory<typeof Table> = () => {
+export const withCaption: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -450,29 +608,29 @@ export const withCaption: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -480,33 +638,37 @@ export const withCaption: ComponentStory<typeof Table> = () => {
 
   return (
     <>
-      <Table variant='simple' columns={columns} data={data}>
-        <TableCaption placement='top'>©バードスタジオ/集英社・東映アニメーション</TableCaption>
+      <Table variant="simple" columns={columns} data={data}>
+        <TableCaption placement="top">
+          ©バードスタジオ/集英社・東映アニメーション
+        </TableCaption>
       </Table>
-      <Table variant='striped' columns={columns} data={data}>
-        <TableCaption placement='bottom'>©バードスタジオ/集英社・東映アニメーション</TableCaption>
+      <Table variant="striped" columns={columns} data={data}>
+        <TableCaption placement="bottom">
+          ©バードスタジオ/集英社・東映アニメーション
+        </TableCaption>
       </Table>
     </>
   )
 }
 
-export const withFooter: ComponentStory<typeof Table> = () => {
+export const withFooter: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
-        footer: '作品名',
+        header: "作品名",
+        accessorKey: "name",
+        footer: "作品名",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
-        footer: '放送期間',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
+        footer: "放送期間",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
-        footer: '話数',
+        header: "話数",
+        accessorKey: "episode",
+        footer: "話数",
       },
     ],
     [],
@@ -515,29 +677,29 @@ export const withFooter: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -551,20 +713,20 @@ export const withFooter: ComponentStory<typeof Table> = () => {
   )
 }
 
-export const withRowId: ComponentStory<typeof Table> = () => {
+export const withRowId: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -573,51 +735,51 @@ export const withRowId: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
   )
 
-  return <Table columns={columns} data={data} rowId='name' />
+  return <Table columns={columns} data={data} rowId="name" />
 }
 
-export const withDefaultSort: ComponentStory<typeof Table> = () => {
+export const withDefaultSort: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -626,29 +788,29 @@ export const withDefaultSort: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -658,29 +820,29 @@ export const withDefaultSort: ComponentStory<typeof Table> = () => {
     <Table
       columns={columns}
       data={data}
-      rowId='name'
-      defaultSort={[{ id: 'name', desc: false }]}
+      rowId="name"
+      defaultSort={[{ id: "name", desc: false }]}
       onChangeSort={(sort) => {
-        console.log('sort', sort)
+        console.log("sort", sort)
       }}
     />
   )
 }
 
-export const manualSort: ComponentStory<typeof Table> = () => {
+export const manualSort: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -689,29 +851,29 @@ export const manualSort: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -721,31 +883,31 @@ export const manualSort: ComponentStory<typeof Table> = () => {
     <Table
       columns={columns}
       data={data}
-      rowId='name'
+      rowId="name"
       manualSorting
       onChangeSort={(sort) => {
-        console.log('sort', sort)
+        console.log("sort", sort)
       }}
     />
   )
 }
 
-export const customControlSort: ComponentStory<typeof Table> = () => {
+export const customControlSort: Story = () => {
   const [sort, onChangeSort] = useState<Sort<Data>>([])
 
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -754,29 +916,29 @@ export const customControlSort: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -789,7 +951,7 @@ export const customControlSort: ComponentStory<typeof Table> = () => {
       <Table
         columns={columns}
         data={data}
-        rowId='name'
+        rowId="name"
         manualSorting
         sort={sort}
         onChangeSort={onChangeSort}
@@ -798,20 +960,20 @@ export const customControlSort: ComponentStory<typeof Table> = () => {
   )
 }
 
-export const withMaxMultiSortColCount: ComponentStory<typeof Table> = () => {
+export const withMaxMultiSortColCount: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -820,29 +982,29 @@ export const withMaxMultiSortColCount: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -852,30 +1014,30 @@ export const withMaxMultiSortColCount: ComponentStory<typeof Table> = () => {
     <Table
       columns={columns}
       data={data}
-      rowId='name'
+      rowId="name"
       maxMultiSortColCount={2}
       onChangeSort={(sort) => {
-        console.log('sort', sort)
+        console.log("sort", sort)
       }}
     />
   )
 }
 
-export const disabledSort: ComponentStory<typeof Table> = () => {
+export const disabledSort: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
         enableSorting: false,
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -884,29 +1046,29 @@ export const disabledSort: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -920,28 +1082,28 @@ export const disabledSort: ComponentStory<typeof Table> = () => {
         columns={columns}
         data={data}
         onChangeSort={(sort) => {
-          console.log('sort', sort)
+          console.log("sort", sort)
         }}
       />
     </>
   )
 }
 
-export const withSortDescFirst: ComponentStory<typeof Table> = () => {
+export const withSortDescFirst: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
         sortDescFirst: true,
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -950,29 +1112,29 @@ export const withSortDescFirst: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -985,34 +1147,34 @@ export const withSortDescFirst: ComponentStory<typeof Table> = () => {
         data={data}
         sortDescFirst
         onChangeSort={(sort) => {
-          console.log('sort', sort)
+          console.log("sort", sort)
         }}
       />
       <Table
         columns={columns}
         data={data}
         onChangeSort={(sort) => {
-          console.log('sort', sort)
+          console.log("sort", sort)
         }}
       />
     </>
   )
 }
 
-export const disabledMultiSort: ComponentStory<typeof Table> = () => {
+export const disabledMultiSort: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -1021,29 +1183,29 @@ export const disabledMultiSort: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -1055,26 +1217,26 @@ export const disabledMultiSort: ComponentStory<typeof Table> = () => {
       data={data}
       enableMultiSort={false}
       onChangeSort={(sort) => {
-        console.log('sort', sort)
+        console.log("sort", sort)
       }}
     />
   )
 }
 
-export const withDefaultSelectedRowIds: ComponentStory<typeof Table> = () => {
+export const withDefaultSelectedRowIds: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -1083,29 +1245,29 @@ export const withDefaultSelectedRowIds: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -1115,29 +1277,29 @@ export const withDefaultSelectedRowIds: ComponentStory<typeof Table> = () => {
     <Table
       columns={columns}
       data={data}
-      rowId='name'
-      defaultSelectedRowIds={['ドラゴンボール']}
+      rowId="name"
+      defaultSelectedRowIds={["ドラゴンボール"]}
       onChangeSelect={(selectedIds) => {
-        console.log('selectedIds', selectedIds)
+        console.log("selectedIds", selectedIds)
       }}
     />
   )
 }
 
-export const disabledRowIds: ComponentStory<typeof Table> = () => {
+export const disabledRowIds: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -1146,29 +1308,29 @@ export const disabledRowIds: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -1178,29 +1340,29 @@ export const disabledRowIds: ComponentStory<typeof Table> = () => {
     <Table
       columns={columns}
       data={data}
-      rowId='name'
-      disabledRowIds={['ドラゴンボールZ']}
+      rowId="name"
+      disabledRowIds={["ドラゴンボールZ"]}
       onChangeSelect={(selectedIds) => {
-        console.log('selectedIds', selectedIds)
+        console.log("selectedIds", selectedIds)
       }}
     />
   )
 }
 
-export const withRowsClickSelect: ComponentStory<typeof Table> = () => {
+export const withRowsClickSelect: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -1209,29 +1371,29 @@ export const withRowsClickSelect: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -1241,29 +1403,29 @@ export const withRowsClickSelect: ComponentStory<typeof Table> = () => {
     <Table
       columns={columns}
       data={data}
-      rowId='name'
+      rowId="name"
       rowsClickSelect
       onChangeSelect={(selectedIds) => {
-        console.log('selectedIds', selectedIds)
+        console.log("selectedIds", selectedIds)
       }}
     />
   )
 }
 
-export const disabledSelect: ComponentStory<typeof Table> = () => {
+export const disabledSelect: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -1272,29 +1434,29 @@ export const disabledSelect: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -1303,22 +1465,22 @@ export const disabledSelect: ComponentStory<typeof Table> = () => {
   return <Table columns={columns} data={data} enableRowSelection={false} />
 }
 
-export const customControlSelect: ComponentStory<typeof Table> = () => {
+export const customControlSelect: Story = () => {
   const [selectedRowIds, onChangeSelect] = useState<string[]>([])
 
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -1327,29 +1489,29 @@ export const customControlSelect: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -1362,7 +1524,7 @@ export const customControlSelect: ComponentStory<typeof Table> = () => {
       <Table
         columns={columns}
         data={data}
-        rowId='name'
+        rowId="name"
         selectedRowIds={selectedRowIds}
         onChangeSelect={onChangeSelect}
       />
@@ -1370,20 +1532,20 @@ export const customControlSelect: ComponentStory<typeof Table> = () => {
   )
 }
 
-export const useClickRow: ComponentStory<typeof Table> = () => {
+export const useClickRow: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -1392,29 +1554,29 @@ export const useClickRow: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -1425,26 +1587,26 @@ export const useClickRow: ComponentStory<typeof Table> = () => {
       columns={columns}
       data={data}
       onClickRow={(row) => {
-        console.log('row', row)
+        console.log("row", row)
       }}
     />
   )
 }
 
-export const withCheckboxProps: ComponentStory<typeof Table> = () => {
+export const withCheckboxProps: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -1453,51 +1615,57 @@ export const withCheckboxProps: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
   )
 
-  return <Table columns={columns} data={data} checkboxProps={{ colorScheme: 'red' }} />
+  return (
+    <Table
+      columns={columns}
+      data={data}
+      checkboxProps={{ colorScheme: "red" }}
+    />
+  )
 }
 
-export const withSelectColumnProps: ComponentStory<typeof Table> = () => {
+export const withSelectColumnProps: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -1506,53 +1674,59 @@ export const withSelectColumnProps: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
   )
 
-  return <Table columns={columns} data={data} selectColumn={{ css: { w: '40px' } }} />
+  return (
+    <Table
+      columns={columns}
+      data={data}
+      selectColumnProps={{ css: { w: "40px" } }}
+    />
+  )
 }
 
-export const disabledSelectColumn: ComponentStory<typeof Table> = () => {
+export const disabledSelectColumn: Story = () => {
   const [selectedRowIds, onChangeSelect] = useState<string[]>([])
 
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
+        header: "作品名",
+        accessorKey: "name",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
+        header: "話数",
+        accessorKey: "episode",
       },
     ],
     [],
@@ -1561,29 +1735,29 @@ export const disabledSelectColumn: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -1591,12 +1765,12 @@ export const disabledSelectColumn: ComponentStory<typeof Table> = () => {
 
   return (
     <>
-      <Text>Select ids {selectedRowIds.join(', ')}</Text>
+      <Text>Select ids {selectedRowIds.join(", ")}</Text>
 
       <Table
         columns={columns}
         data={data}
-        selectColumn={false}
+        selectColumnProps={false}
         rowsClickSelect
         selectedRowIds={selectedRowIds}
         onChangeSelect={onChangeSelect}
@@ -1605,23 +1779,23 @@ export const disabledSelectColumn: ComponentStory<typeof Table> = () => {
   )
 }
 
-export const withColumnStyles: ComponentStory<typeof Table> = () => {
+export const withColumnStyles: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
-        css: { color: 'primary' },
+        header: "作品名",
+        accessorKey: "name",
+        css: { color: "primary" },
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
-        sx: { color: 'secondary' },
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
+        sx: { color: "secondary" },
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
-        style: { color: 'red' },
+        header: "話数",
+        accessorKey: "episode",
+        style: { color: "red" },
       },
     ],
     [],
@@ -1630,29 +1804,29 @@ export const withColumnStyles: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -1661,23 +1835,23 @@ export const withColumnStyles: ComponentStory<typeof Table> = () => {
   return <Table columns={columns} data={data} />
 }
 
-export const customProps: ComponentStory<typeof Table> = () => {
+export const customProps: Story = () => {
   const columns = useMemo<Column<Data>[]>(
     () => [
       {
-        header: '作品名',
-        accessorKey: 'name',
-        footer: '作品名',
+        header: "作品名",
+        accessorKey: "name",
+        footer: "作品名",
       },
       {
-        header: '放送期間',
-        accessorKey: 'broadcastPeriod',
-        footer: '放送期間',
+        header: "放送期間",
+        accessorKey: "broadcastPeriod",
+        footer: "放送期間",
       },
       {
-        header: '話数',
-        accessorKey: 'episode',
-        footer: '話数',
+        header: "話数",
+        accessorKey: "episode",
+        footer: "話数",
       },
     ],
     [],
@@ -1686,29 +1860,29 @@ export const customProps: ComponentStory<typeof Table> = () => {
   const data = useMemo<Data[]>(
     () => [
       {
-        name: 'ドラゴンボール',
-        broadcastPeriod: '1986年2月26日 - 1989年4月19日',
-        episode: '全153話',
+        name: "ドラゴンボール",
+        broadcastPeriod: "1986年2月26日 - 1989年4月19日",
+        episode: "全153話",
       },
       {
-        name: 'ドラゴンボールZ',
-        broadcastPeriod: '1989年4月26日 - 1996年1月31日',
-        episode: '全291話 + スペシャル2話',
+        name: "ドラゴンボールZ",
+        broadcastPeriod: "1989年4月26日 - 1996年1月31日",
+        episode: "全291話 + スペシャル2話",
       },
       {
-        name: 'ドラゴンボールGT',
-        broadcastPeriod: '1996年2月7日 - 1997年11月19日',
-        episode: '全64話 + 番外編1話',
+        name: "ドラゴンボールGT",
+        broadcastPeriod: "1996年2月7日 - 1997年11月19日",
+        episode: "全64話 + 番外編1話",
       },
       {
-        name: 'ドラゴンボール改',
-        broadcastPeriod: '2009年4月5日 - 2015年6月28日',
-        episode: '全159話',
+        name: "ドラゴンボール改",
+        broadcastPeriod: "2009年4月5日 - 2015年6月28日",
+        episode: "全159話",
       },
       {
-        name: 'ドラゴンボール超',
-        broadcastPeriod: '2015年7月5日 - 2018年3月25日',
-        episode: '全131話',
+        name: "ドラゴンボール超",
+        broadcastPeriod: "2015年7月5日 - 2018年3月25日",
+        episode: "全131話",
       },
     ],
     [],
@@ -1719,18 +1893,18 @@ export const customProps: ComponentStory<typeof Table> = () => {
         columns={columns}
         data={data}
         withFooter
-        theadProps={{ bg: ['red.200', 'red.700'] }}
-        tbodyProps={{ bg: ['green.200', 'green.700'] }}
-        tfootProps={{ bg: ['blue.200', 'blue.700'] }}
+        theadProps={{ bg: ["red.200", "red.700"] }}
+        tbodyProps={{ bg: ["green.200", "green.700"] }}
+        tfootProps={{ bg: ["blue.200", "blue.700"] }}
       />
 
       <Table
         columns={columns}
         data={data}
         withFooter
-        headerGroupProps={{ bg: ['red.200', 'red.700'] }}
-        rowProps={{ bg: ['green.200', 'green.700'] }}
-        footerGroupProps={{ bg: ['blue.200', 'blue.700'] }}
+        headerGroupProps={{ bg: ["red.200", "red.700"] }}
+        rowProps={{ bg: ["green.200", "green.700"] }}
+        footerGroupProps={{ bg: ["blue.200", "blue.700"] }}
       />
 
       <Table
@@ -1738,13 +1912,16 @@ export const customProps: ComponentStory<typeof Table> = () => {
         data={data}
         withFooter
         headerProps={({ column }) => {
-          if (column.columnDef.header === '作品名') return { color: ['red.400', 'red.300'] }
+          if (column.columnDef.header === "作品名")
+            return { color: ["red.400", "red.300"] }
         }}
         cellProps={({ column }) => {
-          if (column.columnDef.header === '作品名') return { color: ['red.400', 'red.300'] }
+          if (column.columnDef.header === "作品名")
+            return { color: ["red.400", "red.300"] }
         }}
         footerProps={({ column }) => {
-          if (column.columnDef.footer === '作品名') return { color: ['red.400', 'red.300'] }
+          if (column.columnDef.footer === "作品名")
+            return { color: ["red.400", "red.300"] }
         }}
       />
     </>

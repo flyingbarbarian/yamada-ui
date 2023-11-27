@@ -1,52 +1,98 @@
-import { RowData } from '@tanstack/react-table'
+import type { RowData } from "@tanstack/react-table"
+import type { ComponentArgs, CSSUIObject } from "@yamada-ui/core"
+import { ui, useMultiComponentStyle, omitThemeProps } from "@yamada-ui/core"
+import { TableStyleProvider, TableCaption } from "@yamada-ui/native-table"
 import {
-  ui,
-  useMultiComponentStyle,
-  omitThemeProps,
-  ComponentArgs,
-  CSSUIObject,
-} from '@yamada-ui/core'
-import { TableStyleProvider, TableCaption } from '@yamada-ui/native-table'
-import { cx, pickChildren, getValidChildren, omitObject } from '@yamada-ui/utils'
-import { ForwardedRef, forwardRef, Ref } from 'react'
-import { Tbody, TableBodyProps } from './tbody'
-import { Tfoot, TableFootProps } from './tfoot'
-import { Thead, TableHeadProps } from './thead'
-import { TableContext, TableProvider, useTable, UseTableProps } from './use-table'
+  cx,
+  pickChildren,
+  getValidChildren,
+  omitObject,
+} from "@yamada-ui/utils"
+import type { ForwardedRef, Ref } from "react"
+import { forwardRef } from "react"
+import type { TableBodyProps } from "./tbody"
+import { Tbody } from "./tbody"
+import type { TableFootProps } from "./tfoot"
+import { Tfoot } from "./tfoot"
+import type { TableHeadProps } from "./thead"
+import { Thead } from "./thead"
+import type { TableContext, UseTableProps } from "./use-table"
+import { TableProvider, useTable } from "./use-table"
 
 type TableOptions = {
-  layout?: CSSUIObject['tableLayout']
+  /**
+   * The CSS `table-layout` property.
+   */
+  layout?: CSSUIObject["tableLayout"]
+  /**
+   * If `true`, highlight the row when the table row is selected.
+   *
+   * @default false
+   */
   highlightOnSelected?: boolean
+  /**
+   * If `true`, highlight the row when the table row is hovered.
+   *
+   * @default false
+   */
   highlightOnHover?: boolean
+  /**
+   * If `true`, display the outer border of the table.
+   *
+   * @default false
+   */
   withBorder?: boolean
+  /**
+   * If `true`, display line on the columns of the table.
+   *
+   * @default false
+   */
   withColumnBorders?: boolean
+  /**
+   * If `true`, display the table footer.
+   *
+   * @default false
+   */
   withFooter?: boolean
+  /**
+   * Props for table thead element.
+   */
   theadProps?: TableHeadProps
+  /**
+   * Props for table tbody element.
+   */
   tbodyProps?: TableBodyProps
+  /**
+   * Props for table tfoot element.
+   */
   tfootProps?: TableFootProps
 }
 
 type PagingTableProps =
-  | 'enablePagenation'
-  | 'pageIndex'
-  | 'defaultPageIndex'
-  | 'onChangePageIndex'
-  | 'pageSize'
-  | 'defaultPageSize'
-  | 'onChangePageSize'
-  | 'pageSizeList'
-  | 'pageCount'
-  | 'manualPagination'
-  | 'autoResetPageIndex'
+  | "enablePagenation"
+  | "pageIndex"
+  | "defaultPageIndex"
+  | "onChangePageIndex"
+  | "pageSize"
+  | "defaultPageSize"
+  | "onChangePageSize"
+  | "pageSizeList"
+  | "pageCount"
+  | "manualPagination"
+  | "autoResetPageIndex"
 
-export type TableProps<Y extends RowData> = Omit<UseTableProps<Y>, PagingTableProps> & TableOptions
+export type TableProps<Y extends RowData = unknown> = Omit<
+  UseTableProps<Y>,
+  PagingTableProps
+> &
+  TableOptions
 
 export const Table = forwardRef(
   <Y extends RowData>(
     { colorScheme, highlightOnSelected = true, ...props }: TableProps<Y>,
     ref: ForwardedRef<HTMLTableElement>,
   ) => {
-    const [styles, mergedProps] = useMultiComponentStyle('Table', {
+    const [styles, mergedProps] = useMultiComponentStyle("Table", {
       colorScheme,
       highlightOnSelected,
       ...props,
@@ -65,15 +111,16 @@ export const Table = forwardRef(
 
     const { getTableProps, ...rest } = useTable<Y>({
       ...omitObject(computedProps, [
-        'highlightOnSelected',
-        'highlightOnHover',
-        'withColumnBorders',
+        "highlightOnSelected",
+        "highlightOnHover",
+        "withBorder",
+        "withColumnBorders",
       ]),
       checkboxProps: { colorScheme, ...checkboxProps },
     })
 
     const css: CSSUIObject = {
-      w: '100%',
+      w: "100%",
       tableLayout: layout,
       ...styles.table,
     }
@@ -84,7 +131,11 @@ export const Table = forwardRef(
     return (
       <TableStyleProvider value={styles}>
         <TableProvider value={{ ...rest } as TableContext}>
-          <ui.table className={cx('ui-table', className)} __css={css} {...getTableProps({}, ref)}>
+          <ui.table
+            className={cx("ui-table", className)}
+            __css={css}
+            {...getTableProps({}, ref)}
+          >
             <Thead {...theadProps} />
             <Tbody {...tbodyProps} />
             {withFooter ? <Tfoot {...tfootProps} /> : null}
@@ -95,7 +146,9 @@ export const Table = forwardRef(
     )
   },
 ) as {
-  <Y extends RowData>(props: TableProps<Y> & { ref?: Ref<HTMLDivElement> }): JSX.Element
+  <Y extends RowData>(
+    props: TableProps<Y> & { ref?: Ref<HTMLDivElement> },
+  ): JSX.Element
 } & ComponentArgs
 
-Table.displayName = 'Table'
+Table.displayName = "Table"

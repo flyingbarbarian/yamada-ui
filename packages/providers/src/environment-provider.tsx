@@ -1,7 +1,8 @@
-import { useSafeLayoutEffect } from '@yamada-ui/utils'
-import { FC, createContext, useContext, useMemo, useReducer, useRef } from 'react'
+import { useSafeLayoutEffect } from "@yamada-ui/utils"
+import type { FC, ReactNode } from "react"
+import { createContext, useContext, useMemo, useReducer, useRef } from "react"
 
-type Environment = {
+export type Environment = {
   getWindow: () => Window
   getDocument: () => Document
 }
@@ -14,7 +15,7 @@ const environment: Environment = {
 const EnvironmentContext = createContext<Environment>(environment)
 
 export type EnvironmentProviderProps = {
-  children: React.ReactNode
+  children: ReactNode
   disabled?: boolean
   environment?: Environment
 }
@@ -41,12 +42,12 @@ export const EnvironmentProvider: FC<EnvironmentProviderProps> = ({
     <EnvironmentContext.Provider value={context}>
       {children}
 
-      {enabled ? <span id='__ui_dev' hidden ref={ref} /> : null}
+      {enabled ? <span id="__ui_dev" hidden ref={ref} /> : null}
     </EnvironmentContext.Provider>
   )
 }
 
-EnvironmentProvider.displayName = 'EnvironmentProvider'
+EnvironmentProvider.displayName = "EnvironmentProvider"
 
 export const useEnvironment = ({ isDefer }: { isDefer?: boolean } = {}) => {
   const [, forceUpdate] = useReducer((c) => c + 1, 0)

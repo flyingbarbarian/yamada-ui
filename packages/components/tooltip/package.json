@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/tooltip",
-  "version": "0.1.11",
+  "version": "0.4.16",
   "description": "Yamada UI tooltip component",
   "keywords": [
     "yamada",
@@ -68,6 +68,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

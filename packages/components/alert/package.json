@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/alert",
-  "version": "0.2.1",
+  "version": "0.5.13",
   "description": "Yamada UI alert component",
   "keywords": [
     "yamada",
@@ -64,6 +64,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

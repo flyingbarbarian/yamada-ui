@@ -1,45 +1,92 @@
+import type {
+  CSSUIObject,
+  HTMLUIProps,
+  ThemeProps,
+  Token,
+} from "@yamada-ui/core"
 import {
   ui,
   forwardRef,
   useMultiComponentStyle,
   omitThemeProps,
-  CSSUIObject,
-  HTMLUIProps,
-  ThemeProps,
-  Token,
-} from '@yamada-ui/core'
-import { useValue } from '@yamada-ui/use-value'
-import { cx, omitObject, dataAttr, handlerAll } from '@yamada-ui/utils'
-import { ComponentPropsWithoutRef, FC, useMemo } from 'react'
-import { PaginationItem, PaginationItemProps } from './pagination-item'
-import { PaginationProvider, usePagination, UsePaginationProps } from './use-pagination'
+} from "@yamada-ui/core"
+import { useValue } from "@yamada-ui/use-value"
+import { cx, omitObject, dataAttr, handlerAll } from "@yamada-ui/utils"
+import type { ComponentPropsWithoutRef, FC } from "react"
+import { useMemo } from "react"
+import type { PaginationItemProps } from "./pagination-item"
+import { PaginationItem } from "./pagination-item"
+import type { UsePaginationProps } from "./use-pagination"
+import { PaginationProvider, usePagination } from "./use-pagination"
 
 type PaginationOptions = {
+  /**
+   * The pagination button component to use.
+   */
   component?: FC<PaginationItemProps>
-  itemProps?: HTMLUIProps<'button'>
+  /**
+   * Props for button element.
+   */
+  itemProps?: HTMLUIProps<"button">
+  /**
+   * If `true`, display the control buttons.
+   *
+   * @default true
+   */
   withControls?: Token<boolean>
-  controlProps?: HTMLUIProps<'button'>
-  controlPrevProps?: HTMLUIProps<'button'>
-  controlNextProps?: HTMLUIProps<'button'>
+  /**
+   * Props for inner element.
+   */
+  innerProps?: HTMLUIProps<"div">
+  /**
+   * Props for control button element.
+   */
+  controlProps?: HTMLUIProps<"button">
+  /**
+   * Props for previous of the control button element.
+   */
+  controlPrevProps?: HTMLUIProps<"button">
+  /**
+   * Props for next of the control button element.
+   */
+  controlNextProps?: HTMLUIProps<"button">
+  /**
+   * If `true`, display the edge buttons.
+   *
+   * @default false
+   */
   withEdges?: Token<boolean>
-  edgeProps?: HTMLUIProps<'button'>
-  edgeFirstProps?: HTMLUIProps<'button'>
-  edgeLastProps?: HTMLUIProps<'button'>
+  /**
+   * Props for edge button element.
+   */
+  edgeProps?: HTMLUIProps<"button">
+  /**
+   * Props for first of the edge button element.
+   */
+  edgeFirstProps?: HTMLUIProps<"button">
+  /**
+   * Props for last of the edge button element.
+   */
+  edgeLastProps?: HTMLUIProps<"button">
 }
 
-export type PaginationProps = Omit<HTMLUIProps<'div'>, 'onChange' | 'children'> &
-  ThemeProps<'Pagination'> &
+export type PaginationProps = Omit<
+  HTMLUIProps<"div">,
+  "onChange" | "children"
+> &
+  ThemeProps<"Pagination"> &
   UsePaginationProps &
   PaginationOptions
 
-export const Pagination = forwardRef<PaginationProps, 'div'>((props, ref) => {
-  const [styles, mergedProps] = useMultiComponentStyle('Pagination', props)
+export const Pagination = forwardRef<PaginationProps, "div">((props, ref) => {
+  const [styles, mergedProps] = useMultiComponentStyle("Pagination", props)
   const {
     className,
     component: Component = PaginationItem,
     itemProps,
     withControls = true,
     withEdges = false,
+    innerProps,
     controlProps,
     controlPrevProps,
     controlNextProps,
@@ -52,8 +99,17 @@ export const Pagination = forwardRef<PaginationProps, 'div'>((props, ref) => {
   const computedWithControls = useValue(withControls)
   const computedWithEdges = useValue(withEdges)
 
-  const { currentPage, total, isDisabled, onFirst, onLast, onPrev, onNext, onChange, range } =
-    usePagination(rest)
+  const {
+    currentPage,
+    total,
+    isDisabled,
+    onFirst,
+    onLast,
+    onPrev,
+    onNext,
+    onChange,
+    range,
+  } = usePagination(rest)
 
   const children = useMemo(
     () =>
@@ -63,71 +119,110 @@ export const Pagination = forwardRef<PaginationProps, 'div'>((props, ref) => {
           page={page}
           isActive={currentPage === page}
           isDisabled={isDisabled}
-          {...(itemProps as ComponentPropsWithoutRef<'button'>)}
+          {...(itemProps as ComponentPropsWithoutRef<"button">)}
           onClick={handlerAll(
             itemProps?.onClick,
-            page !== 'dots' ? () => onChange(page) : undefined,
+            page !== "dots" ? () => onChange(page) : undefined,
           )}
         />
       )),
     [Component, currentPage, isDisabled, onChange, range, itemProps],
   )
 
-  const css: CSSUIObject = { display: 'flex', alignItems: 'center', ...styles.container }
+  const css: CSSUIObject = {
+    display: "flex",
+    alignItems: "center",
+    ...styles.container,
+  }
 
   return (
     <PaginationProvider value={styles}>
       <ui.div
         ref={ref}
-        className={cx('ui-pagination', className)}
-        role='navigation'
+        className={cx("ui-pagination", className)}
+        role="navigation"
         __css={css}
-        {...omitObject(rest, ['onChange'])}
+        {...omitObject(rest, [
+          "page",
+          "defaultPage",
+          "total",
+          "siblings",
+          "boundaries",
+          "isDisabled",
+          "onChange",
+        ])}
         data-disabled={dataAttr(isDisabled)}
       >
         {computedWithEdges ? (
           <Component
-            page='first'
-            className='ui-pagination-item-first'
+            page="first"
+            className="ui-pagination__item--first"
             isDisabled={isDisabled || currentPage === 1}
-            {...(edgeProps as ComponentPropsWithoutRef<'button'>)}
-            {...(edgeFirstProps as ComponentPropsWithoutRef<'button'>)}
-            onClick={handlerAll(edgeProps?.onClick, edgeFirstProps?.onClick, onFirst)}
+            {...(edgeProps as ComponentPropsWithoutRef<"button">)}
+            {...(edgeFirstProps as ComponentPropsWithoutRef<"button">)}
+            onClick={handlerAll(
+              edgeProps?.onClick,
+              edgeFirstProps?.onClick,
+              onFirst,
+            )}
           />
         ) : null}
 
         {computedWithControls ? (
           <Component
-            page='prev'
-            className='ui-pagination-item-prev'
+            page="prev"
+            className="ui-pagination__item--prev"
             isDisabled={isDisabled || currentPage === 1}
-            {...(controlProps as ComponentPropsWithoutRef<'button'>)}
-            {...(controlPrevProps as ComponentPropsWithoutRef<'button'>)}
-            onClick={handlerAll(controlProps?.onClick, controlPrevProps?.onClick, onPrev)}
+            {...(controlProps as ComponentPropsWithoutRef<"button">)}
+            {...(controlPrevProps as ComponentPropsWithoutRef<"button">)}
+            onClick={handlerAll(
+              controlProps?.onClick,
+              controlPrevProps?.onClick,
+              onPrev,
+            )}
           />
         ) : null}
 
-        {children}
+        <ui.div
+          className="ui-pagination-inner"
+          __css={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            ...styles.inner,
+          }}
+          {...innerProps}
+        >
+          {children}
+        </ui.div>
 
         {computedWithControls ? (
           <Component
-            page='next'
-            className='ui-pagination-item-next'
+            page="next"
+            className="ui-pagination__item--next"
             isDisabled={isDisabled || currentPage === total}
-            {...(controlProps as ComponentPropsWithoutRef<'button'>)}
-            {...(controlNextProps as ComponentPropsWithoutRef<'button'>)}
-            onClick={handlerAll(controlProps?.onClick, controlNextProps?.onClick, onNext)}
+            {...(controlProps as ComponentPropsWithoutRef<"button">)}
+            {...(controlNextProps as ComponentPropsWithoutRef<"button">)}
+            onClick={handlerAll(
+              controlProps?.onClick,
+              controlNextProps?.onClick,
+              onNext,
+            )}
           />
         ) : null}
 
         {computedWithEdges ? (
           <Component
-            page='last'
-            className='ui-pagination-item-last'
+            page="last"
+            className="ui-pagination__item--last"
             isDisabled={isDisabled || currentPage === total}
-            {...(edgeProps as ComponentPropsWithoutRef<'button'>)}
-            {...(edgeLastProps as ComponentPropsWithoutRef<'button'>)}
-            onClick={handlerAll(edgeProps?.onClick, edgeLastProps?.onClick, onLast)}
+            {...(edgeProps as ComponentPropsWithoutRef<"button">)}
+            {...(edgeLastProps as ComponentPropsWithoutRef<"button">)}
+            onClick={handlerAll(
+              edgeProps?.onClick,
+              edgeLastProps?.onClick,
+              onLast,
+            )}
           />
         ) : null}
       </ui.div>

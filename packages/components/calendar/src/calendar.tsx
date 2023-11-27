@@ -1,43 +1,54 @@
-import {
-  ui,
-  useMultiComponentStyle,
-  omitThemeProps,
+import type {
   CSSUIObject,
   HTMLUIProps,
   ThemeProps,
   ComponentArgs,
-} from '@yamada-ui/core'
-import { cx } from '@yamada-ui/utils'
-import { forwardRef, ForwardedRef, Ref } from 'react'
-import { CalenderHeaderProps } from './calender-header'
-import { Month, MonthProps } from './month'
-import { MonthList, MonthListProps } from './month-list'
-import {
-  CalendarProvider,
-  useCalendar,
+} from "@yamada-ui/core"
+import { ui, useMultiComponentStyle, omitThemeProps } from "@yamada-ui/core"
+import { cx } from "@yamada-ui/utils"
+import type { ForwardedRef, Ref } from "react"
+import { forwardRef } from "react"
+import type { CalendarHeaderProps } from "./calendar-header"
+import type { MonthProps } from "./month"
+import { Month } from "./month"
+import type { MonthListProps } from "./month-list"
+import { MonthList } from "./month-list"
+import type {
   UseCalendarProps,
   CalendarContext,
   MaybeValue,
-} from './use-calendar'
-import { YearList, YearListProps } from './year-list'
+} from "./use-calendar"
+import { CalendarProvider, useCalendar } from "./use-calendar"
+import type { YearListProps } from "./year-list"
+import { YearList } from "./year-list"
 
 type CalendarOptions = {
-  headerProps?: HTMLUIProps<'div'>
+  /**
+   * Props for calendar header element.
+   */
+  headerProps?: HTMLUIProps<"div">
 }
 
-export type CalendarBaseProps = Omit<HTMLUIProps<'div'>, 'value' | 'defaultValue' | 'onChange'> &
-  ThemeProps<'Calendar'> &
+export type CalendarBaseProps = Omit<
+  HTMLUIProps<"div">,
+  "value" | "defaultValue" | "onChange"
+> &
+  ThemeProps<"Calendar"> &
   CalendarOptions &
-  Omit<CalenderHeaderProps, 'label' | 'index'> &
-  Pick<YearListProps, 'yearProps'> &
-  Pick<MonthListProps, 'monthProps'> &
-  Pick<MonthProps, 'tableProps' | 'weekdayProps' | 'dayProps'>
+  Omit<CalendarHeaderProps, "label" | "index"> &
+  Pick<YearListProps, "yearProps"> &
+  Pick<MonthListProps, "monthProps"> &
+  Pick<MonthProps, "tableProps" | "weekdayProps" | "dayProps">
 
-export type CalendarProps<Y extends MaybeValue = Date> = CalendarBaseProps & UseCalendarProps<Y>
+export type CalendarProps<Y extends MaybeValue = Date> = CalendarBaseProps &
+  UseCalendarProps<Y>
 
 export const Calendar = forwardRef(
-  <T extends MaybeValue = Date>(props: CalendarProps<T>, ref: ForwardedRef<HTMLDivElement>) => {
-    const [styles, mergedProps] = useMultiComponentStyle('Calendar', props)
+  <T extends MaybeValue = Date>(
+    props: CalendarProps<T>,
+    ref: ForwardedRef<HTMLDivElement>,
+  ) => {
+    const [styles, mergedProps] = useMultiComponentStyle("Calendar", props)
     const {
       className,
       value,
@@ -64,9 +75,9 @@ export const Calendar = forwardRef(
     })
 
     const css: CSSUIObject = {
-      display: 'flex',
-      flexWrap: 'wrap',
-      alignItems: 'flex-start',
+      display: "flex",
+      flexWrap: "wrap",
+      alignItems: "flex-start",
       ...styles.container,
     }
 
@@ -78,13 +89,15 @@ export const Calendar = forwardRef(
     const maxH = computedProps.maxH ?? computedProps.maxHeight
 
     return (
-      <CalendarProvider value={{ type, styles, ...rest } as unknown as CalendarContext}>
+      <CalendarProvider
+        value={{ type, styles, ...rest } as unknown as CalendarContext}
+      >
         <ui.div
-          className={cx('ui-calendar', className)}
+          className={cx("ui-calendar", className)}
           __css={css}
           {...getContainerProps({}, ref)}
         >
-          {type === 'year' ? (
+          {type === "year" ? (
             <YearList
               {...{
                 headerProps,
@@ -102,7 +115,7 @@ export const Calendar = forwardRef(
               }}
             />
           ) : null}
-          {type === 'month' ? (
+          {type === "month" ? (
             <MonthList
               {...{
                 headerProps,
@@ -120,7 +133,7 @@ export const Calendar = forwardRef(
               }}
             />
           ) : null}
-          {type === 'date' ? (
+          {type === "date" ? (
             <Month
               {...{
                 headerProps,
@@ -150,4 +163,4 @@ export const Calendar = forwardRef(
   ): JSX.Element
 } & ComponentArgs
 
-Calendar.displayName = 'Calendar'
+Calendar.displayName = "Calendar"

@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/use-latest-ref",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Yamada UI useLatestRef custom hook",
   "keywords": [
     "use-latest-ref"
@@ -46,6 +46,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

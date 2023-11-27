@@ -1,5 +1,6 @@
-import { ui, HTMLUIProps } from '@yamada-ui/core'
+import type { HTMLUIProps } from "@yamada-ui/core"
+import { ui } from "@yamada-ui/core"
 
-export type BoxProps = HTMLUIProps<'div'>
+export type BoxProps = HTMLUIProps<"div">
 
-export const Box = ui('div')
+export const Box = ui("div")

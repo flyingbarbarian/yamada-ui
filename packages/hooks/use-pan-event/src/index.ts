@@ -1,14 +1,13 @@
-import { useLatestRef } from '@yamada-ui/use-latest-ref'
+import { useLatestRef } from "@yamada-ui/use-latest-ref"
+import type { AnyPointerEvent, Point, PointerEventInfo } from "@yamada-ui/utils"
 import {
   addPointerEvent,
-  AnyPointerEvent,
   getEventPoint,
   isMultiTouchEvent,
-  Point,
-  PointerEventInfo,
-} from '@yamada-ui/utils'
-import sync, { cancelSync, getFrameData } from 'framesync'
-import { RefObject, useEffect, useRef } from 'react'
+} from "@yamada-ui/utils"
+import sync, { cancelSync, getFrameData } from "framesync"
+import type { RefObject } from "react"
+import { useEffect, useRef } from "react"
 
 type PanEventInfo = {
   point: Point
@@ -53,7 +52,10 @@ const getVelocity = (history: TimestampedPoint[], timeDelta: number): Point => {
   while (i >= 0) {
     timestampedPoint = history[i]
 
-    if (lastPoint.timestamp - timestampedPoint.timestamp > toMilliseconds(timeDelta)) {
+    if (
+      lastPoint.timestamp - timestampedPoint.timestamp >
+      toMilliseconds(timeDelta)
+    ) {
       break
     }
 
@@ -85,10 +87,11 @@ const pipe =
 
 const distance1D = (a: number, b: number) => Math.abs(a - b)
 
-const isPoint = (point: any): point is { x: number; y: number } => 'x' in point && 'y' in point
+const isPoint = (point: any): point is { x: number; y: number } =>
+  "x" in point && "y" in point
 
 const distance = <Y extends Point | number>(a: Y, b: Y) => {
-  if (typeof a === 'number' && typeof b === 'number') return distance1D(a, b)
+  if (typeof a === "number" && typeof b === "number") return distance1D(a, b)
 
   if (isPoint(a) && isPoint(b)) {
     const xDelta = distance1D(a.x, b.x)
@@ -130,7 +133,8 @@ const panEvent = (
 
     const isPanStarted = startEvent !== null
 
-    const isDistancePastThreshold = distance(info.offset, { x: 0, y: 0 }) >= threshold
+    const isDistancePastThreshold =
+      distance(info.offset, { x: 0, y: 0 }) >= threshold
 
     if (!isPanStarted && !isDistancePastThreshold) return
 
@@ -174,9 +178,9 @@ const panEvent = (
   }
 
   let removeListeners = pipe(
-    addPointerEvent(win, 'pointermove', onPointerMove),
-    addPointerEvent(win, 'pointerup', onPointerUp),
-    addPointerEvent(win, 'pointercancel', onPointerUp),
+    addPointerEvent(win, "pointermove", onPointerMove),
+    addPointerEvent(win, "pointerup", onPointerUp),
+    addPointerEvent(win, "pointercancel", onPointerUp),
   )
 
   const end = () => {
@@ -204,9 +208,17 @@ export type UsePanEventProps = {
 
 export const usePanEvent = (
   ref: RefObject<HTMLElement>,
-  { onMove, onStart, onEnd, onSessionStart, onSessionEnd, threshold }: UsePanEventProps,
+  {
+    onMove,
+    onStart,
+    onEnd,
+    onSessionStart,
+    onSessionEnd,
+    threshold,
+  }: UsePanEventProps,
 ) => {
-  const hasPanEvents = !!onMove || !!onStart || !!onEnd || !!onSessionStart || !!onSessionEnd
+  const hasPanEvents =
+    !!onMove || !!onStart || !!onEnd || !!onSessionStart || !!onSessionEnd
 
   const panSession = useRef<ReturnPanEvent | null>(null)
 
@@ -235,7 +247,7 @@ export const usePanEvent = (
       panSession.current = panEvent(event, handlersRef.current, threshold)
     }
 
-    return addPointerEvent(node, 'pointerdown', onPointerDown)
+    return addPointerEvent(node, "pointerdown", onPointerDown)
   }, [ref, hasPanEvents, handlersRef, threshold])
 
   useEffect(() => {

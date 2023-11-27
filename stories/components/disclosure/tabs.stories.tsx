@@ -1,13 +1,17 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@yamada-ui/react'
-import { useState } from 'react'
+import type { Meta, StoryFn } from "@storybook/react"
+import { Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@yamada-ui/react"
+import { useState } from "react"
 
-export default {
-  title: 'Components / Disclosure / Tabs',
+type Story = StoryFn<typeof Tabs>
+
+const meta: Meta<typeof Tabs> = {
+  title: "Components / Disclosure / Tabs",
   component: Tabs,
-} as ComponentMeta<typeof Tabs>
+}
 
-export const basic: ComponentStory<typeof Tabs> = () => {
+export default meta
+
+export const basic: Story = () => {
   return (
     <Tabs>
       <Tab>孫悟空</Tab>
@@ -29,7 +33,7 @@ export const basic: ComponentStory<typeof Tabs> = () => {
   )
 }
 
-export const withDefaultIndex: ComponentStory<typeof Tabs> = () => {
+export const withDefaultIndex: Story = () => {
   return (
     <Tabs defaultIndex={1}>
       <Tab>孫悟空</Tab>
@@ -51,10 +55,10 @@ export const withDefaultIndex: ComponentStory<typeof Tabs> = () => {
   )
 }
 
-export const withSize: ComponentStory<typeof Tabs> = () => {
+export const withSize: Story = () => {
   return (
     <>
-      <Tabs size='sm'>
+      <Tabs size="sm">
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -72,7 +76,7 @@ export const withSize: ComponentStory<typeof Tabs> = () => {
         </TabPanel>
       </Tabs>
 
-      <Tabs size='md'>
+      <Tabs size="md">
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -90,7 +94,7 @@ export const withSize: ComponentStory<typeof Tabs> = () => {
         </TabPanel>
       </Tabs>
 
-      <Tabs size='lg'>
+      <Tabs size="lg">
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -111,10 +115,10 @@ export const withSize: ComponentStory<typeof Tabs> = () => {
   )
 }
 
-export const withVariant: ComponentStory<typeof Tabs> = () => {
+export const withVariant: Story = () => {
   return (
     <>
-      <Tabs variant='line'>
+      <Tabs variant="line">
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -132,7 +136,7 @@ export const withVariant: ComponentStory<typeof Tabs> = () => {
         </TabPanel>
       </Tabs>
 
-      <Tabs variant='sticky'>
+      <Tabs variant="sticky">
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -150,7 +154,7 @@ export const withVariant: ComponentStory<typeof Tabs> = () => {
         </TabPanel>
       </Tabs>
 
-      <Tabs variant='sticky-subtle'>
+      <Tabs variant="sticky-subtle">
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -168,7 +172,7 @@ export const withVariant: ComponentStory<typeof Tabs> = () => {
         </TabPanel>
       </Tabs>
 
-      <Tabs variant='sticky-solid'>
+      <Tabs variant="sticky-solid">
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -186,7 +190,7 @@ export const withVariant: ComponentStory<typeof Tabs> = () => {
         </TabPanel>
       </Tabs>
 
-      <Tabs variant='rounded'>
+      <Tabs variant="rounded">
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -204,7 +208,7 @@ export const withVariant: ComponentStory<typeof Tabs> = () => {
         </TabPanel>
       </Tabs>
 
-      <Tabs variant='rounded-subtle'>
+      <Tabs variant="rounded-subtle">
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -222,7 +226,7 @@ export const withVariant: ComponentStory<typeof Tabs> = () => {
         </TabPanel>
       </Tabs>
 
-      <Tabs variant='rounded-solid'>
+      <Tabs variant="rounded-solid">
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -240,7 +244,7 @@ export const withVariant: ComponentStory<typeof Tabs> = () => {
         </TabPanel>
       </Tabs>
 
-      <Tabs variant='unstyled'>
+      <Tabs variant="unstyled">
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -261,9 +265,9 @@ export const withVariant: ComponentStory<typeof Tabs> = () => {
   )
 }
 
-export const withColorScheme: ComponentStory<typeof Tabs> = () => {
+export const withColorScheme: Story = () => {
   return (
-    <Tabs variant='rounded-solid' colorScheme='red'>
+    <Tabs variant="rounded-solid" colorScheme="red">
       <Tab>孫悟空</Tab>
       <Tab>ベジータ</Tab>
       <Tab>フリーザ</Tab>
@@ -283,10 +287,10 @@ export const withColorScheme: ComponentStory<typeof Tabs> = () => {
   )
 }
 
-export const withAlign: ComponentStory<typeof Tabs> = () => {
+export const withAlign: Story = () => {
   return (
     <>
-      <Tabs align='start'>
+      <Tabs align="start">
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -304,7 +308,7 @@ export const withAlign: ComponentStory<typeof Tabs> = () => {
         </TabPanel>
       </Tabs>
 
-      <Tabs align='center'>
+      <Tabs align="center">
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -322,7 +326,7 @@ export const withAlign: ComponentStory<typeof Tabs> = () => {
         </TabPanel>
       </Tabs>
 
-      <Tabs align='end'>
+      <Tabs align="end">
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -343,10 +347,10 @@ export const withAlign: ComponentStory<typeof Tabs> = () => {
   )
 }
 
-export const withOrientation: ComponentStory<typeof Tabs> = () => {
+export const withOrientation: Story = () => {
   return (
     <>
-      <Tabs orientation='horizontal'>
+      <Tabs orientation="horizontal">
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -364,7 +368,7 @@ export const withOrientation: ComponentStory<typeof Tabs> = () => {
         </TabPanel>
       </Tabs>
 
-      <Tabs orientation='vertical'>
+      <Tabs orientation="vertical">
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -385,10 +389,10 @@ export const withOrientation: ComponentStory<typeof Tabs> = () => {
   )
 }
 
-export const withFitted: ComponentStory<typeof Tabs> = () => {
+export const withFitted: Story = () => {
   return (
     <>
-      <Tabs variant='line' isFitted>
+      <Tabs variant="line" isFitted>
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -406,7 +410,7 @@ export const withFitted: ComponentStory<typeof Tabs> = () => {
         </TabPanel>
       </Tabs>
 
-      <Tabs variant='sticky' isFitted>
+      <Tabs variant="sticky" isFitted>
         <Tab>孫悟空</Tab>
         <Tab>ベジータ</Tab>
         <Tab>フリーザ</Tab>
@@ -427,7 +431,7 @@ export const withFitted: ComponentStory<typeof Tabs> = () => {
   )
 }
 
-export const isDisabled: ComponentStory<typeof Tabs> = () => {
+export const isDisabled: Story = () => {
   return (
     <Tabs>
       <Tab>孫悟空</Tab>
@@ -449,7 +453,7 @@ export const isDisabled: ComponentStory<typeof Tabs> = () => {
   )
 }
 
-export const isFocusable: ComponentStory<typeof Tabs> = () => {
+export const isFocusable: Story = () => {
   return (
     <Tabs>
       <Tab>孫悟空</Tab>
@@ -471,7 +475,7 @@ export const isFocusable: ComponentStory<typeof Tabs> = () => {
   )
 }
 
-export const isManual: ComponentStory<typeof Tabs> = () => {
+export const isManual: Story = () => {
   return (
     <Tabs isManual>
       <Tab>孫悟空</Tab>
@@ -493,9 +497,9 @@ export const isManual: ComponentStory<typeof Tabs> = () => {
   )
 }
 
-export const isLazy: ComponentStory<typeof Tabs> = () => {
+export const isLazy: Story = () => {
   return (
-    <Tabs isLazy lazyBehavior='unmount'>
+    <Tabs isLazy lazyBehavior="unmount">
       <Tab>孫悟空</Tab>
       <Tab>ベジータ</Tab>
       <Tab>フリーザ</Tab>
@@ -515,7 +519,7 @@ export const isLazy: ComponentStory<typeof Tabs> = () => {
   )
 }
 
-export const customTabList: ComponentStory<typeof Tabs> = () => {
+export const customTabList: Story = () => {
   return (
     <Tabs>
       <TabList borderWidth={1}>
@@ -539,9 +543,9 @@ export const customTabList: ComponentStory<typeof Tabs> = () => {
   )
 }
 
-export const customTabPanels: ComponentStory<typeof Tabs> = () => {
+export const customTabPanels: Story = () => {
   return (
-    <Tabs variant='sticky'>
+    <Tabs variant="sticky">
       <Tab>孫悟空</Tab>
       <Tab>ベジータ</Tab>
       <Tab>フリーザ</Tab>
@@ -563,7 +567,7 @@ export const customTabPanels: ComponentStory<typeof Tabs> = () => {
   )
 }
 
-export const customControl: ComponentStory<typeof Tabs> = () => {
+export const customControl: Story = () => {
   const [index, onChange] = useState<number>(0)
 
   return (

@@ -1,29 +1,45 @@
+import type {
+  CSSUIObject,
+  HTMLUIProps,
+  ThemeProps,
+  ColorModeToken,
+  CSS,
+} from "@yamada-ui/core"
 import {
   ui,
   forwardRef,
   omitThemeProps,
-  CSSUIObject,
-  HTMLUIProps,
-  ThemeProps,
   useMultiComponentStyle,
-  CSSUIProps,
-} from '@yamada-ui/core'
-import { useFormControlProps, FormControlOptions } from '@yamada-ui/form-control'
-import { cx } from '@yamada-ui/utils'
+} from "@yamada-ui/core"
+import type { FormControlOptions } from "@yamada-ui/form-control"
+import { useFormControlProps } from "@yamada-ui/form-control"
+import { cx } from "@yamada-ui/utils"
 
 type InputOptions = {
-  focusBorderColor?: CSSUIProps<'unresponsive'>['borderColor']
-  errorBorderColor?: CSSUIProps<'unresponsive'>['borderColor']
+  /**
+   * The border color when the input is focused.
+   */
+  focusBorderColor?: ColorModeToken<CSS.Property.BorderColor, "colors">
+  /**
+   * The border color when the input is invalid.
+   */
+  errorBorderColor?: ColorModeToken<CSS.Property.BorderColor, "colors">
+  /**
+   * The native HTML `size` attribute to be passed to the `input`
+   */
   htmlSize?: number
 }
 
-export type InputProps = Omit<HTMLUIProps<'input'>, 'disabled' | 'required' | 'readOnly' | 'size'> &
-  ThemeProps<'Input'> &
+export type InputProps = Omit<
+  HTMLUIProps<"input">,
+  "disabled" | "required" | "readOnly" | "size"
+> &
+  ThemeProps<"Input"> &
   InputOptions &
   FormControlOptions
 
-export const Input = forwardRef<InputProps, 'input'>((props, ref) => {
-  const [styles, mergedProps] = useMultiComponentStyle('Input', props)
+export const Input = forwardRef<InputProps, "input">((props, ref) => {
+  const [styles, mergedProps] = useMultiComponentStyle("Input", props)
   let { className, htmlSize, ...rest } = omitThemeProps(mergedProps)
 
   rest = useFormControlProps(rest)
@@ -33,7 +49,7 @@ export const Input = forwardRef<InputProps, 'input'>((props, ref) => {
   return (
     <ui.input
       ref={ref}
-      className={cx('ui-input', className)}
+      className={cx("ui-input", className)}
       size={htmlSize}
       __css={css}
       {...rest}

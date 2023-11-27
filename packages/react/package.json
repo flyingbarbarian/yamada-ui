@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/react",
-  "version": "0.4.7",
+  "version": "0.8.32",
   "description": "React UI components of the Yamada, by the Yamada, for the Yamada built with React and Emotion",
   "keywords": [
     "yamada",
@@ -96,6 +96,7 @@
     "@yamada-ui/tag": "workspace:*",
     "@yamada-ui/textarea": "workspace:*",
     "@yamada-ui/theme": "workspace:*",
+    "@yamada-ui/theme-tools": "workspace:*",
     "@yamada-ui/tooltip": "workspace:*",
     "@yamada-ui/transitions": "workspace:*",
     "@yamada-ui/typography": "workspace:*",
@@ -148,6 +149,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

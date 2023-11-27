@@ -1,15 +1,17 @@
-import { useCheckbox, UseCheckboxProps } from '@yamada-ui/checkbox'
+import type { UseCheckboxProps } from "@yamada-ui/checkbox"
+import { useCheckbox } from "@yamada-ui/checkbox"
+import type { HTMLUIProps, ThemeProps } from "@yamada-ui/core"
 import {
   ui,
   forwardRef,
   omitThemeProps,
-  HTMLUIProps,
-  ThemeProps,
   useMultiComponentStyle,
-} from '@yamada-ui/core'
-import { motion, MotionTransition } from '@yamada-ui/motion'
-import { cx, dataAttr, omitObject } from '@yamada-ui/utils'
-import { cloneElement, InputHTMLAttributes, ReactElement } from 'react'
+} from "@yamada-ui/core"
+import type { MotionTransition } from "@yamada-ui/motion"
+import { motion } from "@yamada-ui/motion"
+import { cx, dataAttr, omitObject } from "@yamada-ui/utils"
+import type { InputHTMLAttributes, ReactElement } from "react"
+import { cloneElement } from "react"
 
 export type SwitchIconProps = {
   isChecked?: boolean
@@ -19,31 +21,48 @@ export type SwitchIconProps = {
 }
 
 type SwitchOptions = {
+  /**
+   * The switch icon to use.
+   */
   icon?: ReactElement<SwitchIconProps>
+  /**
+   * Props for switch input element.
+   */
   inputProps?: InputHTMLAttributes<HTMLInputElement>
-  labelProps?: HTMLUIProps<'span'>
-  reverse?: boolean
+  /**
+   * Props for switch label element.
+   */
+  labelProps?: HTMLUIProps<"span">
+  /**
+   * Change switch label from right to left.
+   *
+   * @default false
+   */
+  isReverse?: boolean
+  /**
+   * Motion transition settings.
+   */
   transition?: MotionTransition
 }
 
-export type SwitchProps = Omit<UseCheckboxProps, 'isIndeterminate'> &
-  Omit<HTMLUIProps<'label'>, keyof UseCheckboxProps> &
-  ThemeProps<'Switch'> &
+export type SwitchProps = Omit<UseCheckboxProps, "isIndeterminate"> &
+  Omit<HTMLUIProps<"label">, keyof UseCheckboxProps> &
+  ThemeProps<"Switch"> &
   SwitchOptions
 
-export const Switch = forwardRef<SwitchProps, 'input'>((props, ref) => {
-  const [styles, mergedProps] = useMultiComponentStyle('Switch', props)
+export const Switch = forwardRef<SwitchProps, "input">((props, ref) => {
+  const [styles, mergedProps] = useMultiComponentStyle("Switch", props)
   const {
     className,
-    gap = '0.5rem',
+    gap = "0.5rem",
     children,
     icon,
     inputProps,
     labelProps,
-    reverse,
+    isReverse,
     flexDirection,
     transition = {
-      type: 'spring',
+      type: "spring",
       stiffness: 700,
       damping: 40,
     },
@@ -73,41 +92,44 @@ export const Switch = forwardRef<SwitchProps, 'input'>((props, ref) => {
   return (
     <ui.label
       ref={ref}
-      className={cx('ui-switch', className)}
+      className={cx("ui-switch", className)}
       __css={{
-        cursor: 'pointer',
-        position: 'relative',
-        display: 'inline-flex',
-        flexDirection: flexDirection ?? (reverse ? 'row-reverse' : 'row'),
-        alignItems: 'center',
-        verticalAlign: 'top',
+        cursor: "pointer",
+        position: "relative",
+        display: "inline-flex",
+        flexDirection: flexDirection ?? (isReverse ? "row-reverse" : "row"),
+        alignItems: "center",
+        verticalAlign: "top",
         gap,
         ...styles.container,
       }}
       {...getContainerProps()}
       {...omitObject(rest, [
-        'id',
-        'name',
-        'value',
-        'defaultValue',
-        'checked',
-        'defaultChecked',
-        'isChecked',
-        'onChange',
-        'onBlur',
-        'onFocus',
+        "id",
+        "name",
+        "value",
+        "defaultValue",
+        "checked",
+        "defaultIsChecked",
+        "isChecked",
+        "onChange",
+        "onBlur",
+        "onFocus",
       ])}
     >
-      <ui.input className='ui-switch-input' {...getInputProps(inputProps, ref)} />
+      <ui.input
+        className={cx("ui-switch__input", className)}
+        {...getInputProps(inputProps, ref)}
+      />
 
       {cloneIcon ?? (
         <ui.span
-          className='ui-switch-track'
+          className={cx("ui-switch__track", className)}
           __css={{
-            boxSizing: 'content-box',
-            display: 'inline-flex',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
+            boxSizing: "content-box",
+            display: "inline-flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
             flexShrink: 0,
             ...styles.track,
           }}
@@ -115,7 +137,7 @@ export const Switch = forwardRef<SwitchProps, 'input'>((props, ref) => {
         >
           <ui.span
             as={motion.span}
-            className='ui-switch-thumb'
+            className={cx("ui-switch__thumb", className)}
             data-checked={dataAttr(isChecked)}
             layout
             transition={transition}
@@ -126,7 +148,7 @@ export const Switch = forwardRef<SwitchProps, 'input'>((props, ref) => {
 
       {children ? (
         <ui.span
-          className='ui-switch-label'
+          className={cx("ui-switch__label", className)}
           __css={{ ...styles.label }}
           {...getLabelProps(labelProps)}
         >

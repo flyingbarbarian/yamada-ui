@@ -1,7 +1,8 @@
-import { ui, forwardRef, CSSUIObject, HTMLUIProps } from '@yamada-ui/core'
-import { createContext, cx, getValidChildren } from '@yamada-ui/utils'
-import { createElement } from 'react'
-import { useTabsContext } from './tabs'
+import type { CSSUIObject, HTMLUIProps } from "@yamada-ui/core"
+import { ui, forwardRef } from "@yamada-ui/core"
+import { createContext, cx, getValidChildren } from "@yamada-ui/utils"
+import { createElement } from "react"
+import { useTabsContext } from "./tabs"
 
 const [TabPanelProvider, useTabPanelContext] = createContext<{
   isSelected: boolean
@@ -10,9 +11,9 @@ const [TabPanelProvider, useTabPanelContext] = createContext<{
 
 export { useTabPanelContext }
 
-export type TabPanelsProps = HTMLUIProps<'div'>
+export type TabPanelsProps = HTMLUIProps<"div">
 
-export const TabPanels = forwardRef<TabPanelsProps, 'div'>(
+export const TabPanels = forwardRef<TabPanelsProps, "div">(
   ({ className, children, ...rest }, ref) => {
     const { selectedIndex, tabPanelsProps, styles } = useTabsContext()
 
@@ -29,14 +30,14 @@ export const TabPanels = forwardRef<TabPanelsProps, 'div'>(
     })
 
     const css: CSSUIObject = {
-      w: '100%',
+      w: "100%",
       ...styles.tabPanels,
     }
 
     return (
       <ui.div
         ref={ref}
-        className={cx('ui-tabs-panels', className)}
+        className={cx("ui-tabs__panels", className)}
         __css={css}
         {...tabPanelsProps}
         {...rest}

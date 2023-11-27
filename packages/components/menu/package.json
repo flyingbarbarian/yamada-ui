@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/menu",
-  "version": "0.1.12",
+  "version": "0.3.25",
   "description": "Yamada UI menu component",
   "keywords": [
     "yamada",
@@ -68,6 +68,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

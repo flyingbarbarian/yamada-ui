@@ -1,5 +1,6 @@
-import { getOwnerDocument, useCallbackRef } from '@yamada-ui/utils'
-import { RefObject, useEffect, useRef } from 'react'
+import { getOwnerDocument, useCallbackRef } from "@yamada-ui/utils"
+import type { RefObject } from "react"
+import { useEffect, useRef } from "react"
 
 export type UseOutsideClickProps = {
   enabled?: boolean
@@ -7,7 +8,11 @@ export type UseOutsideClickProps = {
   handler?: (ev: Event) => void
 }
 
-export const useOutsideClick = ({ ref, handler, enabled = true }: UseOutsideClickProps) => {
+export const useOutsideClick = ({
+  ref,
+  handler,
+  enabled = true,
+}: UseOutsideClickProps) => {
   const handlerRef = useCallbackRef(handler)
 
   const state = useRef({
@@ -48,24 +53,27 @@ export const useOutsideClick = ({ ref, handler, enabled = true }: UseOutsideClic
 
     const doc = getOwnerDocument(ref.current)
 
-    doc.addEventListener('mousedown', onPointerDown, true)
-    doc.addEventListener('mouseup', onMouseUp, true)
-    doc.addEventListener('touchstart', onPointerDown, true)
-    doc.addEventListener('touchend', onTouchEnd, true)
+    doc.addEventListener("mousedown", onPointerDown, true)
+    doc.addEventListener("mouseup", onMouseUp, true)
+    doc.addEventListener("touchstart", onPointerDown, true)
+    doc.addEventListener("touchend", onTouchEnd, true)
 
     return () => {
-      doc.removeEventListener('mousedown', onPointerDown, true)
-      doc.removeEventListener('mouseup', onMouseUp, true)
-      doc.removeEventListener('touchstart', onPointerDown, true)
-      doc.removeEventListener('touchend', onTouchEnd, true)
+      doc.removeEventListener("mousedown", onPointerDown, true)
+      doc.removeEventListener("mouseup", onMouseUp, true)
+      doc.removeEventListener("touchstart", onPointerDown, true)
+      doc.removeEventListener("touchend", onTouchEnd, true)
     }
   }, [handler, ref, handlerRef, state, enabled])
 }
 
-const isValidEvent = (ev: MouseEvent | TouchEvent, ref: RefObject<HTMLElement>) => {
+const isValidEvent = (
+  ev: MouseEvent | TouchEvent,
+  ref: RefObject<HTMLElement>,
+) => {
   const target = ev.target as HTMLElement
 
-  if ('button' in ev && ev.button > 0) return false
+  if ("button" in ev && ev.button > 0) return false
 
   if (target) if (!getOwnerDocument(target).contains(target)) return false
 

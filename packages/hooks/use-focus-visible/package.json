@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/use-focus-visible",
-  "version": "0.1.1",
+  "version": "0.2.5",
   "description": "Yamada UI useFocusVisible custom hook",
   "keywords": [
     "use-focus-visible"
@@ -49,6 +49,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

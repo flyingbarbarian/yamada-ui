@@ -1,6 +1,6 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { Icon } from '@yamada-ui/fontawesome'
+import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import type { Meta, StoryFn } from "@storybook/react"
+import { Icon } from "@yamada-ui/fontawesome"
 import {
   Button,
   FileButton,
@@ -11,144 +11,179 @@ import {
   Text,
   Wrap,
   VStack,
-} from '@yamada-ui/react'
-import { useRef, useState } from 'react'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+} from "@yamada-ui/react"
+import { useRef, useState } from "react"
+import type { SubmitHandler } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 
-export default {
-  title: 'Components / Forms / FileButton',
+type Story = StoryFn<typeof FileButton>
+
+const meta: Meta<typeof FileButton> = {
+  title: "Components / Forms / FileButton",
   component: FileButton,
-} as ComponentMeta<typeof FileButton>
+}
 
-export const basic: ComponentStory<typeof FileButton> = () => {
+export default meta
+
+export const basic: Story = () => {
   return (
     <>
       <FileButton>Upload</FileButton>
 
       <FileButton as={IconButton} icon={<Icon icon={faPlus} />} />
 
-      <FileButton>{({ onClick }) => <Link onClick={onClick}>Upload</Link>}</FileButton>
-    </>
-  )
-}
-
-export const withMultiple: ComponentStory<typeof FileButton> = () => {
-  return (
-    <>
-      <FileButton multiple>Upload</FileButton>
-
-      <FileButton as={IconButton} icon={<Icon icon={faPlus} />} multiple />
-
-      <FileButton multiple>{({ onClick }) => <Link onClick={onClick}>Upload</Link>}</FileButton>
-    </>
-  )
-}
-
-export const withAccept: ComponentStory<typeof FileButton> = () => {
-  return (
-    <>
-      <FileButton accept='image/png,image/jpeg'>Upload</FileButton>
-
-      <FileButton as={IconButton} icon={<Icon icon={faPlus} />} accept='image/png,image/jpeg' />
-
-      <FileButton accept='image/png,image/jpeg'>
+      <FileButton>
         {({ onClick }) => <Link onClick={onClick}>Upload</Link>}
       </FileButton>
     </>
   )
 }
 
-export const withSize: ComponentStory<typeof FileButton> = () => {
+export const withMultiple: Story = () => {
   return (
-    <Wrap gap='md'>
-      <FileButton colorScheme='primary' size='xs'>
+    <>
+      <FileButton multiple>Upload</FileButton>
+
+      <FileButton as={IconButton} icon={<Icon icon={faPlus} />} multiple />
+
+      <FileButton multiple>
+        {({ onClick }) => <Link onClick={onClick}>Upload</Link>}
+      </FileButton>
+    </>
+  )
+}
+
+export const withAccept: Story = () => {
+  return (
+    <>
+      <FileButton accept="image/png,image/jpeg">Upload</FileButton>
+
+      <FileButton
+        as={IconButton}
+        icon={<Icon icon={faPlus} />}
+        accept="image/png,image/jpeg"
+      />
+
+      <FileButton accept="image/png,image/jpeg">
+        {({ onClick }) => <Link onClick={onClick}>Upload</Link>}
+      </FileButton>
+    </>
+  )
+}
+
+export const withSize: Story = () => {
+  return (
+    <Wrap gap="md">
+      <FileButton colorScheme="primary" size="xs">
         X Small
       </FileButton>
 
-      <FileButton colorScheme='secondary' size='sm'>
+      <FileButton colorScheme="secondary" size="sm">
         Small
       </FileButton>
 
-      <FileButton colorScheme='warning' size='md'>
+      <FileButton colorScheme="warning" size="md">
         Medium
       </FileButton>
 
-      <FileButton colorScheme='danger' size='lg'>
+      <FileButton colorScheme="danger" size="lg">
         Large
       </FileButton>
     </Wrap>
   )
 }
 
-export const withColorScheme: ComponentStory<typeof FileButton> = () => {
+export const withColorScheme: Story = () => {
   return (
-    <Wrap gap='md'>
-      <FileButton colorScheme='primary'>Primary</FileButton>
+    <Wrap gap="md">
+      <FileButton colorScheme="primary">Primary</FileButton>
 
-      <FileButton colorScheme='secondary'>Secondary</FileButton>
+      <FileButton colorScheme="secondary">Secondary</FileButton>
 
-      <FileButton colorScheme='warning'>Warning</FileButton>
+      <FileButton colorScheme="warning">Warning</FileButton>
 
-      <FileButton colorScheme='danger'>Danger</FileButton>
+      <FileButton colorScheme="danger">Danger</FileButton>
 
-      <FileButton colorScheme='link'>Link</FileButton>
+      <FileButton colorScheme="link">Link</FileButton>
 
-      <FileButton colorScheme='gray'>Gray</FileButton>
+      <FileButton colorScheme="gray">Gray</FileButton>
 
-      <FileButton colorScheme='red'>Red</FileButton>
+      <FileButton colorScheme="zinc">Zinc</FileButton>
 
-      <FileButton colorScheme='orange'>Orange</FileButton>
+      <FileButton colorScheme="neutral">Neutral</FileButton>
 
-      <FileButton colorScheme='yellow'>Yellow</FileButton>
+      <FileButton colorScheme="stone">Stone</FileButton>
 
-      <FileButton colorScheme='green'>Green</FileButton>
+      <FileButton colorScheme="red">Red</FileButton>
 
-      <FileButton colorScheme='teal'>Teal</FileButton>
+      <FileButton colorScheme="rose">Rose</FileButton>
 
-      <FileButton colorScheme='blue'>Blue</FileButton>
+      <FileButton colorScheme="pink">Pink</FileButton>
 
-      <FileButton colorScheme='cyan'>Cyan</FileButton>
+      <FileButton colorScheme="orange">Orange</FileButton>
 
-      <FileButton colorScheme='purple'>Purple</FileButton>
+      <FileButton colorScheme="amber">Amber</FileButton>
 
-      <FileButton colorScheme='pink'>pink</FileButton>
+      <FileButton colorScheme="yellow">Yellow</FileButton>
+
+      <FileButton colorScheme="lime">Lime</FileButton>
+
+      <FileButton colorScheme="green">Green</FileButton>
+
+      <FileButton colorScheme="emerald">Emerald</FileButton>
+
+      <FileButton colorScheme="teal">Teal</FileButton>
+
+      <FileButton colorScheme="cyan">Cyan</FileButton>
+
+      <FileButton colorScheme="sky">Sky</FileButton>
+
+      <FileButton colorScheme="blue">Blue</FileButton>
+
+      <FileButton colorScheme="indigo">Indigo</FileButton>
+
+      <FileButton colorScheme="violet">Violet</FileButton>
+
+      <FileButton colorScheme="purple">Purple</FileButton>
+
+      <FileButton colorScheme="fuchsia">Fuchsia</FileButton>
     </Wrap>
   )
 }
 
-export const withVariant: ComponentStory<typeof FileButton> = () => {
+export const withVariant: Story = () => {
   return (
-    <Wrap gap='md'>
-      <FileButton colorScheme='primary' variant='solid'>
+    <Wrap gap="md">
+      <FileButton colorScheme="primary" variant="solid">
         Solid
       </FileButton>
 
-      <FileButton colorScheme='secondary' variant='outline'>
+      <FileButton colorScheme="secondary" variant="outline">
         Outline
       </FileButton>
 
-      <FileButton colorScheme='warning' variant='ghost'>
+      <FileButton colorScheme="warning" variant="ghost">
         Ghost
       </FileButton>
 
-      <FileButton colorScheme='danger' variant='link'>
+      <FileButton colorScheme="danger" variant="link">
         Link
       </FileButton>
 
-      <FileButton variant='unstyled'>Unstyle</FileButton>
+      <FileButton variant="unstyled">Unstyle</FileButton>
     </Wrap>
   )
 }
 
-export const withBorderColor: ComponentStory<typeof FileButton> = () => {
+export const withBorderColor: Story = () => {
   return (
-    <FileButton isInvalid errorBorderColor='orange.500'>
+    <FileButton isInvalid errorBorderColor="orange.500">
       Upload
     </FileButton>
   )
 }
 
-export const isDisabled: ComponentStory<typeof FileButton> = () => {
+export const isDisabled: Story = () => {
   return (
     <>
       <FileButton isDisabled>Upload</FileButton>
@@ -160,22 +195,26 @@ export const isDisabled: ComponentStory<typeof FileButton> = () => {
           <Link
             onClick={onClick}
             opacity={isDisabled ? 0.4 : 1}
-            cursor={isDisabled ? 'not-allowed' : 'pointer'}
-            _hover={isDisabled ? undefined : { textDecoration: 'underline' }}
+            cursor={isDisabled ? "not-allowed" : "pointer"}
+            _hover={isDisabled ? undefined : { textDecoration: "underline" }}
           >
             Upload
           </Link>
         )}
       </FileButton>
 
-      <FormControl isDisabled label='Upload file' helperMessage='Please select a file to upload.'>
+      <FormControl
+        isDisabled
+        label="Upload file"
+        helperMessage="Please select a file to upload."
+      >
         <FileButton>Upload</FileButton>
       </FormControl>
     </>
   )
 }
 
-export const isReadonly: ComponentStory<typeof FileButton> = () => {
+export const isReadonly: Story = () => {
   return (
     <>
       <FileButton isReadOnly>Upload</FileButton>
@@ -186,36 +225,44 @@ export const isReadonly: ComponentStory<typeof FileButton> = () => {
         {({ onClick, isReadOnly }) => (
           <Link
             onClick={onClick}
-            cursor={isReadOnly ? 'default' : 'pointer'}
-            _hover={isReadOnly ? undefined : { textDecoration: 'underline' }}
+            cursor={isReadOnly ? "default" : "pointer"}
+            _hover={isReadOnly ? undefined : { textDecoration: "underline" }}
           >
             Upload
           </Link>
         )}
       </FileButton>
 
-      <FormControl isReadOnly label='Upload file' helperMessage='Please select a file to upload.'>
+      <FormControl
+        isReadOnly
+        label="Upload file"
+        helperMessage="Please select a file to upload."
+      >
         <FileButton>Upload</FileButton>
       </FormControl>
     </>
   )
 }
 
-export const isInvalid: ComponentStory<typeof FileButton> = () => {
+export const isInvalid: Story = () => {
   return (
     <>
       <FileButton isInvalid>Upload</FileButton>
 
       <FileButton as={IconButton} icon={<Icon icon={faPlus} />} isInvalid />
 
-      <FormControl isInvalid label='Upload file' errorMessage='File is required.'>
+      <FormControl
+        isInvalid
+        label="Upload file"
+        errorMessage="File is required."
+      >
         <FileButton>Upload</FileButton>
       </FormControl>
     </>
   )
 }
 
-export const useReset: ComponentStory<typeof FileButton> = () => {
+export const useReset: Story = () => {
   const [files, onChange] = useState<File[] | null>(null)
   const resetRef = useRef<() => void>(null)
 
@@ -239,7 +286,7 @@ export const useReset: ComponentStory<typeof FileButton> = () => {
   )
 }
 
-export const reactHookForm: ComponentStory<typeof FileButton> = () => {
+export const reactHookForm: Story = () => {
   type Data = { fileButton: File[] | null }
 
   const resetRef = useRef<() => void>(null)
@@ -252,27 +299,30 @@ export const reactHookForm: ComponentStory<typeof FileButton> = () => {
   } = useForm<Data>()
 
   const onReset = () => {
-    setValue('fileButton', null)
+    setValue("fileButton", null)
     resetRef.current?.()
   }
-  const onSubmit: SubmitHandler<Data> = (data) => console.log('submit:', data)
+  const onSubmit: SubmitHandler<Data> = (data) => console.log("submit:", data)
 
-  console.log('watch:', watch())
+  console.log("watch:", watch())
 
   return (
-    <VStack as='form' onSubmit={handleSubmit(onSubmit)}>
+    <VStack as="form" onSubmit={handleSubmit(onSubmit)}>
       <FormControl
         isInvalid={!!errors.fileButton}
-        label='Files'
+        label="Files"
         errorMessage={errors.fileButton?.message}
       >
         <Controller
-          name='fileButton'
+          name="fileButton"
           control={control}
-          rules={{ required: { value: true, message: 'This is required.' } }}
+          rules={{ required: { value: true, message: "This is required." } }}
           render={({ field: { ref, name, onChange, onBlur } }) => (
             <HStack>
-              <FileButton {...{ ref, name, onChange, onBlur }} resetRef={resetRef}>
+              <FileButton
+                {...{ ref, name, onChange, onBlur }}
+                resetRef={resetRef}
+              >
                 Upload
               </FileButton>
 
@@ -282,7 +332,7 @@ export const reactHookForm: ComponentStory<typeof FileButton> = () => {
         />
       </FormControl>
 
-      <Button type='submit' alignSelf='flex-end'>
+      <Button type="submit" alignSelf="flex-end">
         Submit
       </Button>
     </VStack>

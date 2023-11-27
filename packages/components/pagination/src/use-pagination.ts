@@ -1,23 +1,54 @@
-import { CSSUIObject, Token } from '@yamada-ui/core'
-import { useControllableState } from '@yamada-ui/use-controllable-state'
-import { useValue } from '@yamada-ui/use-value'
-import { createContext } from '@yamada-ui/utils'
-import { useCallback, useMemo } from 'react'
+import type { CSSUIObject, Token } from "@yamada-ui/core"
+import { useControllableState } from "@yamada-ui/use-controllable-state"
+import { useValue } from "@yamada-ui/use-value"
+import { createContext } from "@yamada-ui/utils"
+import { useCallback, useMemo } from "react"
 
 type PaginationContext = Record<string, CSSUIObject>
 
-export const [PaginationProvider, usePaginationContext] = createContext<PaginationContext>({
-  strict: false,
-  name: 'PaginationContext',
-})
+export const [PaginationProvider, usePaginationContext] =
+  createContext<PaginationContext>({
+    strict: false,
+    name: "PaginationContext",
+  })
 
 export type UsePaginationProps = {
+  /**
+   * The page of the pagination.
+   * Should be less than `total` and greater than `1`.
+   */
   page?: number
+  /**
+   * The initial page of the pagination.
+   * Should be less than `total` and greater than `1`.
+   *
+   * @default 1
+   */
   defaultPage?: number
+  /**
+   * The total number of pages in pagination.
+   */
   total: number
+  /** Number of siblings displayed on the left/right side of selected page.
+   *
+   * @default 1
+   */
   siblings?: Token<number>
+  /**
+   * Number of elements visible on the left/right edges.
+   *
+   * @default 1
+   */
   boundaries?: Token<number>
+  /**
+   * If `true`, the pagination all item will be disabled.
+   *
+   * @default false
+   */
   isDisabled?: boolean
+  /**
+   * The callback invoked when the page changes.
+   */
   onChange?: (page: number) => void
 }
 
@@ -44,7 +75,10 @@ export const usePagination = ({
 
   const onFirst = useCallback(() => setCurrentPage(1), [setCurrentPage])
 
-  const onLast = useCallback(() => setCurrentPage(total), [setCurrentPage, total])
+  const onLast = useCallback(
+    () => setCurrentPage(total),
+    [setCurrentPage, total],
+  )
 
   const onPrev = useCallback(
     () => setCurrentPage((prev) => (prev === 1 ? prev : prev - 1)),
@@ -56,15 +90,24 @@ export const usePagination = ({
     [setCurrentPage, total],
   )
 
-  const onChange = useCallback((page: number) => setCurrentPage(page), [setCurrentPage])
+  const onChange = useCallback(
+    (page: number) => setCurrentPage(page),
+    [setCurrentPage],
+  )
 
-  const range = useMemo((): (number | 'dots')[] => {
+  const range = useMemo((): (number | "dots")[] => {
     const minimumTotal = computedSiblings * 2 + 3 + computedBoundaries * 2
 
     if (minimumTotal >= total) return computedRange(1, total)
 
-    const prevSiblings = Math.max(currentPage - computedSiblings, computedBoundaries)
-    const nextSiblings = Math.min(currentPage + computedSiblings, total - computedBoundaries)
+    const prevSiblings = Math.max(
+      currentPage - computedSiblings,
+      computedBoundaries,
+    )
+    const nextSiblings = Math.min(
+      currentPage + computedSiblings,
+      total - computedBoundaries,
+    )
 
     const prevDots = prevSiblings > computedBoundaries + 2
     const nextDots = nextSiblings < total - (computedBoundaries + 1)
@@ -74,7 +117,7 @@ export const usePagination = ({
 
       return [
         ...computedRange(1, prevPages),
-        'dots',
+        "dots",
         ...computedRange(total - (computedBoundaries - 1), total),
       ]
     }
@@ -84,16 +127,16 @@ export const usePagination = ({
 
       return [
         ...computedRange(1, computedBoundaries),
-        'dots',
+        "dots",
         ...computedRange(total - nextPages, total),
       ]
     }
 
     return [
       ...computedRange(1, computedBoundaries),
-      'dots',
+      "dots",
       ...computedRange(prevSiblings, nextSiblings),
-      'dots',
+      "dots",
       ...computedRange(total - computedBoundaries + 1, total),
     ]
   }, [computedBoundaries, computedSiblings, currentPage, total])

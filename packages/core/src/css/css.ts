@@ -1,8 +1,10 @@
-import { isArray, isObject, merge, runIfFunc, Dict } from '@yamada-ui/utils'
-import { styles, pseudos, ConfigProps } from '../styles'
-import { StyledTheme } from '../theme.types'
-import { BreakpointQueries } from './breakpoint'
-import { CSSObjectOrFunc, CSSUIObject, CSSUIProps } from './css.types'
+import type { Dict } from "@yamada-ui/utils"
+import { isArray, isObject, merge, runIfFunc } from "@yamada-ui/utils"
+import type { ConfigProps } from "../styles"
+import { styles, pseudos } from "../styles"
+import type { StyledTheme } from "../theme.types"
+import type { BreakpointQueries } from "./breakpoint"
+import type { CSSObjectOrFunc, CSSUIObject, CSSUIProps } from "./css.types"
 
 const expandColorMode = (key: string, value: any[]): Dict => ({
   [key]: value[0],
@@ -11,12 +13,18 @@ const expandColorMode = (key: string, value: any[]): Dict => ({
   },
 })
 
-const expandResponsive = (key: string, value: Dict, queries: BreakpointQueries): Dict =>
+const expandResponsive = (
+  key: string,
+  value: Dict,
+  queries: BreakpointQueries,
+): Dict =>
   Object.entries(value).reduce((css, [breakpointKey, breakpointValue]) => {
-    if (breakpointKey === 'base') {
+    if (breakpointKey === "base") {
       css[key] = breakpointValue
     } else {
-      const query = queries.find(({ breakpoint }) => breakpoint === breakpointKey)?.maxWQuery
+      const query = queries.find(
+        ({ breakpoint }) => breakpoint === breakpointKey,
+      )?.maxWQuery
 
       if (query) css[query] = { [key]: breakpointValue }
     }
@@ -26,7 +34,7 @@ const expandResponsive = (key: string, value: Dict, queries: BreakpointQueries):
 
 const expandCSS =
   (css: CSSUIProps | CSSUIObject) =>
-  (theme: StyledTheme<Dict>): Dict => {
+  (theme: StyledTheme): Dict => {
     if (!theme.__breakpoints) return css
 
     const { isResponsive, queries } = theme.__breakpoints
@@ -56,20 +64,25 @@ const expandCSS =
     return computedCSS
   }
 
-export const getCSS = (options: {
-  theme: StyledTheme<Dict>
+export const getCSS = ({
+  theme,
+  styles = {},
+  pseudos = {},
+}: {
+  theme: StyledTheme
   styles: Dict
   pseudos: Dict
-}): ((cssOrFunc: CSSObjectOrFunc | CSSUIObject, nested?: boolean) => Dict) => {
-  const { theme, styles = {}, pseudos = {} } = options
+}): ((cssOrFunc: CSSObjectOrFunc | CSSUIObject) => Dict) => {
+  const createCSS = (
+    cssOrFunc: CSSObjectOrFunc | CSSUIObject,
+    isNested: boolean = false,
+  ): Dict => {
+    const css = runIfFunc(cssOrFunc, theme)
+    const computedCSS = expandCSS(css)(theme)
 
-  const createCSS = (cssOrFunc: CSSObjectOrFunc | CSSUIObject, nested: boolean = false): Dict => {
-    const _css = runIfFunc(cssOrFunc, theme)
-    const css = expandCSS(_css)(theme)
+    let resolvedCSS: Dict = {}
 
-    let computedCSS: Dict = {}
-
-    for (let [key, value] of Object.entries(css)) {
+    for (let [key, value] of Object.entries(computedCSS)) {
       value = runIfFunc(value, theme)
 
       if (value == null) continue
@@ -78,55 +91,57 @@ export const getCSS = (options: {
 
       let style: ConfigProps | undefined | true = styles[key]
 
-      if (style === true) style = { property: key }
+      if (style === true) style = { properties: key }
 
       if (isObject(value)) {
-        computedCSS[key] = computedCSS[key] ?? {}
-        computedCSS[key] = merge(computedCSS[key], createCSS(value, true))
+        resolvedCSS[key] = resolvedCSS[key] ?? {}
+        resolvedCSS[key] = merge(resolvedCSS[key], createCSS(value, true))
 
         continue
       }
 
       value = style?.transform?.(value, theme) ?? value
 
-      value = style?.processResult ? createCSS(value, true) : value
-
-      if (!nested && style?.static) {
-        const staticStyles = runIfFunc(style.static, theme)
-
-        computedCSS = merge(computedCSS, staticStyles)
+      if (style?.isProcessResult) {
+        value = createCSS(value, true)
       }
 
-      const property = runIfFunc(style?.property, theme)
+      if (!isNested && style?.static) {
+        const staticStyles = runIfFunc(style.static, theme)
 
-      if (property) {
-        if (isArray(property)) {
-          for (const _property of property) {
-            computedCSS[_property] = value
+        resolvedCSS = merge(resolvedCSS, staticStyles)
+      }
+
+      const properties = runIfFunc(style?.properties, theme)
+
+      if (properties) {
+        if (isArray(properties)) {
+          for (const property of properties) {
+            resolvedCSS[property] = value
           }
 
           continue
         } else if (isObject(value)) {
-          computedCSS = merge(computedCSS, value)
+          resolvedCSS = merge(resolvedCSS, value)
 
           continue
         } else {
-          computedCSS[property] = value
+          resolvedCSS[properties] = value
 
           continue
         }
       }
 
       if (isObject(value)) {
-        computedCSS = merge(computedCSS, value)
+        resolvedCSS = merge(resolvedCSS, value)
 
         continue
       }
 
-      computedCSS[key] = value
+      resolvedCSS[key] = value
     }
 
-    return computedCSS
+    return resolvedCSS
   }
 
   return createCSS
@@ -134,7 +149,7 @@ export const getCSS = (options: {
 
 export const css =
   (cssObject: CSSObjectOrFunc | CSSUIObject) =>
-  (theme: StyledTheme<Dict>): Dict =>
+  (theme: StyledTheme): Dict =>
     getCSS({
       theme,
       styles,

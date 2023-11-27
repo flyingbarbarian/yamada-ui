@@ -1,7 +1,7 @@
 const toNumber = (n: any): number => {
   const num = parseFloat(n)
 
-  return typeof num !== 'number' || Number.isNaN(num) ? 0 : num
+  return typeof num !== "number" || Number.isNaN(num) ? 0 : num
 }
 
 export const toPrecision = (n: number, precision?: number): string => {
@@ -39,7 +39,8 @@ export const roundNumberToStep = (n: number, from: number, step: number) => {
 export const valueToPercent = (n: number, min: number, max: number): number =>
   ((n - min) * 100) / (max - min)
 
-export const percentToValue = (n: number, min: number, max: number) => (max - min) * n + min
+export const percentToValue = (n: number, min: number, max: number) =>
+  (max - min) * n + min
 
 export const clampNumber = (n: number, min: number, max: number): number =>
   Math.min(Math.max(n, min), max)

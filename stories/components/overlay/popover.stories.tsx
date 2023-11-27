@@ -1,4 +1,4 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import type { Meta, StoryFn } from "@storybook/react"
 import {
   Button,
   Popover,
@@ -13,16 +13,20 @@ import {
   PopoverAnchor,
   Text,
   useDisclosure,
-} from '@yamada-ui/react'
+} from "@yamada-ui/react"
 
-export default {
-  title: 'Components / Overlay / Popover',
+type Story = StoryFn<typeof Popover>
+
+const meta: Meta<typeof Popover> = {
+  title: "Components / Overlay / Popover",
   component: Popover,
-} as ComponentMeta<typeof Popover>
+}
 
-export const basic: ComponentStory<typeof Popover> = () => {
+export default meta
+
+export const basic: Story = () => {
   return (
-    <Center w='calc(100vw - 16px * 2)' h='calc(100vh - 16px * 2)'>
+    <Center w="calc(100vw - 16px * 2)" h="calc(100vh - 16px * 2)">
       <Popover>
         <PopoverTrigger>
           <Button>Open Popover</Button>
@@ -37,9 +41,9 @@ export const basic: ComponentStory<typeof Popover> = () => {
   )
 }
 
-export const withFooter: ComponentStory<typeof Popover> = () => {
+export const withFooter: Story = () => {
   return (
-    <Center w='calc(100vw - 16px * 2)' h='calc(100vh - 16px * 2)'>
+    <Center w="calc(100vw - 16px * 2)" h="calc(100vh - 16px * 2)">
       <Popover>
         <PopoverTrigger>
           <Button>Open Popover</Button>
@@ -55,9 +59,9 @@ export const withFooter: ComponentStory<typeof Popover> = () => {
   )
 }
 
-export const withAnchor: ComponentStory<typeof Popover> = () => {
+export const withAnchor: Story = () => {
   return (
-    <Center w='calc(100vw - 16px * 2)' h='calc(100vh - 16px * 2)' gap='md'>
+    <Center w="calc(100vw - 16px * 2)" h="calc(100vh - 16px * 2)" gap="md">
       <Popover closeOnBlur={false}>
         <PopoverAnchor>
           <Text>Here display Popover</Text>
@@ -77,9 +81,9 @@ export const withAnchor: ComponentStory<typeof Popover> = () => {
   )
 }
 
-export const withDuration: ComponentStory<typeof Popover> = () => {
+export const withDuration: Story = () => {
   return (
-    <Center w='calc(100vw - 16px * 2)' h='calc(100vh - 16px * 2)'>
+    <Center w="calc(100vw - 16px * 2)" h="calc(100vh - 16px * 2)">
       <Popover duration={0.7}>
         <PopoverTrigger>
           <Button>Open Popover</Button>
@@ -94,15 +98,16 @@ export const withDuration: ComponentStory<typeof Popover> = () => {
   )
 }
 
-export const controlPopover: ComponentStory<typeof Popover> = () => {
-  const [isOpen, , onClose, onToggle] = useDisclosure()
+export const controlPopover: Story = () => {
+  const { isOpen, onClose, onToggle } = useDisclosure()
+
   return (
-    <Center w='calc(100vw - 16px * 2)' h='calc(100vh - 16px * 2)' gap='md'>
+    <Center w="calc(100vw - 16px * 2)" h="calc(100vh - 16px * 2)" gap="md">
       <Button onClick={onToggle}>Open Popover</Button>
 
       <Popover isOpen={isOpen} onClose={onClose} closeOnBlur={false}>
         <PopoverTrigger>
-          <Button colorScheme='primary'>Target Popover</Button>
+          <Button colorScheme="primary">Target Popover</Button>
         </PopoverTrigger>
 
         <PopoverContent>
@@ -114,9 +119,9 @@ export const controlPopover: ComponentStory<typeof Popover> = () => {
   )
 }
 
-export const withOffset: ComponentStory<typeof Popover> = () => {
+export const withOffset: Story = () => {
   return (
-    <Center w='calc(100vw - 16px * 2)' h='calc(100vh - 16px * 2)'>
+    <Center w="calc(100vw - 16px * 2)" h="calc(100vh - 16px * 2)">
       <Popover offset={[16, 16]}>
         <PopoverTrigger>
           <Button>Open Popover</Button>
@@ -131,9 +136,9 @@ export const withOffset: ComponentStory<typeof Popover> = () => {
   )
 }
 
-export const withGutter: ComponentStory<typeof Popover> = () => {
+export const withGutter: Story = () => {
   return (
-    <Center w='calc(100vw - 16px * 2)' h='calc(100vh - 16px * 2)'>
+    <Center w="calc(100vw - 16px * 2)" h="calc(100vh - 16px * 2)">
       <Popover gutter={32}>
         <PopoverTrigger>
           <Button>Open Popover</Button>
@@ -148,62 +153,72 @@ export const withGutter: ComponentStory<typeof Popover> = () => {
   )
 }
 
-export const withAnimation: ComponentStory<typeof Popover> = () => {
+export const withAnimation: Story = () => {
   return (
-    <Center h='calc(100vh - 16px * 2)'>
-      <Wrap gap='md'>
-        <Popover animation='scale'>
+    <Center h="calc(100vh - 16px * 2)">
+      <Wrap gap="md">
+        <Popover animation="scale">
           <PopoverTrigger>
             <Button>Open scale Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
 
-        <Popover animation='top'>
+        <Popover animation="top">
           <PopoverTrigger>
             <Button>Open top Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
 
-        <Popover animation='left'>
+        <Popover animation="left">
           <PopoverTrigger>
             <Button>Open left Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
 
-        <Popover animation='bottom'>
+        <Popover animation="bottom">
           <PopoverTrigger>
             <Button>Open bottom Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
 
-        <Popover animation='right'>
+        <Popover animation="right">
           <PopoverTrigger>
             <Button>Open right Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
       </Wrap>
@@ -211,139 +226,163 @@ export const withAnimation: ComponentStory<typeof Popover> = () => {
   )
 }
 
-export const withPlacement: ComponentStory<typeof Popover> = () => {
+export const withPlacement: Story = () => {
   return (
-    <Center h='calc(100vh - 16px * 2)'>
-      <Wrap gap='md'>
-        <Popover placement='top'>
+    <Center h="calc(100vh - 16px * 2)">
+      <Wrap gap="md">
+        <Popover placement="top">
           <PopoverTrigger>
             <Button>Open top center Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
 
-        <Popover placement='top-start'>
+        <Popover placement="top-start">
           <PopoverTrigger>
             <Button>Open top start Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
 
-        <Popover placement='top-end'>
+        <Popover placement="top-end">
           <PopoverTrigger>
             <Button>Open top end Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
 
-        <Popover placement='left'>
+        <Popover placement="left">
           <PopoverTrigger>
             <Button>Open left center Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
 
-        <Popover placement='left-start'>
+        <Popover placement="left-start">
           <PopoverTrigger>
             <Button>Open left start Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
 
-        <Popover placement='left-end'>
+        <Popover placement="left-end">
           <PopoverTrigger>
             <Button>Open left end Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
 
-        <Popover placement='bottom'>
+        <Popover placement="bottom">
           <PopoverTrigger>
             <Button>Open bottom center Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
 
-        <Popover placement='bottom-start'>
+        <Popover placement="bottom-start">
           <PopoverTrigger>
             <Button>Open bottom start Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
 
-        <Popover placement='bottom-end'>
+        <Popover placement="bottom-end">
           <PopoverTrigger>
             <Button>Open bottom end Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
 
-        <Popover placement='right'>
+        <Popover placement="right">
           <PopoverTrigger>
             <Button>Open right center Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
 
-        <Popover placement='right-start'>
+        <Popover placement="right-start">
           <PopoverTrigger>
             <Button>Open right start Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
 
-        <Popover placement='right-end'>
+        <Popover placement="right-end">
           <PopoverTrigger>
             <Button>Open right end Popover</Button>
           </PopoverTrigger>
 
           <PopoverContent>
             <PopoverHeader>ベジータ!</PopoverHeader>
-            <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
+            <PopoverBody>
+              がんばれカカロット……お前がナンバー１だ！！
+            </PopoverBody>
           </PopoverContent>
         </Popover>
       </Wrap>
@@ -351,9 +390,9 @@ export const withPlacement: ComponentStory<typeof Popover> = () => {
   )
 }
 
-export const disabledCloseButton: ComponentStory<typeof Popover> = () => {
+export const disabledCloseButton: Story = () => {
   return (
-    <Center w='calc(100vw - 16px * 2)' h='calc(100vh - 16px * 2)'>
+    <Center w="calc(100vw - 16px * 2)" h="calc(100vh - 16px * 2)">
       <Popover closeOnButton={false}>
         <PopoverTrigger>
           <Button>Open Popover</Button>
@@ -368,16 +407,16 @@ export const disabledCloseButton: ComponentStory<typeof Popover> = () => {
   )
 }
 
-export const customCloseButton: ComponentStory<typeof Popover> = () => {
+export const customCloseButton: Story = () => {
   return (
-    <Center w='calc(100vw - 16px * 2)' h='calc(100vh - 16px * 2)'>
+    <Center w="calc(100vw - 16px * 2)" h="calc(100vh - 16px * 2)">
       <Popover>
         <PopoverTrigger>
           <Button>Open Popover</Button>
         </PopoverTrigger>
 
         <PopoverContent>
-          <PopoverCloseButton color='gray.400' />
+          <PopoverCloseButton color="gray.400" />
           <PopoverHeader>ベジータ!</PopoverHeader>
           <PopoverBody>がんばれカカロット……お前がナンバー１だ！！</PopoverBody>
         </PopoverContent>
@@ -386,10 +425,10 @@ export const customCloseButton: ComponentStory<typeof Popover> = () => {
   )
 }
 
-export const changeTrigger: ComponentStory<typeof Popover> = () => {
+export const changeTrigger: Story = () => {
   return (
-    <Center w='calc(100vw - 16px * 2)' h='calc(100vh - 16px * 2)'>
-      <Popover trigger='hover'>
+    <Center w="calc(100vw - 16px * 2)" h="calc(100vh - 16px * 2)">
+      <Popover trigger="hover">
         <PopoverTrigger>
           <Button>Open Popover</Button>
         </PopoverTrigger>
@@ -403,9 +442,9 @@ export const changeTrigger: ComponentStory<typeof Popover> = () => {
   )
 }
 
-export const disabledCloseBlur: ComponentStory<typeof Popover> = () => {
+export const disabledCloseBlur: Story = () => {
   return (
-    <Center w='calc(100vw - 16px * 2)' h='calc(100vh - 16px * 2)'>
+    <Center w="calc(100vw - 16px * 2)" h="calc(100vh - 16px * 2)">
       <Popover closeOnBlur={false}>
         <PopoverTrigger>
           <Button>Open Popover</Button>
@@ -420,9 +459,9 @@ export const disabledCloseBlur: ComponentStory<typeof Popover> = () => {
   )
 }
 
-export const useLazy: ComponentStory<typeof Popover> = () => {
+export const useLazy: Story = () => {
   return (
-    <Center w='calc(100vw - 16px * 2)' h='calc(100vh - 16px * 2)'>
+    <Center w="calc(100vw - 16px * 2)" h="calc(100vh - 16px * 2)">
       <Popover isLazy>
         <PopoverTrigger>
           <Button>Open Popover</Button>

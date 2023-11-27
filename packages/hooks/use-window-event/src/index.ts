@@ -1,5 +1,5 @@
-import { useCallbackRef } from '@yamada-ui/utils'
-import { useEffect } from 'react'
+import { useCallbackRef } from "@yamada-ui/utils"
+import { useEffect } from "react"
 
 type Handler<E extends string> = E extends keyof WindowEventMap
   ? (ev: WindowEventMap[E]) => void
@@ -11,7 +11,9 @@ export const useWindowEvent = <E extends string>(
   handler: Handler<E>,
   options?: Options,
 ) => {
-  const listener = useCallbackRef(handler) as unknown as EventListenerOrEventListenerObject
+  const listener = useCallbackRef(
+    handler,
+  ) as unknown as EventListenerOrEventListenerObject
 
   useEffect(() => {
     window.addEventListener(event, listener, options)

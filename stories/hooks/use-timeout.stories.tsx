@@ -1,9 +1,12 @@
-import { Box, useTimeout } from '@yamada-ui/react'
-import { useState } from 'react'
+import type { Meta } from "@storybook/react"
+import { Box, useTimeout } from "@yamada-ui/react"
+import { useState } from "react"
 
-export default {
-  title: 'Hooks / useTimeout',
+const meta: Meta = {
+  title: "Hooks / useTimeout",
 }
+
+export default meta
 
 export const basic = () => {
   const [state, setState] = useState<number>(1)

@@ -12,9 +12,13 @@
     <img alt="MIT License" src="https://img.shields.io/github/license/hirotomoyamada/yamada-ui"/>
   </a>
   <img alt="Github Stars" src="https://img.shields.io/github/stars/hirotomoyamada/yamada-ui" />
-  <a href="https://discord.gg/NStNNpjN">
+  <a href="https://discord.gg/ubYvRAxFEB">
     <img alt="MIT License" src="https://img.shields.io/badge/Chat%20on-Discord-%235865f2"/>
   </a>
+</p>
+
+<p align='center'>
+  English | <a href='./README.ja.md'>日本語</a>
 </p>
 
 Yamada UI is a React UI component library that streamlines the development of cutting-edge web applications and websites. This library offers a diverse range of components that can be easily combined to construct complex user interfaces, incorporating various features such as color modes and animations, which are not typically supported by other React UI component libraries.
@@ -80,7 +84,7 @@ You will need to install them separately.
 # Provide a convenient Table component using `@tanstack/react-table`.
 $ pnpm add @yamada-ui/table
 
-# Provide a convenient Calender and datePicker, MonthPicker component
+# Provide a convenient Calendar and datePicker, MonthPicker component
 $ pnpm add @yamada-ui/calendar
 
 # Provide a convenient Carousel component using `embla-carousel-react`.
@@ -103,7 +107,7 @@ To get started with using the components, please follow the steps below:
 1. Wrap your application with the `UIProvider` provided
 
 ```tsx
-import { UIProvider } from '@yamada-ui/react'
+import { UIProvider } from "@yamada-ui/react"
 
 const App = ({ children }) => {
   return <UIProvider>{children}</UIProvider>
@@ -117,7 +121,7 @@ Yamada UI supports light and dark modes by default
 2. Now you can start using components like so
 
 ```tsx
-import { Box, Text } from '@yamada-ui/react'
+import { Box, Text } from "@yamada-ui/react"
 
 const Example = () => {
   return (
@@ -138,6 +142,8 @@ const Example = () => {
 ## Contributing
 
 Wouldn't you like to contribute? That's amazing! We have prepared a [contribution guide](./CONTRIBUTING.md) to assist you.
+
+The documentation site for Yamada UI is located in a separate [repository](https://github.com/hirotomoyamada/yamada-docs). If you're interested in contributing to the documentation, please refer to this [contribution guide](https://github.com/hirotomoyamada/yamada-docs/blob/main/CONTRIBUTING.md).
 
 ## License
 

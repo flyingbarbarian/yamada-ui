@@ -1,40 +1,36 @@
-import { isArray, isObject, prettier } from '../../utils'
-import { config } from './config'
+import { isArray, isObject, omitObject, prettier } from "../../utils"
+import { config } from "./config"
 
 type Component = {
   sizes: string[]
   variants: string[]
 }
 
-const defaultColors = ['brand', 'primary', 'secondary', 'warning', 'danger', 'link']
+const hues = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
 
-const hues = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900']
-
-export const printComponent = (components: Record<string, Component>): string =>
+export const printComponent = (components: Record<string, Component>) =>
   `components: { ${Object.entries(components)
     .map(
       ([key, unions]) =>
-        `${key.match(/^[a-zA-Z0-9\-_]+$/) ? key : `"${key}"`}: { ${print(unions)}}`,
+        `${key.match(/^[a-zA-Z0-9\-_]+$/) ? key : `"${key}"`}: { ${print(
+          unions,
+        )}}`,
     )
     .join(`\n`)} }`
 
-export const print = (unions: Record<string, string[]>): string =>
+export const print = (unions: Record<string, string[]>) =>
   Object.entries(unions)
     .sort(([a], [b]) => a.localeCompare(b))
     .map(
       ([key, union]) =>
         `${key}: ${union
           .map((value: any) => `"${value}"`)
-          .concat(['(string & {})'])
-          .join(' | ')};`,
+          .concat(["(string & {})"])
+          .join(" | ")};`,
     )
-    .join('\n')
+    .join("\n")
 
-export const extractComponents = ({
-  components = {},
-}: {
-  components: any
-}): Record<string, Component> =>
+export const extractComponents = ({ components = {} }: { components: any }) =>
   Object.entries<{ sizes?: object; variants?: object }>(components).reduce(
     (obj, [key, { sizes, variants }]) => {
       if (sizes || variants) {
@@ -49,33 +45,30 @@ export const extractComponents = ({
     {} as Record<string, Component>,
   )
 
-export const extractTransitions = (
-  theme: any,
-): {
-  transitionProperty: string[]
-  transitionDuration: string[]
-  transitionEasing: string[]
-} => {
+export const extractTransitions = (theme: any) => {
   let transitionProperty: string[] = []
   let transitionDuration: string[] = []
   let transitionEasing: string[] = []
 
-  const { transitions } = theme
+  const { transitions, semantics } = theme
 
-  if (!isObject(transitions)) return { transitionProperty, transitionDuration, transitionEasing }
+  if (!isObject(transitions))
+    return { transitionProperty, transitionDuration, transitionEasing }
+
+  const { property, duration, easing } = semantics.transitions ?? {}
 
   Object.entries(transitions).forEach(([key, value]) => {
     switch (key) {
-      case 'property':
-        transitionProperty = extractPaths(value)
+      case "property":
+        transitionProperty = [...extractPaths(value), ...extractPaths(property)]
         break
 
-      case 'duration':
-        transitionDuration = extractPaths(value)
+      case "duration":
+        transitionDuration = [...extractPaths(value), ...extractPaths(duration)]
         break
 
-      case 'easing':
-        transitionEasing = extractPaths(value)
+      case "easing":
+        transitionEasing = [...extractPaths(value), ...extractPaths(easing)]
         break
 
       default:
@@ -86,34 +79,58 @@ export const extractTransitions = (
   return { transitionProperty, transitionDuration, transitionEasing }
 }
 
-const isHue = (value: any): boolean => {
+const isHue = (value: any) => {
   if (!isObject(value)) return false
 
   const keys = Object.keys(value)
 
-  return hues.every((key) => keys.includes(key))
+  return hues.every((key) => keys.includes(key.toString()))
 }
 
-const isDefaultColor = (key: any): boolean => defaultColors.includes(key)
-
-export const extractColorSchemes = (theme: any): string[] => {
-  const { colors } = theme
+export const extractColorSchemes = (theme: any) => {
+  const { colors, semantics } = theme
 
   if (!isObject(colors)) return []
 
   return Object.entries(colors).reduce((array, [key, value]) => {
-    if (isHue(value) || isDefaultColor(key)) array.push(key)
+    if (!isHue(value)) return array
+
+    array.push(key)
+
+    const [semanticKey] =
+      Object.entries(semantics?.colorSchemes ?? {}).find(
+        ([, relatedKey]) => key === relatedKey,
+      ) ?? []
+
+    if (semanticKey) array.push(semanticKey)
 
     return array
   }, [] as string[])
 }
 
-export const extractPaths = (target: any, maxDepth = 3): string[] => {
-  if ((!isObject(target) && !Array.isArray(target)) || !maxDepth) return []
+export const extractThemeSchemes = (theme: any) => {
+  const { themeSchemes } = theme
+
+  if (!isObject(themeSchemes)) return ["base"]
+
+  return ["base", ...Object.keys(themeSchemes)]
+}
+
+export const extractPaths = (
+  target: any,
+  maxDepth = 3,
+  omitKeys: string[] = [],
+) => {
+  if ((!isObject(target) && !isArray(target)) || !maxDepth) return []
 
   return Object.entries(target).reduce((array, [key, value]) => {
-    if (isObject(value)) {
-      extractPaths(value, maxDepth - 1).forEach((nestedKey) => array.push(`${key}.${nestedKey}`))
+    if (
+      isObject(value) &&
+      !Object.keys(value).some((key) => omitKeys.includes(key))
+    ) {
+      extractPaths(value, maxDepth - 1, omitKeys).forEach((nestedKey) =>
+        array.push(`${key}.${nestedKey}`),
+      )
     } else {
       array.push(key)
     }
@@ -122,8 +139,8 @@ export const extractPaths = (target: any, maxDepth = 3): string[] => {
   }, [] as string[])
 }
 
-export const extractKeys = (theme: any, key: string): string[] => {
-  const keys = key.split('.')
+export const extractKeys = (theme: any, key: string) => {
+  const keys = key.split(".")
 
   const property = keys.reduce((obj, key) => obj[key] ?? {}, theme)
 
@@ -134,17 +151,33 @@ export const extractKeys = (theme: any, key: string): string[] => {
 
 export const createThemeTypings = async (theme: any) => {
   const unions = config.reduce(
-    (obj, { key, maxScanDepth, filter = () => true, flatMap = (value) => value }) => {
+    (
+      obj,
+      {
+        key,
+        maxScanDepth,
+        omitScanKeys,
+        filter = () => true,
+        flatMap = (value) => value,
+      },
+    ) => {
       const target = theme[key]
 
       obj[key] = []
 
       if (isObject(target) || isArray(target)) {
-        obj[key] = extractPaths(target, maxScanDepth).filter(filter).flatMap(flatMap)
+        obj[key] = extractPaths(target, maxScanDepth, omitScanKeys)
+          .filter(filter)
+          .flatMap(flatMap)
       }
 
       if (isObject(theme.semantics)) {
-        const semanticKeys = extractKeys(theme.semantics, key).filter(filter).flatMap(flatMap)
+        const semanticKeys = extractKeys(
+          omitObject(theme.semantics, ["colorSchemes"]),
+          key,
+        )
+          .filter(filter)
+          .flatMap(flatMap)
 
         obj[key].push(...semanticKeys)
       }
@@ -154,10 +187,12 @@ export const createThemeTypings = async (theme: any) => {
     {} as Record<string, string[]>,
   )
 
-  const textStyles = extractKeys(theme, 'styles.textStyles')
-  const layerStyles = extractKeys(theme, 'styles.layerStyles')
+  const textStyles = extractKeys(theme, "styles.textStyles")
+  const layerStyles = extractKeys(theme, "styles.layerStyles")
   const colorSchemes = extractColorSchemes(theme)
-  const { transitionProperty, transitionDuration, transitionEasing } = extractTransitions(theme)
+  const themeSchemes = extractThemeSchemes(theme)
+  const { transitionProperty, transitionDuration, transitionEasing } =
+    extractTransitions(theme)
   const componentTypes = extractComponents(theme)
 
   return prettier(
@@ -167,6 +202,7 @@ export const createThemeTypings = async (theme: any) => {
         textStyles,
         layerStyles,
         colorSchemes,
+        themeSchemes,
         transitionProperty,
         transitionDuration,
         transitionEasing,

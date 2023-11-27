@@ -1,16 +1,15 @@
+import type { CSSUIObject, HTMLUIProps, ThemeProps } from "@yamada-ui/core"
 import {
   ui,
   forwardRef,
   useMultiComponentStyle,
   omitThemeProps,
-  CSSUIObject,
-  HTMLUIProps,
-  ThemeProps,
-} from '@yamada-ui/core'
-import { useControllableState } from '@yamada-ui/use-controllable-state'
-import { createDescendant } from '@yamada-ui/use-descendant'
-import { createContext, cx, isArray } from '@yamada-ui/utils'
-import { Dispatch, ReactNode, SetStateAction, useEffect, useState } from 'react'
+} from "@yamada-ui/core"
+import { useControllableState } from "@yamada-ui/use-controllable-state"
+import { createDescendant } from "@yamada-ui/use-descendant"
+import { createContext, cx, isArray } from "@yamada-ui/utils"
+import type { Dispatch, ReactNode, SetStateAction } from "react"
+import { useEffect, useState } from "react"
 
 const {
   DescendantsContextProvider,
@@ -22,40 +21,68 @@ export { useAccordionDescendant }
 
 type AccordionContext = Pick<
   AccordionOptions,
-  'isMultiple' | 'isToggle' | 'icon' | 'iconHidden'
+  "isMultiple" | "isToggle" | "icon" | "iconHidden"
 > & {
-  index: ExpandedIndex
-  setIndex: Dispatch<SetStateAction<ExpandedIndex>>
+  index: number | number[]
+  setIndex: Dispatch<SetStateAction<number | number[]>>
   focusedIndex: number
   setFocusedIndex: Dispatch<SetStateAction<number>>
   styles: Record<string, CSSUIObject>
 }
 
-const [AccordionProvider, useAccordionContext] = createContext<AccordionContext>({
-  name: 'AccordionContext',
-  errorMessage: `useAccordionContext returned is 'undefined'. Seems you forgot to wrap the components in "<Accordion />"`,
-})
+const [AccordionProvider, useAccordionContext] =
+  createContext<AccordionContext>({
+    name: "AccordionContext",
+    errorMessage: `useAccordionContext returned is 'undefined'. Seems you forgot to wrap the components in "<Accordion />"`,
+  })
 
 export { useAccordionContext }
 
-type ExpandedIndex = number | number[]
-
 type AccordionOptions = {
-  index?: ExpandedIndex
-  defaultIndex?: ExpandedIndex
+  /**
+   * The index(es) of the accordion item to expand.
+   */
+  index?: number | number[]
+  /**
+   * The initial index(es) of the accordion item to expand.
+   */
+  defaultIndex?: number | number[]
+  /**
+   * If `true`, multiple accordion items can be expanded at once.
+   *
+   * @default false
+   */
   isMultiple?: boolean
+  /**
+   * If `true`, any expanded accordion item can be collapsed again.
+   *
+   * @default false
+   */
   isToggle?: boolean
+  /**
+   * If `true`, hide the accordion icon for all items.
+   *
+   * @default false
+   */
   iconHidden?: boolean
-  icon?: ReactNode | ((props: { isExpanded: boolean; isDisabled: boolean }) => ReactNode)
-  onChange?: (index: ExpandedIndex) => void
+  /**
+   * The accordion icon for all items to use.
+   */
+  icon?:
+    | ReactNode
+    | ((props: { isExpanded: boolean; isDisabled: boolean }) => ReactNode)
+  /**
+   * The callback invoked when accordion items are expanded or collapsed.
+   */
+  onChange?: (index: number | number[]) => void
 }
 
-export type AccordionProps = Omit<HTMLUIProps<'div'>, 'onChange'> &
-  ThemeProps<'Accordion'> &
+export type AccordionProps = Omit<HTMLUIProps<"div">, "onChange"> &
+  ThemeProps<"Accordion"> &
   AccordionOptions
 
-export const Accordion = forwardRef<AccordionProps, 'div'>((props, ref) => {
-  const [styles, mergedProps] = useMultiComponentStyle('Accordion', props)
+export const Accordion = forwardRef<AccordionProps, "div">((props, ref) => {
+  const [styles, mergedProps] = useMultiComponentStyle("Accordion", props)
   const {
     className,
     index: value,
@@ -68,7 +95,11 @@ export const Accordion = forwardRef<AccordionProps, 'div'>((props, ref) => {
     ...rest
   } = omitThemeProps(mergedProps)
 
-  if ((value || defaultValue) != null && !isArray(value || defaultValue) && isMultiple) {
+  if (
+    (value || defaultValue) != null &&
+    !isArray(value || defaultValue) &&
+    isMultiple
+  ) {
     console.warn(
       `Accordion: If 'isMultiple' is passed, then 'index' or 'defaultIndex' must be an array.`,
     )
@@ -94,7 +125,7 @@ export const Accordion = forwardRef<AccordionProps, 'div'>((props, ref) => {
     return () => setFocusedIndex(-1)
   }, [])
 
-  const css: CSSUIObject = { w: 'full', ...styles.container }
+  const css: CSSUIObject = { w: "full", ...styles.container }
 
   return (
     <DescendantsContextProvider value={descendants}>
@@ -111,7 +142,12 @@ export const Accordion = forwardRef<AccordionProps, 'div'>((props, ref) => {
           styles,
         }}
       >
-        <ui.div ref={ref} className={cx('ui-accordion', className)} __css={css} {...rest} />
+        <ui.div
+          ref={ref}
+          className={cx("ui-accordion", className)}
+          __css={css}
+          {...rest}
+        />
       </AccordionProvider>
     </DescendantsContextProvider>
   )

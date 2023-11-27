@@ -1,4 +1,5 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import type { Meta, StoryFn } from "@storybook/react"
+import type { NativeTableProps } from "@yamada-ui/react"
 import {
   NativeTable,
   Thead,
@@ -8,20 +9,24 @@ import {
   Th,
   Td,
   TableCaption,
-  NativeTableProps,
   ScrollArea,
   Box,
   defaultTheme,
   TableContainer,
-} from '@yamada-ui/react'
-import { FC, useState } from 'react'
+} from "@yamada-ui/react"
+import type { FC } from "react"
+import { useState } from "react"
 
-export default {
-  title: 'Components / Data Display / NativeTable',
+type Story = StoryFn<typeof NativeTable>
+
+const meta: Meta<typeof NativeTable> = {
+  title: "Components / Data Display / NativeTable",
   component: NativeTable,
-} as ComponentMeta<typeof NativeTable>
+}
 
-export const basic: ComponentStory<typeof NativeTable> = () => {
+export default meta
+
+export const basic: Story = () => {
   return (
     <TableContainer>
       <NativeTable>
@@ -73,7 +78,7 @@ export const basic: ComponentStory<typeof NativeTable> = () => {
   )
 }
 
-export const withSize: ComponentStory<typeof NativeTable> = () => {
+export const withSize: Story = () => {
   const Table: FC<NativeTableProps> = (props) => {
     return (
       <TableContainer>
@@ -128,15 +133,15 @@ export const withSize: ComponentStory<typeof NativeTable> = () => {
 
   return (
     <>
-      <Table size='sm' />
-      <Table size='md' />
-      <Table size='lg' />
-      <Table size='xl' />
+      <Table size="sm" />
+      <Table size="md" />
+      <Table size="lg" />
+      <Table size="xl" />
     </>
   )
 }
 
-export const withVariant: ComponentStory<typeof NativeTable> = () => {
+export const withVariant: Story = () => {
   const Table: FC<NativeTableProps> = (props) => {
     return (
       <TableContainer>
@@ -191,13 +196,13 @@ export const withVariant: ComponentStory<typeof NativeTable> = () => {
 
   return (
     <>
-      <Table variant='simple' />
-      <Table variant='striped' />
+      <Table variant="simple" />
+      <Table variant="striped" />
     </>
   )
 }
 
-export const withColorScheme: ComponentStory<typeof NativeTable> = () => {
+export const withColorScheme: Story = () => {
   const Table: FC<NativeTableProps> = (props) => {
     return (
       <TableContainer>
@@ -252,40 +257,62 @@ export const withColorScheme: ComponentStory<typeof NativeTable> = () => {
 
   return (
     <>
-      <Table variant='striped' colorScheme='primary' />
+      <Table variant="striped" colorScheme="primary" />
 
-      <Table variant='striped' colorScheme='secondary' />
+      <Table variant="striped" colorScheme="secondary" />
 
-      <Table variant='striped' colorScheme='warning' />
+      <Table variant="striped" colorScheme="warning" />
 
-      <Table variant='striped' colorScheme='danger' />
+      <Table variant="striped" colorScheme="danger" />
 
-      <Table variant='striped' colorScheme='link' />
+      <Table variant="striped" colorScheme="link" />
 
-      <Table variant='striped' colorScheme='gray' />
+      <Table variant="striped" colorScheme="gray" />
 
-      <Table variant='striped' colorScheme='red' />
+      <Table variant="striped" colorScheme="zinc" />
 
-      <Table variant='striped' colorScheme='orange' />
+      <Table variant="striped" colorScheme="neutral" />
 
-      <Table variant='striped' colorScheme='yellow' />
+      <Table variant="striped" colorScheme="stone" />
 
-      <Table variant='striped' colorScheme='green' />
+      <Table variant="striped" colorScheme="red" />
 
-      <Table variant='striped' colorScheme='teal' />
+      <Table variant="striped" colorScheme="rose" />
 
-      <Table variant='striped' colorScheme='blue' />
+      <Table variant="striped" colorScheme="pink" />
 
-      <Table variant='striped' colorScheme='cyan' />
+      <Table variant="striped" colorScheme="orange" />
 
-      <Table variant='striped' colorScheme='purple' />
+      <Table variant="striped" colorScheme="amber" />
 
-      <Table variant='striped' colorScheme='pink' />
+      <Table variant="striped" colorScheme="yellow" />
+
+      <Table variant="striped" colorScheme="lime" />
+
+      <Table variant="striped" colorScheme="green" />
+
+      <Table variant="striped" colorScheme="emerald" />
+
+      <Table variant="striped" colorScheme="teal" />
+
+      <Table variant="striped" colorScheme="cyan" />
+
+      <Table variant="striped" colorScheme="sky" />
+
+      <Table variant="striped" colorScheme="blue" />
+
+      <Table variant="striped" colorScheme="indigo" />
+
+      <Table variant="striped" colorScheme="violet" />
+
+      <Table variant="striped" colorScheme="purple" />
+
+      <Table variant="striped" colorScheme="fuchsia" />
     </>
   )
 }
 
-export const withColumnBorders: ComponentStory<typeof NativeTable> = () => {
+export const withColumnBorders: Story = () => {
   return (
     <TableContainer>
       <NativeTable withColumnBorders>
@@ -337,7 +364,7 @@ export const withColumnBorders: ComponentStory<typeof NativeTable> = () => {
   )
 }
 
-export const withBorder: ComponentStory<typeof NativeTable> = () => {
+export const withBorder: Story = () => {
   return (
     <TableContainer>
       <NativeTable withBorder>
@@ -389,7 +416,7 @@ export const withBorder: ComponentStory<typeof NativeTable> = () => {
   )
 }
 
-export const withHighlightOnHover: ComponentStory<typeof NativeTable> = () => {
+export const withHighlightOnHover: Story = () => {
   return (
     <TableContainer>
       <NativeTable highlightOnHover>
@@ -441,12 +468,14 @@ export const withHighlightOnHover: ComponentStory<typeof NativeTable> = () => {
   )
 }
 
-export const withCaption: ComponentStory<typeof NativeTable> = () => {
+export const withCaption: Story = () => {
   return (
     <>
       <TableContainer>
         <NativeTable>
-          <TableCaption placement='top'>©バードスタジオ/集英社・東映アニメーション</TableCaption>
+          <TableCaption placement="top">
+            ©バードスタジオ/集英社・東映アニメーション
+          </TableCaption>
 
           <Thead>
             <Tr>
@@ -495,7 +524,9 @@ export const withCaption: ComponentStory<typeof NativeTable> = () => {
       </TableContainer>
       <TableContainer>
         <NativeTable>
-          <TableCaption placement='bottom'>©バードスタジオ/集英社・東映アニメーション</TableCaption>
+          <TableCaption placement="bottom">
+            ©バードスタジオ/集英社・東映アニメーション
+          </TableCaption>
 
           <Thead>
             <Tr>
@@ -546,20 +577,24 @@ export const withCaption: ComponentStory<typeof NativeTable> = () => {
   )
 }
 
-export const withStickyHeader: ComponentStory<typeof NativeTable> = () => {
+export const withStickyHeader: Story = () => {
   const [isScrolled, setIsScrolled] = useState(false)
 
   return (
-    <TableContainer w='full'>
-      <ScrollArea w='full' h='xs' onScrollPositionChange={({ y }) => setIsScrolled(y !== 0)}>
+    <TableContainer w="full">
+      <ScrollArea
+        w="full"
+        h="xs"
+        onScrollPositionChange={({ y }) => setIsScrolled(y !== 0)}
+      >
         <NativeTable>
           <Thead
-            position='sticky'
+            position="sticky"
             top={0}
-            bg={['white', 'black']}
-            transitionProperty='box-shadow'
-            transitionDuration='slow'
-            boxShadow={isScrolled ? 'md' : undefined}
+            bg={["white", "black"]}
+            transitionProperty="box-shadow"
+            transitionDuration="slow"
+            boxShadow={isScrolled ? "md" : undefined}
           >
             <Tr>
               <Th>Name</Th>
@@ -575,7 +610,7 @@ export const withStickyHeader: ComponentStory<typeof NativeTable> = () => {
               <Td isNumeric>0.25rem</Td>
               <Td isNumeric>4px</Td>
               <Td>
-                <Box maxW='0.25rem' h='9xs' bg='red.500'></Box>
+                <Box maxW="0.25rem" h="9xs" bg="red.500" />
               </Td>
             </Tr>
             <Tr>
@@ -583,7 +618,7 @@ export const withStickyHeader: ComponentStory<typeof NativeTable> = () => {
               <Td isNumeric>0.5rem</Td>
               <Td isNumeric>8px</Td>
               <Td>
-                <Box maxW='0.5rem' h='9xs' bg='red.500'></Box>
+                <Box maxW="0.5rem" h="9xs" bg="red.500" />
               </Td>
             </Tr>
             <Tr>
@@ -591,7 +626,7 @@ export const withStickyHeader: ComponentStory<typeof NativeTable> = () => {
               <Td isNumeric>1rem</Td>
               <Td isNumeric>16px</Td>
               <Td>
-                <Box maxW='1rem' h='9xs' bg='red.500'></Box>
+                <Box maxW="1rem" h="9xs" bg="red.500" />
               </Td>
             </Tr>
             <Tr>
@@ -599,7 +634,7 @@ export const withStickyHeader: ComponentStory<typeof NativeTable> = () => {
               <Td isNumeric>1.5rem</Td>
               <Td isNumeric>24px</Td>
               <Td>
-                <Box maxW='1.5rem' h='9xs' bg='red.500'></Box>
+                <Box maxW="1.5rem" h="9xs" bg="red.500" />
               </Td>
             </Tr>
             <Tr>
@@ -607,7 +642,7 @@ export const withStickyHeader: ComponentStory<typeof NativeTable> = () => {
               <Td isNumeric>2rem</Td>
               <Td isNumeric>32px</Td>
               <Td>
-                <Box maxW='2rem' h='9xs' bg='red.500'></Box>
+                <Box maxW="2rem" h="9xs" bg="red.500" />
               </Td>
             </Tr>
             <Tr>
@@ -615,7 +650,7 @@ export const withStickyHeader: ComponentStory<typeof NativeTable> = () => {
               <Td isNumeric>3rem</Td>
               <Td isNumeric>48px</Td>
               <Td>
-                <Box maxW='3rem' h='9xs' bg='red.500'></Box>
+                <Box maxW="3rem" h="9xs" bg="red.500" />
               </Td>
             </Tr>
             <Tr>
@@ -623,7 +658,7 @@ export const withStickyHeader: ComponentStory<typeof NativeTable> = () => {
               <Td isNumeric>4.5rem</Td>
               <Td isNumeric>72px</Td>
               <Td>
-                <Box maxW='4.5rem' h='9xs' bg='red.500'></Box>
+                <Box maxW="4.5rem" h="9xs" bg="red.500" />
               </Td>
             </Tr>
             <Tr>
@@ -631,7 +666,7 @@ export const withStickyHeader: ComponentStory<typeof NativeTable> = () => {
               <Td isNumeric>6rem</Td>
               <Td isNumeric>96px</Td>
               <Td>
-                <Box maxW='6rem' h='9xs' bg='red.500'></Box>
+                <Box maxW="6rem" h="9xs" bg="red.500" />
               </Td>
             </Tr>
             <Tr>
@@ -639,7 +674,7 @@ export const withStickyHeader: ComponentStory<typeof NativeTable> = () => {
               <Td isNumeric>10rem</Td>
               <Td isNumeric>160px</Td>
               <Td>
-                <Box maxW='10rem' h='9xs' bg='red.500'></Box>
+                <Box maxW="10rem" h="9xs" bg="red.500" />
               </Td>
             </Tr>
             {Object.entries(defaultTheme.spaces)
@@ -652,7 +687,7 @@ export const withStickyHeader: ComponentStory<typeof NativeTable> = () => {
                     <Td isNumeric>{value}</Td>
                     <Td isNumeric>{`${parseFloat(value) * 16}px`}</Td>
                     <Td>
-                      <Box maxW={value} h='9xs' bg='green.500'></Box>
+                      <Box maxW={value} h="9xs" bg="green.500" />
                     </Td>
                   </Tr>
                 )

@@ -1,39 +1,55 @@
-import { getMemoizedObject as get, Dict, StringLiteral } from '@yamada-ui/utils'
-import { Token } from '../css'
-import { Configs } from './config'
+import type { Dict, StringLiteral } from "@yamada-ui/utils"
+import { getMemoizedObject as get } from "@yamada-ui/utils"
+import type { Token } from "../css"
+import type { Configs, Transform } from "./config"
 
-const getPriority = (theme: any, token: any, css: any = {}) => {
-  const result: Dict = {}
+const transform: Transform = (value, theme, css = {}) => {
+  const resolvedCSS: Dict = {}
 
-  const obj = get(theme, `styles.${token}`, {})
+  const style = get<Dict>(theme, `styles.${value}`, {})
 
-  for (const prop in obj) {
+  for (const prop in style) {
     const done = prop in css && css[prop] != null
 
-    if (!done) result[prop] = obj[prop]
+    if (!done) resolvedCSS[prop] = style[prop]
   }
 
-  return result
+  return resolvedCSS
 }
 
 export const others: Configs = {
   layerStyle: {
-    processResult: true,
-    transform: (value, theme, css) => getPriority(theme, `layerStyles.${value}`, css),
+    isProcessResult: true,
+    transform: (value, ...rest) => transform(`layerStyles.${value}`, ...rest),
   },
   textStyle: {
-    processResult: true,
-    transform: (value, theme, css) => getPriority(theme, `textStyles.${value}`, css),
+    isProcessResult: true,
+    transform: (value, ...rest) => transform(`textStyles.${value}`, ...rest),
+  },
+  apply: {
+    isProcessResult: true,
+    transform,
   },
 }
 
-export type OthersProps<Y = 'responsive', M = 'colorMode'> = {
+export type OthersProps = {
   /**
-   * Apply text styles defined in `theme.layerStyles`
+   * Apply layer styles defined in `theme.layerStyles`.
    */
-  layerStyle?: Token<StringLiteral, 'layerStyles', Y, M>
+  layerStyle?: Token<StringLiteral, "layerStyles">
   /**
-   * Apply text styles defined in `theme.textStyles`
+   * Apply text styles defined in `theme.textStyles`.
    */
-  textStyle?: Token<StringLiteral, 'textStyles', Y, M>
+  textStyle?: Token<StringLiteral, "textStyles">
+  /**
+   * Apply other styles defined in `theme.styles`.
+   *
+   * @example
+   * ```jsx
+   * <Box apply='mdx.h1'>Box</Box>
+   * ```
+   *
+   * This will apply styles defined in `theme.styles.mdx.h1`
+   */
+  apply?: Token<StringLiteral>
 }

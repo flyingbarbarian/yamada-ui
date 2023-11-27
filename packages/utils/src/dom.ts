@@ -1,20 +1,29 @@
-import React from 'react'
+import type React from "react"
 
 export const createdDom = (): boolean =>
-  !!(typeof window !== 'undefined' && window.document && window.document.createElement)
+  !!(
+    typeof window !== "undefined" &&
+    window.document &&
+    window.document.createElement
+  )
 
 export const getPlatform = (): string =>
   (navigator as any).userAgentData?.platform ?? navigator.platform
 
-export const vendor = (v: RegExp): boolean => createdDom() && v.test(navigator.vendor)
-export const platform = (v: RegExp): boolean => createdDom() && v.test(getPlatform())
+export const vendor = (v: RegExp): boolean =>
+  createdDom() && v.test(navigator.vendor)
+export const platform = (v: RegExp): boolean =>
+  createdDom() && v.test(getPlatform())
 
 export const isMac = (): boolean => platform(/^mac/)
 export const isApple = (): boolean => platform(/mac|iphone|ipad|ipod/i)
 export const isSafari = (): boolean => isApple() && vendor(/apple/i)
 
 export const isElement = (el: any): el is Element =>
-  el != null && typeof el == 'object' && 'nodeType' in el && el.nodeType === Node.ELEMENT_NODE
+  el != null &&
+  typeof el == "object" &&
+  "nodeType" in el &&
+  el.nodeType === Node.ELEMENT_NODE
 
 export const isHTMLElement = (el: any): el is HTMLElement => {
   if (!isElement(el)) return false
@@ -31,17 +40,18 @@ export const isHidden = (el: HTMLElement): boolean => {
 }
 
 export const isDisabled = (el: HTMLElement): boolean =>
-  Boolean(el.getAttribute('disabled')) === true ||
-  Boolean(el.getAttribute('aria-disabled')) === true
+  Boolean(el.getAttribute("disabled")) === true ||
+  Boolean(el.getAttribute("aria-disabled")) === true
 
 const isVisible = (el: HTMLElement) => el.offsetWidth > 0 && el.offsetHeight > 0
 
-export const hasTabIndex = (el: HTMLElement): boolean => el.hasAttribute('tabindex')
+export const hasTabIndex = (el: HTMLElement): boolean =>
+  el.hasAttribute("tabindex")
 
 export const isContentEditable = (el: HTMLElement): boolean => {
-  const value = el.getAttribute('contenteditable')
+  const value = el.getAttribute("contenteditable")
 
-  return value !== 'false' && value != null
+  return value !== "false" && value != null
 }
 
 export const isContains = (
@@ -51,42 +61,48 @@ export const isContains = (
   return parent === child || parent?.contains(child)
 }
 
-export const getEventRelatedTarget = (ev: React.FocusEvent | React.MouseEvent) =>
-  (ev.relatedTarget ?? ev.currentTarget.ownerDocument.activeElement) as HTMLElement | null
+export const getEventRelatedTarget = (
+  ev: React.FocusEvent | React.MouseEvent,
+) =>
+  (ev.relatedTarget ??
+    ev.currentTarget.ownerDocument.activeElement) as HTMLElement | null
 
-type Booleanish = boolean | 'true' | 'false'
+type Booleanish = boolean | "true" | "false"
 
 export const dataAttr = (condition: boolean | undefined) =>
-  (condition ? '' : undefined) as Booleanish
+  (condition ? "" : undefined) as Booleanish
 
-export const ariaAttr = (condition: boolean | undefined): boolean | undefined =>
-  condition ? true : undefined
+export const ariaAttr = (
+  condition: boolean | undefined,
+): boolean | undefined => (condition ? true : undefined)
 
 export type FocusableElement = {
   focus: (options?: FocusOptions) => void
 }
 
 const focusableElList = [
-  'input:not(:disabled):not([disabled])',
-  'select:not(:disabled):not([disabled])',
-  'textarea:not(:disabled):not([disabled])',
-  'embed',
-  'iframe',
-  'object',
-  'a[href]',
-  'area[href]',
-  'button:not(:disabled):not([disabled])',
-  '[tabindex]',
-  'audio[controls]',
-  'video[controls]',
-  '*[tabindex]:not([aria-disabled])',
-  '*[contenteditable]',
+  "input:not(:disabled):not([disabled])",
+  "select:not(:disabled):not([disabled])",
+  "textarea:not(:disabled):not([disabled])",
+  "embed",
+  "iframe",
+  "object",
+  "a[href]",
+  "area[href]",
+  "button:not(:disabled):not([disabled])",
+  "[tabindex]",
+  "audio[controls]",
+  "video[controls]",
+  "*[tabindex]:not([aria-disabled])",
+  "*[contenteditable]",
 ]
 
 const focusableElSelector: string = focusableElList.join()
 
 export const getAllFocusable = <T extends HTMLElement>(container: T): T[] => {
-  const focusableEls: T[] = Array.from(container.querySelectorAll<T>(focusableElSelector))
+  const focusableEls: T[] = Array.from(
+    container.querySelectorAll<T>(focusableElSelector),
+  )
 
   focusableEls.unshift(container)
 
@@ -99,14 +115,14 @@ export const isFocusable = (el: HTMLElement): boolean => {
   }
 
   const { localName } = el
-  const focusableTags = ['input', 'select', 'textarea', 'button']
+  const focusableTags = ["input", "select", "textarea", "button"]
 
   if (focusableTags.indexOf(localName) >= 0) return true
 
   const others = {
-    a: () => el.hasAttribute('href'),
-    audio: () => el.hasAttribute('controls'),
-    video: () => el.hasAttribute('controls'),
+    a: () => el.hasAttribute("href"),
+    audio: () => el.hasAttribute("controls"),
+    video: () => el.hasAttribute("controls"),
   }
 
   if (localName in others) return others[localName as keyof typeof others]()
@@ -122,8 +138,9 @@ export const hasNegativeTabIndex = (el: HTMLElement): boolean =>
 export const isTabbable = (el?: HTMLElement | null): boolean =>
   el ? isHTMLElement(el) && isFocusable(el) && !hasNegativeTabIndex(el) : false
 
-export const getOwnerWindow = (node?: Element | null): Window & typeof globalThis =>
-  getOwnerDocument(node)?.defaultView ?? window
+export const getOwnerWindow = (
+  node?: Element | null,
+): Window & typeof globalThis => getOwnerDocument(node)?.defaultView ?? window
 
 export const getOwnerDocument = (el?: Element | null): Document =>
   isElement(el) ? el.ownerDocument : document

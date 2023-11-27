@@ -1,5 +1,4 @@
-import { useCallback, useState } from 'react'
-import { StepStatusType } from './use-stepper'
+import { useCallback, useState } from "react"
 
 export type UseStepsProps = {
   index?: number
@@ -9,32 +8,46 @@ export type UseStepsProps = {
 export const useSteps = ({ index = 0, count }: UseStepsProps) => {
   const [activeStep, setActiveStep] = useState(index)
 
-  const maxStep = typeof count === 'number' ? count - 1 : 0
+  const maxStep = typeof count === "number" ? count - 1 : 0
   const activeStepPercent = activeStep / maxStep
 
-  const isActiveStep = useCallback((step: number) => step === activeStep, [activeStep])
+  const isActiveStep = useCallback(
+    (step: number) => step === activeStep,
+    [activeStep],
+  )
 
-  const isCompleteStep = useCallback((step: number) => step < activeStep, [activeStep])
+  const isCompleteStep = useCallback(
+    (step: number) => step < activeStep,
+    [activeStep],
+  )
 
-  const isIncompleteStep = useCallback((step: number) => step > activeStep, [activeStep])
+  const isIncompleteStep = useCallback(
+    (step: number) => step > activeStep,
+    [activeStep],
+  )
 
   const getStepStatus = useCallback(
-    (step: number): StepStatusType => {
-      if (step < activeStep) return 'complete'
-      if (step > activeStep) return 'incomplete'
+    (step: number): "complete" | "active" | "incomplete" => {
+      if (step < activeStep) return "complete"
+      if (step > activeStep) return "incomplete"
 
-      return 'active'
+      return "active"
     },
     [activeStep],
   )
 
   const onStepNext = useCallback(
     () =>
-      setActiveStep((step) => (typeof count === 'number' ? Math.min(count, step + 1) : step + 1)),
+      setActiveStep((step) =>
+        typeof count === "number" ? Math.min(count, step + 1) : step + 1,
+      ),
     [count],
   )
 
-  const onStepPrev = useCallback(() => setActiveStep((step) => Math.max(0, step - 1)), [])
+  const onStepPrev = useCallback(
+    () => setActiveStep((step) => Math.max(0, step - 1)),
+    [],
+  )
 
   return {
     activeStep,

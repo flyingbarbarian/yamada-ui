@@ -1,9 +1,16 @@
-import { useMultiComponentStyle, omitThemeProps, CSSUIObject, ThemeProps } from '@yamada-ui/core'
-import { Popover, PopoverProps } from '@yamada-ui/popover'
-import { createDescendant } from '@yamada-ui/use-descendant'
-import { useDisclosure } from '@yamada-ui/use-disclosure'
-import { createContext, useUnmountEffect, useUpdateEffect } from '@yamada-ui/utils'
-import { Dispatch, FC, RefObject, SetStateAction, useCallback, useRef, useState } from 'react'
+import type { CSSUIObject, ThemeProps } from "@yamada-ui/core"
+import { useMultiComponentStyle, omitThemeProps } from "@yamada-ui/core"
+import type { PopoverProps } from "@yamada-ui/popover"
+import { Popover } from "@yamada-ui/popover"
+import { createDescendant } from "@yamada-ui/use-descendant"
+import { useDisclosure } from "@yamada-ui/use-disclosure"
+import {
+  createContext,
+  useUnmountEffect,
+  useUpdateEffect,
+} from "@yamada-ui/utils"
+import type { Dispatch, FC, RefObject, SetStateAction } from "react"
+import { useCallback, useRef, useState } from "react"
 
 const {
   DescendantsContextProvider,
@@ -27,24 +34,31 @@ type MenuContext = MenuOptions & {
 }
 
 const [MenuProvider, useMenu] = createContext<MenuContext>({
-  name: 'MenuContext',
+  name: "MenuContext",
   errorMessage: `useMenu returned is 'undefined'. Seems you forgot to wrap the components in "<Menu />"`,
 })
 
 export { useMenu }
 
 type MenuOptions = {
+  /**
+   * If `true`, the list element will be closed when value is selected.
+   *
+   * @default true
+   */
   closeOnSelect?: boolean
 }
 
-export type MenuProps = ThemeProps<'Menu'> & Omit<PopoverProps, 'closeOnButton'> & MenuOptions
+export type MenuProps = ThemeProps<"Menu"> &
+  Omit<PopoverProps, "closeOnButton"> &
+  MenuOptions
 
 export const Menu: FC<MenuProps> = (props) => {
-  const [styles, mergedProps] = useMultiComponentStyle('Menu', props)
+  const [styles, mergedProps] = useMultiComponentStyle("Menu", props)
   const {
     initialFocusRef,
     closeOnSelect = true,
-    placement = 'bottom-start',
+    placement = "bottom-start",
     duration = 0.2,
     ...rest
   } = omitThemeProps(mergedProps)
@@ -57,7 +71,9 @@ export const Menu: FC<MenuProps> = (props) => {
   const timeoutIds = useRef<Set<any>>(new Set([]))
 
   const onFocusMenu = useCallback(() => {
-    requestAnimationFrame(() => menuRef.current?.focus({ preventScroll: false }))
+    requestAnimationFrame(
+      () => menuRef.current?.focus({ preventScroll: false }),
+    )
   }, [])
 
   const onFocusFirstItem = useCallback(() => {
@@ -90,7 +106,10 @@ export const Menu: FC<MenuProps> = (props) => {
     onFocusMenu()
   }, [onFocusMenu, rest])
 
-  const [isOpen, onOpen, onClose] = useDisclosure({ ...props, onOpen: onOpenInternal })
+  const { isOpen, onOpen, onClose } = useDisclosure({
+    ...props,
+    onOpen: onOpenInternal,
+  })
 
   useUpdateEffect(() => {
     if (!isOpen) setFocusedIndex(-1)

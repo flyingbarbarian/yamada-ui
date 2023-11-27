@@ -1,17 +1,30 @@
-import * as CSS from 'csstype'
-import { Token } from '../css'
-import { Configs, configs } from './config'
+import type * as CSS from "csstype"
+import type { Token } from "../css"
+import type { Configs } from "./config"
+import { configs, transforms } from "./config"
 
 export const transition: Configs = {
   transitionDelay: true,
   willChange: true,
-  transitionProperty: configs.prop('transitionProperty', 'transitions.property'),
-  transitionDuration: configs.prop('transitionDuration', 'transitions.duration'),
-  transitionTimingFunction: configs.prop('transitionTimingFunction', 'transitions.easing'),
-  animation: true,
+  transitionProperty: configs.prop(
+    "transitionProperty",
+    "transitions.property",
+  ),
+  transitionDuration: configs.prop(
+    "transitionDuration",
+    "transitions.duration",
+  ),
+  transitionTimingFunction: configs.prop(
+    "transitionTimingFunction",
+    "transitions.easing",
+  ),
+  animation: configs.propTransform("animation", transforms.animation),
   animationName: true,
-  animationDuration: configs.prop('animationDuration', 'transitions.duration'),
-  animationTimingFunction: configs.prop('animationTimingFunction', 'transitions.easing'),
+  animationDuration: configs.prop("animationDuration", "transitions.duration"),
+  animationTimingFunction: configs.prop(
+    "animationTimingFunction",
+    "transitions.easing",
+  ),
   animationDelay: true,
   animationIterationCount: true,
   animationDirection: true,
@@ -19,61 +32,76 @@ export const transition: Configs = {
   animationPlayState: true,
 }
 
-export type TransitionProps<Y = 'responsive', M = 'colorMode'> = {
+export type TransitionProps = {
   /**
-   * The CSS `transition-delay` property
+   * The CSS `transition-delay` property.
    */
-  transitionDelay?: Token<CSS.Property.TransitionDelay, unknown, Y, M>
+  transitionDelay?: Token<CSS.Property.TransitionDelay>
   /**
-   * The CSS `will-change` property
+   * The CSS `will-change` property.
    */
-  willChange?: Token<CSS.Property.WillChange, unknown, Y, M>
+  willChange?: Token<CSS.Property.WillChange>
   /**
-   * The CSS `transition-property` property
+   * The CSS `transition-property` property.
    */
-  transitionProperty?: Token<CSS.Property.TransitionProperty, 'transitionProperty', Y, M>
+  transitionProperty?: Token<
+    CSS.Property.TransitionProperty,
+    "transitionProperty"
+  >
   /**
-   * The CSS `transition-duration` property
+   * The CSS `transition-duration` property.
    */
-  transitionDuration?: Token<CSS.Property.TransitionDuration, 'transitionDuration', Y, M>
+  transitionDuration?: Token<
+    CSS.Property.TransitionDuration,
+    "transitionDuration"
+  >
   /**
-   * The CSS `transition-timing-function` property
+   * The CSS `transition-timing-function` property.
    */
-  transitionTimingFunction?: Token<CSS.Property.TransitionTimingFunction, 'transitionEasing', Y, M>
+  transitionTimingFunction?: Token<
+    CSS.Property.TransitionTimingFunction,
+    "transitionEasing"
+  >
   /**
-   * The CSS `animation` property
+   * The CSS `animation` property.
    */
-  animation?: Token<CSS.Property.Animation, unknown, Y, M>
+  animation?: Token<CSS.Property.Animation, "animations">
   /**
-   * The CSS `animation-name` property
+   * The CSS `animation-name` property.
    */
-  animationName?: Token<CSS.Property.AnimationName, unknown, Y, M>
+  animationName?: Token<CSS.Property.AnimationName>
   /**
-   * The CSS `animation-duration` property
+   * The CSS `animation-duration` property.
    */
-  animationDuration?: Token<CSS.Property.AnimationDuration, 'transitionDuration', Y, M>
+  animationDuration?: Token<
+    CSS.Property.AnimationDuration,
+    "transitionDuration"
+  >
   /**
-   * The CSS `animation-timing-function` property
+   * The CSS `animation-timing-function` property.
    */
-  animationTimingFunction?: Token<CSS.Property.AnimationTimingFunction, 'transitionEasing', Y, M>
+  animationTimingFunction?: Token<
+    CSS.Property.AnimationTimingFunction,
+    "transitionEasing"
+  >
   /**
-   * The CSS `animation-delay` property
+   * The CSS `animation-delay` property.
    */
-  animationDelay?: Token<CSS.Property.AnimationDelay, unknown, Y, M>
+  animationDelay?: Token<CSS.Property.AnimationDelay>
   /**
-   * The CSS `animation-iteration-count` property
+   * The CSS `animation-iteration-count` property.
    */
-  animationIterationCount?: Token<CSS.Property.AnimationIterationCount, unknown, Y, M>
+  animationIterationCount?: Token<CSS.Property.AnimationIterationCount>
   /**
-   * The CSS `animation-direction` property
+   * The CSS `animation-direction` property.
    */
-  animationDirection?: Token<CSS.Property.AnimationDirection, unknown, Y, M>
+  animationDirection?: Token<CSS.Property.AnimationDirection>
   /**
-   * The CSS `animation-fill-mode` property
+   * The CSS `animation-fill-mode` property.
    */
-  animationFillMode?: Token<CSS.Property.AnimationFillMode, unknown, Y, M>
+  animationFillMode?: Token<CSS.Property.AnimationFillMode>
   /**
-   * The CSS `animation-play-state` property
+   * The CSS `animation-play-state` property.
    */
-  animationPlayState?: Token<CSS.Property.AnimationPlayState, unknown, Y, M>
+  animationPlayState?: Token<CSS.Property.AnimationPlayState>
 }

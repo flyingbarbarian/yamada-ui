@@ -1,6 +1,6 @@
-import { useEventListener } from '@yamada-ui/use-event-listener'
+import { useEventListener } from "@yamada-ui/use-event-listener"
+import type { FocusableElement } from "@yamada-ui/utils"
 import {
-  FocusableElement,
   getActiveElement,
   getAllFocusable,
   isRefObject,
@@ -8,8 +8,9 @@ import {
   useSafeLayoutEffect,
   useUpdateEffect,
   isSafari,
-} from '@yamada-ui/utils'
-import { RefObject, useCallback, useRef } from 'react'
+} from "@yamada-ui/utils"
+import type { RefObject } from "react"
+import { useCallback, useRef } from "react"
 
 export type UseFocusOnHideProps = {
   focusRef: RefObject<FocusableElement>
@@ -73,7 +74,8 @@ export const useFocusOnShow = <T extends HTMLElement>(
   const lastVisibleRef = useRef(visible)
 
   useSafeLayoutEffect(() => {
-    if (!lastVisibleRef.current && visible) autoFocusRef.current = autoFocusValue
+    if (!lastVisibleRef.current && visible)
+      autoFocusRef.current = autoFocusValue
 
     lastVisibleRef.current = visible
   }, [visible, autoFocusValue])
@@ -103,7 +105,7 @@ export const useFocusOnShow = <T extends HTMLElement>(
     onFocus()
   }, [onFocus])
 
-  useEventListener(element, 'transitionend', onFocus)
+  useEventListener(element, "transitionend", onFocus)
 }
 
 export type UseFocusOnMouseDownProps = {
@@ -112,12 +114,16 @@ export type UseFocusOnMouseDownProps = {
   elements?: Array<React.RefObject<HTMLElement> | HTMLElement | null>
 }
 
-export const useFocusOnPointerDown = ({ ref, elements, enabled }: UseFocusOnMouseDownProps) => {
+export const useFocusOnPointerDown = ({
+  ref,
+  elements,
+  enabled,
+}: UseFocusOnMouseDownProps) => {
   const doc = () => ref.current?.ownerDocument ?? document
 
-  useEventListener(doc, 'pointerdown', (event) => {
+  useEventListener(doc, "pointerdown", (ev) => {
     if (!isSafari() || !enabled) return
-    const target = event.target as HTMLElement
+    const target = ev.target as HTMLElement
 
     const els = elements ?? [ref]
 
@@ -127,7 +133,7 @@ export const useFocusOnPointerDown = ({ ref, elements, enabled }: UseFocusOnMous
     })
 
     if (doc().activeElement !== target && isValidTarget) {
-      event.preventDefault()
+      ev.preventDefault()
 
       target.focus()
     }

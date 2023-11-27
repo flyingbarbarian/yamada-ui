@@ -1,31 +1,35 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { Divider, Flex } from '@yamada-ui/react'
+import type { Meta, StoryFn } from "@storybook/react"
+import { Divider, Flex } from "@yamada-ui/react"
 
-export default {
-  title: 'Components / Layouts / Divider',
+type Story = StoryFn<typeof Divider>
+
+const meta: Meta<typeof Divider> = {
+  title: "Components / Layouts / Divider",
   component: Divider,
-} as ComponentMeta<typeof Divider>
+}
 
-export const horizontal: ComponentStory<typeof Divider> = () => {
+export default meta
+
+export const horizontal: Story = () => {
   return (
     <>
-      <Divider w='lg' orientation='horizontal' variant='solid' />
+      <Divider w="lg" orientation="horizontal" variant="solid" />
 
-      <Divider w='lg' orientation='horizontal' variant='dashed' />
+      <Divider w="lg" orientation="horizontal" variant="dashed" />
 
-      <Divider w='lg' orientation='horizontal' variant='dotted' />
+      <Divider w="lg" orientation="horizontal" variant="dotted" />
     </>
   )
 }
 
-export const vertical: ComponentStory<typeof Divider> = () => {
+export const vertical: Story = () => {
   return (
-    <Flex gap='md'>
-      <Divider h='lg' orientation='vertical' variant='solid' />
+    <Flex gap="md">
+      <Divider h="lg" orientation="vertical" variant="solid" />
 
-      <Divider h='lg' orientation='vertical' variant='dashed' />
+      <Divider h="lg" orientation="vertical" variant="dashed" />
 
-      <Divider h='lg' orientation='vertical' variant='dotted' />
+      <Divider h="lg" orientation="vertical" variant="dotted" />
     </Flex>
   )
 }

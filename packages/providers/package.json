@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/providers",
-  "version": "0.3.5",
+  "version": "0.9.13",
   "description": "Yamada UI providers",
   "keywords": [
     "yamada",
@@ -46,14 +46,9 @@
   "dependencies": {
     "@yamada-ui/core": "workspace:*",
     "@yamada-ui/utils": "workspace:*",
-    "@yamada-ui/use-timeout": "workspace:*",
     "@yamada-ui/theme": "workspace:*",
     "@yamada-ui/loading": "workspace:*",
-    "@yamada-ui/notice": "workspace:*",
-    "@yamada-ui/motion": "workspace:*",
-    "@yamada-ui/portal": "workspace:*",
-    "react-remove-scroll": "^2.5.4",
-    "@emotion/react": "^11.11.0"
+    "@yamada-ui/notice": "workspace:*"
   },
   "devDependencies": {
     "react": "^18.0.0",
@@ -72,6 +67,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

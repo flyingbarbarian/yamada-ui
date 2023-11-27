@@ -1,45 +1,55 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { Label, Switch, Wrap, useBoolean, HStack, VStack, Button } from '@yamada-ui/react'
-import { useId } from 'react'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-export default {
-  title: 'Components / Forms / Switch',
+import type { Meta, StoryFn } from "@storybook/react"
+import {
+  Label,
+  Switch,
+  Wrap,
+  useBoolean,
+  HStack,
+  VStack,
+  Button,
+} from "@yamada-ui/react"
+import { useId } from "react"
+import type { SubmitHandler } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
+
+type Story = StoryFn<typeof Switch>
+
+const meta: Meta<typeof Switch> = {
+  title: "Components / Forms / Switch",
   component: Switch,
-} as ComponentMeta<typeof Switch>
-
-export const basic: ComponentStory<typeof Switch> = () => {
-  return <Switch>basic</Switch>
 }
 
-export const withReverse: ComponentStory<typeof Switch> = () => {
-  return <Switch reverse>basic</Switch>
+export default meta
+
+export const withReverse: Story = () => {
+  return <Switch isReverse>basic</Switch>
 }
 
-export const withSize: ComponentStory<typeof Switch> = () => {
+export const withSize: Story = () => {
   return (
     <>
-      <Switch size='sm'>small size</Switch>
-      <Switch size='md'>medium size</Switch>
-      <Switch size='lg'>large size</Switch>
+      <Switch size="sm">small size</Switch>
+      <Switch size="md">medium size</Switch>
+      <Switch size="lg">large size</Switch>
     </>
   )
 }
 
-export const withVariant: ComponentStory<typeof Switch> = () => {
+export const withVariant: Story = () => {
   return (
     <>
-      <Switch variant='thick'>thick</Switch>
-      <Switch variant='thin'>thin</Switch>
+      <Switch variant="thick">thick</Switch>
+      <Switch variant="thin">thin</Switch>
     </>
   )
 }
 
-export const withLabel: ComponentStory<typeof Switch> = () => {
+export const withLabel: Story = () => {
   const id = useId()
 
   return (
-    <HStack gap='sm'>
-      <Label htmlFor={id} userSelect='none'>
+    <HStack gap="sm">
+      <Label htmlFor={id} userSelect="none">
         Please Click
       </Label>
       <Switch id={id} />
@@ -47,95 +57,139 @@ export const withLabel: ComponentStory<typeof Switch> = () => {
   )
 }
 
-export const withColorScheme: ComponentStory<typeof Switch> = () => {
+export const withColorScheme: Story = () => {
   return (
-    <Wrap gap='md'>
-      <Switch colorScheme='primary' defaultChecked>
+    <Wrap gap="md">
+      <Switch colorScheme="primary" defaultIsChecked>
         Primary
       </Switch>
 
-      <Switch colorScheme='secondary' defaultChecked>
+      <Switch colorScheme="secondary" defaultIsChecked>
         Secondary
       </Switch>
 
-      <Switch colorScheme='warning' defaultChecked>
+      <Switch colorScheme="warning" defaultIsChecked>
         Warning
       </Switch>
 
-      <Switch colorScheme='danger' defaultChecked>
+      <Switch colorScheme="danger" defaultIsChecked>
         Danger
       </Switch>
 
-      <Switch colorScheme='link' defaultChecked>
+      <Switch colorScheme="link" defaultIsChecked>
         Link
       </Switch>
 
-      <Switch colorScheme='gray' defaultChecked>
+      <Switch colorScheme="gray" defaultIsChecked>
         Gray
       </Switch>
 
-      <Switch colorScheme='red' defaultChecked>
+      <Switch colorScheme="zinc" defaultIsChecked>
+        Zinc
+      </Switch>
+
+      <Switch colorScheme="neutral" defaultIsChecked>
+        Neutral
+      </Switch>
+
+      <Switch colorScheme="stone" defaultIsChecked>
+        Stone
+      </Switch>
+
+      <Switch colorScheme="red" defaultIsChecked>
         Red
       </Switch>
 
-      <Switch colorScheme='orange' defaultChecked>
+      <Switch colorScheme="rose" defaultIsChecked>
+        Rose
+      </Switch>
+
+      <Switch colorScheme="pink" defaultIsChecked>
+        Pink
+      </Switch>
+
+      <Switch colorScheme="orange" defaultIsChecked>
         Orange
       </Switch>
 
-      <Switch colorScheme='yellow' defaultChecked>
+      <Switch colorScheme="amber" defaultIsChecked>
+        Amber
+      </Switch>
+
+      <Switch colorScheme="yellow" defaultIsChecked>
         Yellow
       </Switch>
 
-      <Switch colorScheme='green' defaultChecked>
+      <Switch colorScheme="lime" defaultIsChecked>
+        Lime
+      </Switch>
+
+      <Switch colorScheme="green" defaultIsChecked>
         Green
       </Switch>
 
-      <Switch colorScheme='teal' defaultChecked>
+      <Switch colorScheme="emerald" defaultIsChecked>
+        Emerald
+      </Switch>
+
+      <Switch colorScheme="teal" defaultIsChecked>
         Teal
       </Switch>
 
-      <Switch colorScheme='blue' defaultChecked>
-        Blue
-      </Switch>
-
-      <Switch colorScheme='cyan' defaultChecked>
+      <Switch colorScheme="cyan" defaultIsChecked>
         Cyan
       </Switch>
 
-      <Switch colorScheme='purple' defaultChecked>
+      <Switch colorScheme="sky" defaultIsChecked>
+        Sky
+      </Switch>
+
+      <Switch colorScheme="blue" defaultIsChecked>
+        Blue
+      </Switch>
+
+      <Switch colorScheme="indigo" defaultIsChecked>
+        Indigo
+      </Switch>
+
+      <Switch colorScheme="violet" defaultIsChecked>
+        Violet
+      </Switch>
+
+      <Switch colorScheme="purple" defaultIsChecked>
         Purple
       </Switch>
 
-      <Switch colorScheme='pink' defaultChecked>
-        pink
+      <Switch colorScheme="fuchsia" defaultIsChecked>
+        Fuchsia
       </Switch>
     </Wrap>
   )
 }
 
-export const isDisabled: ComponentStory<typeof Switch> = () => {
+export const isDisabled: Story = () => {
   return (
     <>
       <Switch isDisabled>disabled</Switch>
-      <Switch isDisabled defaultChecked>
+      <Switch isDisabled defaultIsChecked>
         disabled
       </Switch>
     </>
   )
 }
 
-export const isReadonly: ComponentStory<typeof Switch> = () => {
+export const isReadonly: Story = () => {
   return (
     <>
       <Switch isReadOnly>read only</Switch>
-      <Switch isReadOnly defaultChecked>
+      <Switch isReadOnly defaultIsChecked>
         read only
       </Switch>
     </>
   )
 }
 
-export const customControl: ComponentStory<typeof Switch> = () => {
+export const customControl: Story = () => {
   const [isChecked, { toggle }] = useBoolean(false)
 
   return (
@@ -145,19 +199,19 @@ export const customControl: ComponentStory<typeof Switch> = () => {
   )
 }
 
-export const reactHookForm: ComponentStory<typeof Switch> = () => {
+export const reactHookForm: Story = () => {
   type Data = { switch: boolean }
 
   const { control, handleSubmit, watch } = useForm<Data>()
 
-  const onSubmit: SubmitHandler<Data> = (data) => console.log('submit:', data)
+  const onSubmit: SubmitHandler<Data> = (data) => console.log("submit:", data)
 
-  console.log('watch:', watch())
+  console.log("watch:", watch())
 
   return (
-    <VStack as='form' onSubmit={handleSubmit(onSubmit)}>
+    <VStack as="form" onSubmit={handleSubmit(onSubmit)}>
       <Controller
-        name='switch'
+        name="switch"
         control={control}
         render={({ field: { value, ...rest } }) => (
           <Switch isChecked={value} {...rest}>
@@ -166,14 +220,14 @@ export const reactHookForm: ComponentStory<typeof Switch> = () => {
         )}
       />
 
-      <Button type='submit' alignSelf='flex-end'>
+      <Button type="submit" alignSelf="flex-end">
         Submit
       </Button>
     </VStack>
   )
 }
 
-export const reactHookFormWithDefaultValue: ComponentStory<typeof Switch> = () => {
+export const reactHookFormWithDefaultValue: Story = () => {
   type Data = { switch: boolean }
 
   const defaultValues: Data = {
@@ -182,14 +236,14 @@ export const reactHookFormWithDefaultValue: ComponentStory<typeof Switch> = () =
 
   const { control, handleSubmit, watch } = useForm<Data>({ defaultValues })
 
-  const onSubmit: SubmitHandler<Data> = (data) => console.log('submit:', data)
+  const onSubmit: SubmitHandler<Data> = (data) => console.log("submit:", data)
 
-  console.log('watch:', watch())
+  console.log("watch:", watch())
 
   return (
-    <VStack as='form' onSubmit={handleSubmit(onSubmit)}>
+    <VStack as="form" onSubmit={handleSubmit(onSubmit)}>
       <Controller
-        name='switch'
+        name="switch"
         control={control}
         render={({ field: { value, ...rest } }) => (
           <Switch isChecked={value} {...rest}>
@@ -198,7 +252,7 @@ export const reactHookFormWithDefaultValue: ComponentStory<typeof Switch> = () =
         )}
       />
 
-      <Button type='submit' alignSelf='flex-end'>
+      <Button type="submit" alignSelf="flex-end">
         Submit
       </Button>
     </VStack>

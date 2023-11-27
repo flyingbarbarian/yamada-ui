@@ -1,4 +1,11 @@
-type Primitive = null | undefined | string | number | boolean | symbol | bigint
+export type Primitive =
+  | null
+  | undefined
+  | string
+  | number
+  | boolean
+  | symbol
+  | bigint
 
 type PathImpl<K extends string | number | symbol, V> = K extends string | number
   ? V extends Primitive
@@ -18,6 +25,4 @@ export type Union<T> = T | StringLiteral
 
 export type Length = string | 0 | number
 
-export type DynamicRecord<T> = {
-  [K in keyof T]-?: T[K] extends Primitive ? string | number : DynamicRecord<T[K]>
-}
+export type Merge<T extends object> = { [K in keyof T]: T[K] }

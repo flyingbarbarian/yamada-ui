@@ -1,45 +1,59 @@
-import { forwardRef, CSSUIProps, LoadingVariant } from '@yamada-ui/core'
-import { IconProps } from '@yamada-ui/icon'
-import { useToken } from '@yamada-ui/use-token'
-import { useValue } from '@yamada-ui/use-value'
-import { cx } from '@yamada-ui/utils'
-import { useMemo } from 'react'
-import { Audio } from './audio'
-import { Circles } from './circles'
-import { Dots } from './dots'
-import { Grid } from './grid'
-import { Oval } from './oval'
-import { Puff } from './puff'
-import { Rings } from './rings'
+import type { CSSUIProps } from "@yamada-ui/core"
+import { forwardRef } from "@yamada-ui/core"
+import type { IconProps } from "@yamada-ui/icon"
+import { useToken } from "@yamada-ui/use-token"
+import { useValue } from "@yamada-ui/use-value"
+import { cx } from "@yamada-ui/utils"
+import { useMemo } from "react"
+import { Audio } from "./audio"
+import { Circles } from "./circles"
+import { Dots } from "./dots"
+import { Grid } from "./grid"
+import { Oval } from "./oval"
+import { Puff } from "./puff"
+import { Rings } from "./rings"
 
 type LoadingOptions = {
-  variant?: LoadingVariant
-  secondaryColor?: CSSUIProps['color']
-  duration?: IconProps['dur']
+  /**
+   * The variant of the Loading.
+   *
+   * @default 'oval'
+   */
+  variant?: "oval" | "grid" | "audio" | "dots" | "puff" | "rings" | "circles"
+  /**
+   * The CSS `color` property.
+   *
+   * @default 'primary'
+   */
+  secondaryColor?: CSSUIProps["color"]
+  /**
+   * The CSS `dur` property.
+   */
+  duration?: IconProps["dur"]
 }
 
-export type LoadingProps = Omit<IconProps, 'dur'> & LoadingOptions
+export type LoadingProps = Omit<IconProps, "dur"> & LoadingOptions
 
-export const Loading = forwardRef<LoadingProps, 'svg'>(
+export const Loading = forwardRef<LoadingProps, "svg">(
   (
     {
       className,
-      variant = 'oval',
-      color: _color = 'primary',
+      variant = "oval",
+      color: _color = "primary",
       secondaryColor: _secondaryColor,
-      size = '1em',
+      size = "1em",
       duration,
       ...rest
     },
     ref,
   ) => {
-    const color = (useToken('colors', useValue(_color)) ?? _color) as string
-    const secondaryColor = (useToken('colors', useValue(_secondaryColor)) ??
+    const color = (useToken("colors", useValue(_color)) ?? _color) as string
+    const secondaryColor = (useToken("colors", useValue(_secondaryColor)) ??
       _secondaryColor) as string
 
     const props = useMemo(
       () => ({
-        className: cx('ui-loading', className),
+        className: cx("ui-loading", className),
         size,
         color,
         duration,
@@ -49,22 +63,22 @@ export const Loading = forwardRef<LoadingProps, 'svg'>(
     )
 
     switch (variant) {
-      case 'grid':
+      case "grid":
         return <Grid ref={ref} {...props} />
 
-      case 'audio':
+      case "audio":
         return <Audio ref={ref} {...props} />
 
-      case 'dots':
+      case "dots":
         return <Dots ref={ref} {...props} />
 
-      case 'puff':
+      case "puff":
         return <Puff ref={ref} {...props} />
 
-      case 'rings':
+      case "rings":
         return <Rings ref={ref} {...props} />
 
-      case 'circles':
+      case "circles":
         return <Circles ref={ref} {...props} />
 
       default:

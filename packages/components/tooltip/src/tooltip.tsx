@@ -1,94 +1,167 @@
+import type {
+  CSSUIObject,
+  HTMLUIProps,
+  ThemeProps,
+  CSSUIProps,
+} from "@yamada-ui/core"
 import {
   ui,
   forwardRef,
   omitThemeProps,
-  CSSUIObject,
-  HTMLUIProps,
-  ThemeProps,
   useComponentStyle,
-  UIProps,
-} from '@yamada-ui/core'
-import {
-  motion,
+} from "@yamada-ui/core"
+import type {
   HTMLMotionProps,
-  AnimatePresence,
   MotionTransitionProperties,
-} from '@yamada-ui/motion'
-import { Portal } from '@yamada-ui/portal'
-import { scaleFadeProps, slideFadeProps } from '@yamada-ui/transitions'
-import { useDisclosure } from '@yamada-ui/use-disclosure'
-import { useEventListener } from '@yamada-ui/use-event-listener'
-import { UsePopperProps, usePopper } from '@yamada-ui/use-popper'
+} from "@yamada-ui/motion"
+import { motion, AnimatePresence } from "@yamada-ui/motion"
+import type { PortalProps } from "@yamada-ui/portal"
+import { Portal } from "@yamada-ui/portal"
+import { scaleFadeProps, slideFadeProps } from "@yamada-ui/transitions"
+import { useDisclosure } from "@yamada-ui/use-disclosure"
+import { useEventListener } from "@yamada-ui/use-event-listener"
+import type { UsePopperProps } from "@yamada-ui/use-popper"
+import { usePopper } from "@yamada-ui/use-popper"
+import type { PropGetter } from "@yamada-ui/utils"
 import {
   cx,
   handlerAll,
-  PropGetter,
   mergeRefs,
   getOwnerWindow,
   getOwnerDocument,
   omitObject,
-} from '@yamada-ui/utils'
-import { Children, cloneElement, useCallback, useEffect, useRef } from 'react'
-
-type Animation = 'scale' | 'top' | 'right' | 'left' | 'bottom' | 'none'
+} from "@yamada-ui/utils"
+import type { ReactNode } from "react"
+import { Children, cloneElement, useCallback, useEffect, useRef } from "react"
 
 type TooltipOptions = {
-  label?: React.ReactNode
+  /**
+   * The label of the tooltip.
+   */
+  label?: ReactNode
+  /**
+   * If `true`, the tooltip will be shown.
+   */
   isOpen?: boolean
+  /**
+   * If `true`, the tooltip will be initially shown.
+   */
   defaultIsOpen?: boolean
-  onOpen?(): void
-  onClose?(): void
+  /**
+   * Callback to run when the tooltip shows.
+   */
+  onOpen?: () => void
+  /**
+   * Callback to run when the tooltip hides.
+   */
+  onClose?: () => void
+  /**
+   * If `true`, the tooltip will be disabled.
+   *
+   * @default false
+   */
   isDisabled?: boolean
+  /**
+   * The delay before showing the tooltip.
+   *
+   * @default 0
+   */
   openDelay?: number
+  /**
+   * The delay before hiding the tooltip.
+   *
+   * @default 0
+   */
   closeDelay?: number
+  /**
+   * If `true`, the tooltip will hide on click.
+   *
+   * @default true
+   */
   closeOnClick?: boolean
+  /**
+   * If `true`, the tooltip will hide on scroll.
+   *
+   * @default false
+   */
   closeOnScroll?: boolean
+  /**
+   * If `true`, the tooltip will hide while the mouse is down.
+   *
+   * @default false
+   */
   closeOnMouseDown?: boolean
+  /**
+   * If `true`, the tooltip will hide while the pointer is down.
+   *
+   * @default false
+   */
   closeOnPointerDown?: boolean
+  /**
+   * If `true`, the tooltip will hide on pressing Esc key.
+   *
+   * @default true
+   */
   closeOnEsc?: boolean
-  animation?: Animation
-  duration?: MotionTransitionProperties['duration']
+  /**
+   * The animation of the tooltip.
+   *
+   * @default 'scale'
+   */
+  animation?: "scale" | "top" | "right" | "left" | "bottom" | "none"
+  /**
+   * The animation duration.
+   */
+  duration?: MotionTransitionProperties["duration"]
+  /**
+   * Props for portal component.
+   */
+  portalProps?: Pick<PortalProps, "appendToParentPortal" | "containerRef">
+  /**
+   * If `true`, the element will be transported to the end of document.body.
+   */
+  withPortal?: boolean
 }
 
-export type TooltipProps = HTMLUIProps<'div'> &
-  ThemeProps<'Tooltip'> &
-  Omit<HTMLMotionProps<'div'>, 'color' | 'style' | 'variants' | 'transition'> &
-  Pick<UsePopperProps, 'modifiers' | 'gutter' | 'offset' | 'placement'> &
+export type TooltipProps = HTMLUIProps<"div"> &
+  ThemeProps<"Tooltip"> &
+  Omit<HTMLMotionProps<"div">, "color" | "style" | "variants" | "transition"> &
+  Pick<UsePopperProps, "modifiers" | "gutter" | "offset" | "placement"> &
   TooltipOptions
 
 const getTooltipProps = (
-  animation: TooltipProps['animation'] = 'scale',
-  duration?: TooltipProps['duration'],
+  animation: TooltipProps["animation"] = "scale",
+  duration?: TooltipProps["duration"],
 ) => {
   const custom = {
     reverse: true,
     duration,
-    enter: { visibility: 'visible' },
-    transitionEnd: { exit: { visibility: 'hidden' } },
+    enter: { visibility: "visible" },
+    transitionEnd: { exit: { visibility: "hidden" } },
   }
 
   switch (animation) {
-    case 'scale':
+    case "scale":
       return {
         ...scaleFadeProps,
         custom: { ...custom, scale: 0.95 },
       }
-    case 'top':
+    case "top":
       return {
         ...slideFadeProps,
         custom: { ...custom, offsetY: -16 },
       }
-    case 'right':
+    case "right":
       return {
         ...slideFadeProps,
         custom: { ...custom, offsetX: 16 },
       }
-    case 'left':
+    case "left":
       return {
         ...slideFadeProps,
         custom: { ...custom, offsetX: -16 },
       }
-    case 'bottom':
+    case "bottom":
       return {
         ...slideFadeProps,
         custom: { ...custom, offsetY: 16 },
@@ -96,9 +169,12 @@ const getTooltipProps = (
   }
 }
 
-export const Tooltip = forwardRef<TooltipProps, 'div'>(
-  ({ closeOnPointerDown, zIndex, ...props }, ref) => {
-    const [styles, mergedProps] = useComponentStyle('Tooltip', props)
+export const Tooltip = forwardRef<TooltipProps, "div">(
+  (
+    { closeOnPointerDown, zIndex, portalProps, withPortal = true, ...props },
+    ref,
+  ) => {
+    const [styles, mergedProps] = useComponentStyle("Tooltip", props)
     const {
       className,
       children,
@@ -121,7 +197,7 @@ export const Tooltip = forwardRef<TooltipProps, 'div'>(
 
     closeOnPointerDown = closeOnMouseDown
 
-    const [isOpen, onOpen, onClose] = useDisclosure(rest)
+    const { isOpen, onOpen, onClose } = useDisclosure(rest)
 
     const triggerRef = useRef<HTMLElement>(null)
 
@@ -179,23 +255,24 @@ export const Tooltip = forwardRef<TooltipProps, 'div'>(
     )
 
     const onKeyDown = useCallback(
-      (event: KeyboardEvent) => (isOpen && event.key === 'Escape' ? closeWithDelay() : undefined),
+      (ev: KeyboardEvent) =>
+        isOpen && ev.key === "Escape" ? closeWithDelay() : undefined,
       [isOpen, closeWithDelay],
     )
 
     useEventListener(
       () => getOwnerDocument(triggerRef.current),
-      'keydown',
+      "keydown",
       (ev) => (closeOnEsc ? onKeyDown(ev) : undefined),
     )
 
     useEventListener(
       () => getOwnerDocument(triggerRef.current),
-      'scroll',
+      "scroll",
       () => (isOpen && closeOnScroll ? closeNow() : undefined),
     )
 
-    useEventListener(() => triggerRef.current, 'pointerleave', closeWithDelay)
+    useEventListener(() => triggerRef.current, "pointerleave", closeWithDelay)
 
     useEffect(
       () => () => {
@@ -210,7 +287,7 @@ export const Tooltip = forwardRef<TooltipProps, 'div'>(
         ...props,
         ref: mergeRefs(triggerRef, ref, referenceRef),
         onPointerEnter: handlerAll(props.onPointerEnter, (e) =>
-          e.pointerType !== 'touch' ? openWithDelay() : undefined,
+          e.pointerType !== "touch" ? openWithDelay() : undefined,
         ),
         onClick: handlerAll(props.onClick, onClick),
         onPointerDown: handlerAll(props.onPointerDown, onPointerDown),
@@ -221,12 +298,14 @@ export const Tooltip = forwardRef<TooltipProps, 'div'>(
       [referenceRef, onClick, onPointerDown, openWithDelay, closeWithDelay],
     )
 
-    const child = Children.only(children) as React.ReactElement & { ref?: React.Ref<any> }
+    const child = Children.only(children) as React.ReactElement & {
+      ref?: React.Ref<any>
+    }
     const trigger = cloneElement(child, getTriggerProps(child.props, child.ref))
 
     const css: CSSUIObject = {
-      position: 'relative',
-      ...omitObject(styles, ['zIndex']),
+      position: "relative",
+      ...omitObject(styles, ["zIndex"]),
     }
 
     if (!label) return <>{children}</>
@@ -234,25 +313,33 @@ export const Tooltip = forwardRef<TooltipProps, 'div'>(
     return (
       <>
         {trigger}
+
         <AnimatePresence>
           {isOpen ? (
-            <Portal>
+            <Portal isDisabled={!withPortal} {...portalProps}>
               <ui.div
                 {...getPopperProps()}
-                zIndex={(zIndex ?? styles.zIndex) as UIProps['zIndex']}
-                pointerEvents='none'
+                zIndex={(zIndex ?? styles.zIndex) as CSSUIProps["zIndex"]}
+                pointerEvents="none"
               >
                 <ui.div
                   as={motion.div}
                   ref={ref}
-                  className={cx('ui-tooltip', className)}
+                  className={cx("ui-tooltip", className)}
                   style={{ transformOrigin }}
-                  {...(animation !== 'none' ? getTooltipProps(animation, duration) : {})}
-                  initial='exit'
-                  animate={isOpen ? 'enter' : 'exit'}
-                  exit='exit'
+                  {...(animation !== "none"
+                    ? getTooltipProps(animation, duration)
+                    : {})}
+                  initial="exit"
+                  animate={isOpen ? "enter" : "exit"}
+                  exit="exit"
                   __css={css}
-                  {...omitObject(rest, ['isOpen', 'defaultIsOpen', 'onOpen', 'onClose'])}
+                  {...omitObject(rest, [
+                    "isOpen",
+                    "defaultIsOpen",
+                    "onOpen",
+                    "onClose",
+                  ])}
                 >
                   {label}
                 </ui.div>

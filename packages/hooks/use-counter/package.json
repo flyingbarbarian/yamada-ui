@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/use-counter",
-  "version": "0.1.1",
+  "version": "0.3.5",
   "description": "Yamada UI useCounter custom hook",
   "keywords": [
     "use-counter"
@@ -49,6 +49,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

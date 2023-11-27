@@ -1,6 +1,6 @@
 {
   "name": "@yamada-ui/use-timeout",
-  "version": "0.1.2",
+  "version": "0.2.5",
   "description": "Yamada UI useTimeout custom hook",
   "keywords": [
     "use-timeout"
@@ -49,6 +49,9 @@
     "format": [
       "cjs",
       "esm"
-    ]
+    ],
+    "banner": {
+      "js": "\"use client\""
+    }
   }
 }

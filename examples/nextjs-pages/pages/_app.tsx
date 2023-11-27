@@ -1,13 +1,25 @@
 import type { AppProps } from 'next/app'
-import { extendConfig, extendTheme, localStorageManager, UIProvider } from '@yamada-ui/react'
-import { customTheme, customConfig } from 'theme'
-
-const theme = extendTheme(customTheme)()
-const config = extendConfig(customConfig)
+import { UIProvider, colorModeManager, themeSchemeManager } from '@yamada-ui/react'
+import { theme, config } from 'theme'
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const { cookies } = pageProps
+  const resolvedColorModeManager =
+    typeof cookies === 'string'
+      ? colorModeManager.cookieStorageSSR(cookies)
+      : colorModeManager.cookieStorage
+  const resolvedThemeSchemeManager =
+    typeof cookies === 'string'
+      ? themeSchemeManager.cookieStorageSSR(cookies)
+      : themeSchemeManager.cookieStorage
+
   return (
-    <UIProvider config={config} theme={theme} colorModeManager={localStorageManager}>
+    <UIProvider
+      theme={theme}
+      config={config}
+      colorModeManager={resolvedColorModeManager}
+      themeSchemeManager={resolvedThemeSchemeManager}
+    >
       <Component {...pageProps} />
     </UIProvider>
   )
